@@ -13,7 +13,7 @@ interface Asset {
   type: string
   size: string
   uploadDate: string
-  status: "processing" | "verified"
+  status: "processing" | "verified" | "error"
   txHash?: string
   timestamp?: string
 }
@@ -31,6 +31,29 @@ export function AssetList({ assets }: AssetListProps) {
     if (type.includes("pdf") || type.includes("document")) return <FileText className="w-4 h-4" />
     return <File className="w-4 h-4" />
   }
+
+  const getStatusBadge = (status: Asset['status']) => {
+    switch (status) {
+      case 'processing':
+        return (
+          <Badge variant="outline" className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
+            Processing
+          </Badge>
+        );
+      case 'verified':
+        return (
+          <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+            Verified
+          </Badge>
+        );
+      case 'error':
+        return (
+          <Badge variant="outline" className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
+            Error
+          </Badge>
+        );
+    }
+  };
 
   return (
     <>
@@ -64,21 +87,7 @@ export function AssetList({ assets }: AssetListProps) {
                   <TableCell>{asset.size}</TableCell>
                   <TableCell>{asset.uploadDate}</TableCell>
                   <TableCell>
-                    {asset.status === "processing" ? (
-                      <Badge
-                        variant="outline"
-                        className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-                      >
-                        Processing
-                      </Badge>
-                    ) : (
-                      <Badge
-                        variant="outline"
-                        className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                      >
-                        Verified
-                      </Badge>
-                    )}
+                    {getStatusBadge(asset.status)}
                   </TableCell>
                   <TableCell className="text-right">
                     <Button variant="ghost" size="icon" onClick={() => setSelectedAsset(asset)}>
@@ -121,21 +130,7 @@ export function AssetList({ assets }: AssetListProps) {
               <div className="grid grid-cols-3 gap-4 items-center">
                 <span className="font-medium">Status:</span>
                 <span className="col-span-2">
-                  {selectedAsset.status === "processing" ? (
-                    <Badge
-                      variant="outline"
-                      className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
-                    >
-                      Processing
-                    </Badge>
-                  ) : (
-                    <Badge
-                      variant="outline"
-                      className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
-                    >
-                      Verified
-                    </Badge>
-                  )}
+                  {getStatusBadge(selectedAsset.status)}
                 </span>
               </div>
 

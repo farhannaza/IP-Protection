@@ -1,12 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Shield, FileText, Music, ImageIcon, File } from "lucide-react"
+import { Shield, FileText, Music, ImageIcon, File, Video, Package } from "lucide-react"
 import { FileUploader } from "@/components/file-uploader"
 import { AssetList } from "@/components/asset-list"
+import { Web3Service } from "@/lib/web3"
+import { generateFileHash } from "@/lib/hash"
+import { toast, Toaster } from "sonner"
 
 export default function Dashboard() {
   const [assets, setAssets] = useState<
@@ -16,36 +18,64 @@ export default function Dashboard() {
       type: string
       size: string
       uploadDate: string
-      status: "processing" | "verified"
+      status: "processing" | "verified" | "error"
       txHash?: string
       timestamp?: string
     }>
-  >([
-    {
-      id: "1",
-      name: "song-demo.mp3",
-      type: "audio/mp3",
-      size: "4.2 MB",
-      uploadDate: "2025-03-15",
-      status: "verified",
-      txHash: "0x1a2b3c4d5e6f...",
-      timestamp: "2025-03-15 14:30:22",
-    },
-    {
-      id: "2",
-      name: "manuscript.pdf",
-      type: "application/pdf",
-      size: "1.8 MB",
-      uploadDate: "2025-03-20",
-      status: "verified",
-      txHash: "0x7e8f9a0b1c2d...",
-      timestamp: "2025-03-20 09:15:47",
-    },
-  ])
+  >([]);
+  const [web3Service, setWeb3Service] = useState<Web3Service | null>(null);
+  const [networkInfo, setNetworkInfo] = useState<{
+    name: string;
+    contractAddress: string;
+  } | null>(null);
 
-  const handleFileUpload = (files: File[]) => {
-    // In a real app, we would process the files and send them to the server
-    // For demo purposes, we'll just add them to the state
+  useEffect(() => {
+    const initializeWeb3AndLoadAssets = async () => {
+      try {
+        const service = new Web3Service();
+        await service.initialize();
+        
+        // Get network information
+        const networkName = await service.getNetworkName();
+        const contractAddress = await service.getContractAddress();
+        setNetworkInfo({
+          name: networkName,
+          contractAddress: contractAddress
+        });
+
+        setWeb3Service(service);
+
+        // Load assets from blockchain
+        const blockchainAssets = await service.getAllProtectedAssets();
+        
+        // Convert blockchain assets to UI format
+        const formattedAssets = blockchainAssets.map(asset => ({
+          id: asset.hash,
+          name: asset.fileName,
+          type: asset.fileType,
+          size: asset.fileSize,
+          uploadDate: new Date(asset.timestamp * 1000).toISOString().split('T')[0],
+          status: "verified" as const,
+          txHash: asset.hash,
+          timestamp: new Date(asset.timestamp * 1000).toLocaleString(),
+        }));
+
+        setAssets(formattedAssets);
+      } catch (error: any) {
+        toast.error(error.message);
+      }
+    };
+
+    initializeWeb3AndLoadAssets();
+  }, []);
+
+  const handleFileUpload = async (files: File[]) => {
+    if (!web3Service) {
+      toast.error("Web3 not initialized");
+      return;
+    }
+
+    // Add new files to UI immediately with processing status
     const newAssets = files.map((file, index) => ({
       id: `new-${Date.now()}-${index}`,
       name: file.name,
@@ -53,31 +83,113 @@ export default function Dashboard() {
       size: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
       uploadDate: new Date().toISOString().split("T")[0],
       status: "processing" as const,
-    }))
+    }));
 
-    setAssets([...newAssets, ...assets])
+    setAssets(prev => [...newAssets, ...prev]);
 
-    // Simulate processing and verification
-    setTimeout(() => {
-      setAssets((prev) =>
-        prev.map((asset) =>
-          asset.status === "processing"
-            ? {
-                ...asset,
-                status: "verified",
-                txHash: `0x${Math.random().toString(16).substring(2, 14)}...`,
-                timestamp: new Date().toLocaleString(),
-              }
-            : asset,
-        ),
-      )
-    }, 3000)
-  }
+    // Process each file
+    for (const [index, file] of files.entries()) {
+      try {
+        // Generate hash
+        const hash = await generateFileHash(file);
+
+        // Store hash and file information on blockchain
+        const txHash = await web3Service.storeHash(
+          hash,
+          file.name,
+          file.type,
+          `${(file.size / (1024 * 1024)).toFixed(2)} MB`
+        );
+
+        // Update asset status
+        setAssets(prev => prev.map(asset => {
+          if (asset.id === newAssets[index].id) {
+            return {
+              ...asset,
+              status: "verified",
+              txHash,
+              timestamp: new Date().toLocaleString(),
+            };
+          }
+          return asset;
+        }));
+
+        toast.success(`File "${file.name}" has been protected`);
+        
+        // Refresh assets from blockchain
+        const blockchainAssets = await web3Service.getAllProtectedAssets();
+        const formattedAssets = blockchainAssets.map(asset => ({
+          id: asset.hash,
+          name: asset.fileName,
+          type: asset.fileType,
+          size: asset.fileSize,
+          uploadDate: new Date(asset.timestamp * 1000).toISOString().split('T')[0],
+          status: "verified" as const,
+          txHash: asset.hash,
+          timestamp: new Date(asset.timestamp * 1000).toLocaleString(),
+        }));
+        setAssets(formattedAssets);
+
+      } catch (error: any) {
+        console.error(error);
+        
+        setAssets(prev => prev.map(asset => {
+          if (asset.id === newAssets[index].id) {
+            return {
+              ...asset,
+              status: "error",
+            };
+          }
+          return asset;
+        }));
+
+        toast.error(error.message || `Failed to protect "${file.name}"`);
+      }
+    }
+  };
+
+  // Helper function to categorize files
+  const getCategoryCounts = () => {
+    return {
+      documents: assets.filter(a => 
+        a.type.includes('pdf') || 
+        a.type.includes('document') || 
+        a.type.includes('txt') ||
+        a.type.includes('doc')
+      ).length,
+      music: assets.filter(a => 
+        a.type.includes('audio') || 
+        a.type.includes('mp3') || 
+        a.type.includes('wav')
+      ).length,
+      images: assets.filter(a => 
+        a.type.includes('image') || 
+        a.type.includes('png') || 
+        a.type.includes('jpg') || 
+        a.type.includes('jpeg') || 
+        a.type.includes('gif')
+      ).length,
+      videos: assets.filter(a => 
+        a.type.includes('video') || 
+        a.type.includes('mp4') || 
+        a.type.includes('mov') || 
+        a.type.includes('avi')
+      ).length,
+      others: assets.filter(a => {
+        const isDocument = a.type.includes('pdf') || a.type.includes('document') || a.type.includes('txt') || a.type.includes('doc');
+        const isMusic = a.type.includes('audio') || a.type.includes('mp3') || a.type.includes('wav');
+        const isImage = a.type.includes('image') || a.type.includes('png') || a.type.includes('jpg') || a.type.includes('jpeg') || a.type.includes('gif');
+        const isVideo = a.type.includes('video') || a.type.includes('mp4') || a.type.includes('mov') || a.type.includes('avi');
+        return !isDocument && !isMusic && !isImage && !isVideo;
+      }).length
+    };
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
+      <Toaster position="top-right" />
       <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-        <Link className="flex items-center gap-2 font-semibold" href="/">
+      <Link className="flex items-center gap-2 font-semibold" href="/">
           <Shield className="h-6 w-6" />
           <span>IP Shield</span>
         </Link>
@@ -88,22 +200,25 @@ export default function Dashboard() {
           <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard/verify">
             Verify
           </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/profile">
-            Profile
-          </Link>
-          <Button variant="outline" size="sm">
-            Logout
-          </Button>
         </nav>
+        {networkInfo && (
+          <div className="ml-auto mr-4 text-sm text-muted-foreground">
+            <span className="font-medium">{networkInfo.name}</span>
+            <span className="mx-2">|</span>
+            <span className="font-mono text-xs truncate" title={networkInfo.contractAddress}>
+              Contract: {networkInfo.contractAddress.slice(0, 6)}...{networkInfo.contractAddress.slice(-4)}
+            </span>
+          </div>
+        )}
       </header>
-      <main className="flex-1 container py-6">
+      <main className="flex-1 container max-w-7xl mx-auto py-6 px-4">
         <div className="grid gap-6">
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
             <p className="text-muted-foreground">Manage and protect your intellectual property</p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium">Total Assets</CardTitle>
@@ -120,9 +235,7 @@ export default function Dashboard() {
                 <File className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">
-                  {assets.filter((a) => a.type.includes("pdf") || a.type.includes("document")).length}
-                </div>
+                <div className="text-2xl font-bold">{getCategoryCounts().documents}</div>
                 <p className="text-xs text-muted-foreground">Protected documents</p>
               </CardContent>
             </Card>
@@ -132,7 +245,7 @@ export default function Dashboard() {
                 <Music className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{assets.filter((a) => a.type.includes("audio")).length}</div>
+                <div className="text-2xl font-bold">{getCategoryCounts().music}</div>
                 <p className="text-xs text-muted-foreground">Protected audio files</p>
               </CardContent>
             </Card>
@@ -142,8 +255,28 @@ export default function Dashboard() {
                 <ImageIcon className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{assets.filter((a) => a.type.includes("image")).length}</div>
+                <div className="text-2xl font-bold">{getCategoryCounts().images}</div>
                 <p className="text-xs text-muted-foreground">Protected images</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Videos</CardTitle>
+                <Video className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{getCategoryCounts().videos}</div>
+                <p className="text-xs text-muted-foreground">Protected videos</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Others</CardTitle>
+                <Package className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{getCategoryCounts().others}</div>
+                <p className="text-xs text-muted-foreground">Other protected files</p>
               </CardContent>
             </Card>
           </div>
@@ -171,7 +304,7 @@ export default function Dashboard() {
       </main>
       <footer className="border-t py-4 px-6">
         <div className="container flex flex-col sm:flex-row items-center justify-between">
-          <p className="text-xs text-muted-foreground">© 2025 IP Shield. All rights reserved.</p>
+          <p className="text-xs text-muted-foreground">IP Shield.</p>
           <p className="text-xs text-muted-foreground">Powered by Blockchain Technology</p>
         </div>
       </footer>
