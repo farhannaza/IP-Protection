@@ -164,14 +164,6 @@ export default function VerifyPage() {
           <Shield className="h-6 w-6" />
           <span>IP Shield</span>
         </Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard">
-            Dashboard
-          </Link>
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard/verify">
-            Verify
-          </Link>
-        </nav>
         {networkInfo && (
           <div className="ml-4 text-sm text-muted-foreground">
             <span className="font-medium">{networkInfo.name}</span>
@@ -181,6 +173,14 @@ export default function VerifyPage() {
             </span>
           </div>
         )}
+        <nav className="ml-auto flex gap-4 sm:gap-6">
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard">
+            Dashboard
+          </Link>
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard/verify">
+            Verify
+          </Link>
+        </nav>
       </header>
       <main className="flex-1 container max-w-7xl mx-auto py-6 px-4">
         <div className="grid gap-6 max-w-2xl mx-auto">
