@@ -189,19 +189,10 @@ export default function Dashboard() {
     <div className="flex flex-col min-h-screen">
       <Toaster position="top-right" />
       <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-        <Link className="flex items-center gap-2 font-semibold" href="/">
+      <Link className="flex items-center gap-2 font-semibold" href="/">
           <Shield className="h-6 w-6" />
           <span>IP Shield</span>
         </Link>
-        {networkInfo && (
-          <div className="ml-4 text-sm text-muted-foreground">
-            <span className="font-medium">{networkInfo.name}</span>
-            <span className="mx-2">|</span>
-            <span className="font-mono text-xs truncate" title={networkInfo.contractAddress}>
-              Contract: {networkInfo.contractAddress.slice(0, 6)}...{networkInfo.contractAddress.slice(-4)}
-            </span>
-          </div>
-        )}
         <nav className="ml-auto flex gap-4 sm:gap-6">
           <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard">
             Dashboard
@@ -210,6 +201,15 @@ export default function Dashboard() {
             Verify
           </Link>
         </nav>
+        {networkInfo && (
+          <div className="ml-auto mr-4 text-sm text-muted-foreground">
+            <span className="font-medium">{networkInfo.name}</span>
+            <span className="mx-2">|</span>
+            <span className="font-mono text-xs truncate" title={networkInfo.contractAddress}>
+              Contract: {networkInfo.contractAddress.slice(0, 6)}...{networkInfo.contractAddress.slice(-4)}
+            </span>
+          </div>
+        )}
       </header>
       <main className="flex-1 container max-w-7xl mx-auto py-6 px-4">
         <div className="grid gap-6">
