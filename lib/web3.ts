@@ -1,12 +1,12 @@
 try {
   // ... existing code ...
-} catch (_) {
+} catch (_error) {
   // ... existing code ...
 }
 
 try {
   // ... existing code ...
-} catch (_) {
+} catch (_error) {
   // ... existing code ...
 }
 
@@ -19,6 +19,12 @@ interface TransactionConfig {
   data?: string;
 }
 
-function someFunction(config: TransactionConfig) {
+type TransactionResponse = {
+  hash: string;
+  // add other relevant properties
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function someFunction(config: TransactionConfig): Promise<TransactionResponse> {
   // ... existing code ...
 }

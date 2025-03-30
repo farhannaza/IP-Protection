@@ -1,5 +1,5 @@
 try {
   // ... existing code ...
-} catch (_) {
+} catch (_error) {
   // ... existing code ...
 }
