@@ -85,7 +85,7 @@ module.exports = {
     // Useful for deploying to a public network.
     // Note: It's important to wrap the provider as a function to ensure truffle uses a new provider every time.
     sepolia: {
-      provider: () => new HDWalletProvider(MNEMONIC, `wss://eth-sepolia.g.alchemy.com/v2/M9kdrlu2PCXlBWKAaDlwKvxXGx-6-QBt`),
+      provider: () => new HDWalletProvider(MNEMONIC, `wss://eth-sepolia.g.alchemy.com/v2/${PROJECT_ID}`),
       network_id: 11155111,       // sepolia's id
       confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
       WebSocket: true,
@@ -94,11 +94,11 @@ module.exports = {
     },
     //
     // Useful for private networks
-    // private: {
-    //   provider: () => new HDWalletProvider(MNEMONIC, `https://network.io`),
-    //   network_id: 2111,   // This network is yours, in the cloud.
-    //   production: true    // Treats this network as if it was a public net. (default: false)
-    // }
+  //   private: {
+  //     provider: () => new HDWalletProvider(MNEMONIC, `https://eth-sepolia.g.alchemy.com/v2/{PROJECT_ID}`),
+  //     network_id: 2111,   // This network is yours, in the cloud.
+  //     production: true    // Treats this network as if it was a public net. (default: false)
+  //   }
   },
 
   // Set default mocha options here, use special reporters, etc.
