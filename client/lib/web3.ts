@@ -91,8 +91,6 @@ export class Web3Service {
         .send({
           from: accounts[0]
         });
-      console.log("txhash:", result.transactionHash)
-
       return result.transactionHash;
     } catch (error: any) {
       throw new Error(error.message || 'Failed to store hash');
@@ -128,47 +126,23 @@ export class Web3Service {
     fileType?: string;
     fileSize?: string;
     timestamp?: number;
-    transactionHash?: string;
   }> {
     this.ensureInitialized();
     try {
       const exists = await this.contract.methods.hashExists(hash).call();
       if (exists) {
         const data = await this.contract.methods.getHashData(hash).call();
-        console.log("hash",hash);
         return { 
           exists, 
           fileName: data[1],
           fileType: data[2],
           fileSize: data[3],
-          timestamp: Number(data[4]),
-          transactionHash: hash
+          timestamp: Number(data[4])
         };
       }
       return { exists };
     } catch (error) {
       throw new Error('Failed to verify hash');
-    }
-  }
-
-  async getHashTransactionHash(hash: string): Promise<string> {
-    this.ensureInitialized();
-    try {
-      // Get past events for the HashStored event (this is the event name from your smart contract)
-      const events = await this.contract.getPastEvents('HashStored', {
-        filter: { hash: hash },
-        fromBlock: 0,
-        toBlock: 'latest'
-      });
-
-      if (events.length === 0) {
-        throw new Error('No transaction found for this hash');
-      }
-
-      // Return the transaction hash of the event
-      return events[0].transactionHash;
-    } catch (error: any) {
-      throw new Error(`Failed to get transaction hash: ${error.message}`);
     }
   }
 

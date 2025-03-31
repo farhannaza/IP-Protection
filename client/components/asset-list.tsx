@@ -1,12 +1,11 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { FileText, Music, ImageIcon, File, ExternalLink, Info } from "lucide-react"
-import { Web3Service } from "@/lib/web3"
 
 interface Asset {
   id: string
@@ -17,7 +16,6 @@ interface Asset {
   status: "processing" | "verified" | "error"
   txHash?: string
   timestamp?: string
-  etherscanTxHash?: string
 }
 
 interface AssetListProps {
@@ -26,45 +24,6 @@ interface AssetListProps {
 
 export function AssetList({ assets }: AssetListProps) {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null)
-  const [web3Service, setWeb3Service] = useState<Web3Service | null>(null)
-
-  useEffect(() => {
-    const initializeWeb3 = async () => {
-      try {
-        const service = new Web3Service();
-        await service.initialize();
-        setWeb3Service(service);
-      } catch (error: any) {
-        console.error('Failed to initialize Web3:', error);
-      }
-    };
-
-    initializeWeb3();
-  }, []);
-
-  const getBlockExplorerUrl = (txHash: string) => {
-    return `https://sepolia.etherscan.io/tx/${txHash}`;
-  };
-
-  const handleViewOnExplorer = async (asset: Asset) => {
-    if (!web3Service) {
-      console.error('Web3 service not initialized');
-      return;
-    }
-
-    try {
-      // Ensure the hash has the '0x' prefix
-      const hash = asset.txHash?.startsWith('0x') ? asset.txHash : `0x${asset.txHash}`;
-      console.log('Looking up transaction for hash:', hash);
-      
-      const txHash = await web3Service.getHashTransactionHash(hash);
-      console.log('Found transaction hash:', txHash);
-      window.open(getBlockExplorerUrl(txHash), '_blank');
-    } catch (error: any) {
-      console.error('Failed to get transaction hash:', error);
-      // You might want to show a toast or some other user feedback here
-    }
-  };
 
   const getFileIcon = (type: string) => {
     if (type.includes("image")) return <ImageIcon className="w-4 h-4" />
@@ -185,11 +144,7 @@ export function AssetList({ assets }: AssetListProps) {
                     <span className="font-medium">Transaction Hash:</span>
                     <span className="col-span-2 truncate">{selectedAsset.txHash}</span>
                   </div>
-                  <Button 
-                    variant="outline" 
-                    className="mt-2"
-                    onClick={() => handleViewOnExplorer(selectedAsset)}
-                  >
+                  <Button variant="outline" className="mt-2">
                     <ExternalLink className="w-4 h-4 mr-2" />
                     View on Blockchain Explorer
                   </Button>
