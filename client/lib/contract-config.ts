@@ -13,7 +13,10 @@ export const getContractConfig = async (): Promise<ContractConfig> => {
     
     // Get the deployed address for this network from the contract artifact
     const networks = HashStorageArtifact.networks as Record<string, { address: string }>;
+    console.log("network:", networks)
     const deployedNetwork = networks[networkId];
+    console.log("deployed:", deployedNetwork.address)
+
 
     if (!deployedNetwork) {
       throw new Error(`Contract not deployed on network ${networkId}`);
@@ -24,6 +27,7 @@ export const getContractConfig = async (): Promise<ContractConfig> => {
       abi: HashStorageArtifact.abi,
       network: networkId
     };
+    
   } catch (error: any) {
     throw new Error(`Failed to get contract config: ${error.message}`);
   }
