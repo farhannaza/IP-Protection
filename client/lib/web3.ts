@@ -4,7 +4,9 @@ import { getContractConfig, type ContractConfig } from './contract-config';
 
 declare global {
   interface Window {
-    ethereum?: unknown;
+    ethereum?: {
+      request: (args: { method: string; params?: unknown[] | undefined; }) => Promise<unknown>;
+    } | undefined;
   }
 }
 

@@ -1,3 +1,11 @@
+declare global {
+  interface Window {
+    ethereum?: {
+      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+    };
+  }
+}
+
 import HashStorageArtifact from '@/app/routes/artifacts/HashStorage.json';
 
 export interface ContractConfig {
@@ -8,6 +16,10 @@ export interface ContractConfig {
 
 export const getContractConfig = async (): Promise<ContractConfig> => {
   try {
+    if (!window.ethereum) {
+      throw new Error("MetaMask is not installed");
+    }
+
     // Get the network ID from MetaMask
     const networkId = await window.ethereum.request({ method: 'net_version' });
     
@@ -29,6 +41,6 @@ export const getContractConfig = async (): Promise<ContractConfig> => {
     };
     
   } catch (error: unknown) {
-    throw new Error(`Failed to get contract config: ${error.message}`);
+    throw new Error(`Failed to get contract config: ${error instanceof Error ? error.message : error}`);
   }
 }; 
