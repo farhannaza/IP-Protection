@@ -7,10 +7,11 @@ declare global {
 }
 
 import HashStorageArtifact from '@/app/routes/artifacts/HashStorage.json';
+import { AbiItem } from 'web3-utils';
 
 export interface ContractConfig {
   address: string;
-  abi: unknown;
+  abi: AbiItem[];
   network: string;
 }
 
@@ -21,7 +22,7 @@ export const getContractConfig = async (): Promise<ContractConfig> => {
     }
 
     // Get the network ID from MetaMask
-    const networkId = await window.ethereum.request({ method: 'net_version' });
+    const networkId = await window.ethereum.request({ method: 'net_version' }) as string;
     
     // Get the deployed address for this network from the contract artifact
     const networks = HashStorageArtifact.networks as Record<string, { address: string }>;
@@ -36,7 +37,7 @@ export const getContractConfig = async (): Promise<ContractConfig> => {
 
     return {
       address: deployedNetwork.address,
-      abi: HashStorageArtifact.abi,
+      abi: HashStorageArtifact.abi as AbiItem[],
       network: networkId
     };
     

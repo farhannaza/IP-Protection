@@ -1,5 +1,6 @@
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
+import { AbiItem } from 'web3-utils';
 import { getContractConfig, type ContractConfig } from './contract-config';
 
 declare global {
@@ -37,12 +38,12 @@ export class Web3Service {
       
       // Initialize contract
       this.contract = new this.web3.eth.Contract(
-        this.contractConfig.abi,
+        this.contractConfig.abi as any,
         this.contractConfig.address
       );
 
       // Listen for network changes
-      window.ethereum.on('chainChanged', () => {
+      window.ethereum!.on('chainChanged', () => {
         window.location.reload();
       });
 
@@ -71,9 +72,9 @@ export class Web3Service {
 
   async connectWallet(): Promise<string[]> {
     try {
-      const accounts = await window.ethereum.request({ 
+      const accounts = await window.ethereum!.request({ 
         method: 'eth_requestAccounts' 
-      });
+      }) as string[];
       return accounts;
     } catch {
       throw new Error('Failed to connect wallet');
@@ -89,7 +90,7 @@ export class Web3Service {
     this.ensureInitialized();
     try {
       const accounts = await this.connectWallet();
-      const result = await (this.contract as Contract).methods
+      const result = await (this.contract as Contract<AbiItem[]>).methods
         .storeHash(hash, fileName, fileType, fileSize)
         .send({
           from: accounts[0]
@@ -105,11 +106,11 @@ export class Web3Service {
   async getAllProtectedAssets(): Promise<HashData[]> {
     this.ensureInitialized();
     try {
-      const hashes = await (this.contract as Contract).methods.getAllHashes().call();
+      const hashes = await (this.contract as Contract<AbiItem[]>).methods.getAllHashes().call();
       const assets: HashData[] = [];
 
       for (const hash of hashes) {
-        const data = await (this.contract as Contract).methods.getHashData(hash).call();
+        const data = await (this.contract as Contract<AbiItem[]>).methods.getHashData(hash).call();
         assets.push({
           hash: data[0],
           fileName: data[1],
@@ -135,9 +136,9 @@ export class Web3Service {
   }> {
     this.ensureInitialized();
     try {
-      const exists = await (this.contract as Contract).methods.hashExists(hash).call();
+      const exists = await (this.contract as Contract<AbiItem[]>).methods.hashExists(hash).call();
       if (exists) {
-        const data = await (this.contract as Contract).methods.getHashData(hash).call();
+        const data = await (this.contract as Contract<AbiItem[]>).methods.getHashData(hash).call();
         console.log("hash",hash);
         return { 
           exists, 
@@ -158,7 +159,7 @@ export class Web3Service {
     this.ensureInitialized();
     try {
       // Get past events for the HashStored event (this is the event name from your smart contract)
-      const events = await (this.contract as Contract).getPastEvents('HashStored', {
+      const events = await (this.contract as Contract<AbiItem[]>).getPastEvents('HashStored', {
         filter: { hash: hash },
         fromBlock: 0,
         toBlock: 'latest'
