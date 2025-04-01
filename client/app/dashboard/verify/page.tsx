@@ -55,9 +55,9 @@ export default function VerifyPage() {
         setWeb3Service(service);
         setIsInitialized(true);
         
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Initialization error:', error);
-        toast.error(`Failed to initialize: ${error.message}`);
+        toast.error(`Failed to initialize: ${error}`);
       }
     };
 
@@ -105,11 +105,11 @@ export default function VerifyPage() {
           message: "File not found in our records.",
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
-        message: error.message || "Failed to verify file.",
+        message: error as string || "Failed to verify file.",
       });
     }
   };
@@ -152,11 +152,11 @@ export default function VerifyPage() {
           message: "Hash not found in our records.",
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
-        message: error.message || "Failed to verify hash.",
+        message: error as string || "Failed to verify hash.",
       });
     }
   };
@@ -226,7 +226,7 @@ export default function VerifyPage() {
               <CardHeader>
                 <CardTitle>Upload File to Verify</CardTitle>
                 <CardDescription>
-                  We'll calculate the hash of your file and check if it exists on the blockchain
+                We&apos;ll calculate the hash of your file and check if it exists on the blockchain
                 </CardDescription>
               </CardHeader>
               <CardContent>
