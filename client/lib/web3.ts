@@ -95,8 +95,6 @@ export class Web3Service {
         .send({
           from: accounts[0]
         });
-      console.log("txhash:", result.transactionHash)
-
       return result.transactionHash;
     } catch {
       throw new Error('Failed to store hash');
@@ -132,21 +130,23 @@ export class Web3Service {
     fileType?: string;
     fileSize?: string;
     timestamp?: number;
-    transactionHash?: string;
   }> {
     this.ensureInitialized();
     try {
       const exists = await (this.contract as Contract<AbiItem[]>).methods.hashExists(hash).call();
       if (exists) {
+<<<<<<< HEAD
         const data = await (this.contract as Contract<AbiItem[]>).methods.getHashData(hash).call();
         console.log("hash",hash);
+=======
+        const data = await this.contract.methods.getHashData(hash).call();
+>>>>>>> parent of 7ce082d (finish v3?)
         return { 
           exists, 
           fileName: data[1],
           fileType: data[2],
           fileSize: data[3],
-          timestamp: Number(data[4]),
-          transactionHash: hash
+          timestamp: Number(data[4])
         };
       }
       return { exists };
@@ -155,6 +155,7 @@ export class Web3Service {
     }
   }
 
+<<<<<<< HEAD
   async getHashTransactionHash(hash: string): Promise<string> {
     this.ensureInitialized();
     try {
@@ -176,6 +177,8 @@ export class Web3Service {
     }
   }
 
+=======
+>>>>>>> parent of 7ce082d (finish v3?)
   // Add check for contract initialization
   private ensureInitialized() {
     if (!this.contract) {
