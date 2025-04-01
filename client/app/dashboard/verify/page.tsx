@@ -226,7 +226,7 @@ export default function VerifyPage() {
               <CardHeader>
                 <CardTitle>Upload File to Verify</CardTitle>
                 <CardDescription>
-                  We'll calculate the hash of your file and check if it exists on the blockchain
+                  We&apos;ll calculate the hash of your file and check if it exists on the blockchain
                 </CardDescription>
               </CardHeader>
               <CardContent>
