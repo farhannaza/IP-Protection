@@ -61,10 +61,8 @@ export default function Dashboard() {
         }));
 
         setAssets(formattedAssets);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          toast.error(error.message);
-        }
+      } catch (error: any) {
+        toast.error(error.message);
       }
     };
 
@@ -132,10 +130,9 @@ export default function Dashboard() {
         }));
         setAssets(formattedAssets);
 
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          console.error(error);
-        }
+      } catch (error: any) {
+        console.error(error);
+        
         setAssets(prev => prev.map(asset => {
           if (asset.id === newAssets[index].id) {
             return {
@@ -146,7 +143,7 @@ export default function Dashboard() {
           return asset;
         }));
 
-        toast.error(error instanceof Error ? error.message : `Failed to protect "${file.name}"`);
+        toast.error(error.message || `Failed to protect "${file.name}"`);
       }
     }
   };

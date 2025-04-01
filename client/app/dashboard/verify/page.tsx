@@ -55,9 +55,9 @@ export default function VerifyPage() {
         setWeb3Service(service);
         setIsInitialized(true);
         
-      } catch (error: unknown) {
+      } catch (error: any) {
         console.error('Initialization error:', error);
-        toast.error(`Failed to initialize: ${error}`);
+        toast.error(`Failed to initialize: ${error.message}`);
       }
     };
 
@@ -105,11 +105,11 @@ export default function VerifyPage() {
           message: "File not found in our records.",
         });
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
-        message: error as string || "Failed to verify file.",
+        message: error.message || "Failed to verify file.",
       });
     }
   };
@@ -152,11 +152,11 @@ export default function VerifyPage() {
           message: "Hash not found in our records.",
         });
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
-        message: error as string || "Failed to verify hash.",
+        message: error.message || "Failed to verify hash.",
       });
     }
   };

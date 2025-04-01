@@ -2,7 +2,7 @@ import HashStorageArtifact from '@/app/routes/artifacts/HashStorage.json';
 
 export interface ContractConfig {
   address: string;
-  abi: unknown;
+  abi: any;
   network: string;
 }
 
@@ -28,7 +28,7 @@ export const getContractConfig = async (): Promise<ContractConfig> => {
       network: networkId
     };
     
-  } catch (error: unknown) {
+  } catch (error: any) {
     throw new Error(`Failed to get contract config: ${error.message}`);
   }
 }; 
