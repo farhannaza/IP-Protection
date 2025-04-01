@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { FileText, Music, ImageIcon, File, ExternalLink, Info } from "lucide-react"
+import { Web3Service } from "@/lib/web3"
 
 interface Asset {
   id: string
@@ -16,6 +17,7 @@ interface Asset {
   status: "processing" | "verified" | "error"
   txHash?: string
   timestamp?: string
+  etherscanTxHash?: string
 }
 
 interface AssetListProps {
@@ -24,7 +26,6 @@ interface AssetListProps {
 
 export function AssetList({ assets }: AssetListProps) {
   const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null)
-<<<<<<< HEAD
   const [web3Service, setWeb3Service] = useState<Web3Service | null>(null)
 
   useEffect(() => {
@@ -33,15 +34,13 @@ export function AssetList({ assets }: AssetListProps) {
         const service = new Web3Service();
         await service.initialize();
         setWeb3Service(service);
-      } catch (error: unknown) {
+      } catch (error: any) {
         console.error('Failed to initialize Web3:', error);
       }
     };
 
     initializeWeb3();
   }, []);
-=======
->>>>>>> parent of 7ce082d (finish v3?)
 
   const getFileIcon = (type: string) => {
     if (type.includes("image")) return <ImageIcon className="w-4 h-4" />
@@ -73,7 +72,6 @@ export function AssetList({ assets }: AssetListProps) {
     }
   };
 
-<<<<<<< HEAD
   const getBlockExplorerUrl = (txHash: string) => {
     return `https://sepolia.etherscan.io/tx/${txHash}`;
   };
@@ -84,13 +82,11 @@ export function AssetList({ assets }: AssetListProps) {
     try {
       const txHash = await web3Service.getHashTransactionHash(asset.txHash!);
       window.open(getBlockExplorerUrl(txHash), '_blank');
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error('Failed to get transaction hash:', error);
     }
   };
 
-=======
->>>>>>> parent of 7ce082d (finish v3?)
   return (
     <>
       <div className="rounded-md border">
@@ -180,7 +176,11 @@ export function AssetList({ assets }: AssetListProps) {
                     <span className="font-medium">Transaction Hash:</span>
                     <span className="col-span-2 truncate">{selectedAsset.txHash}</span>
                   </div>
-                  <Button variant="outline" className="mt-2">
+                  <Button 
+                    variant="outline" 
+                    className="mt-2"
+                    onClick={() => handleViewOnExplorer(selectedAsset)}
+                  >
                     <ExternalLink className="w-4 h-4 mr-2" />
                     View on Blockchain Explorer
                   </Button>
@@ -193,3 +193,4 @@ export function AssetList({ assets }: AssetListProps) {
     </>
   )
 }
+

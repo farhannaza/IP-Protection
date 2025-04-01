@@ -1,13 +1,9 @@
 import Web3 from 'web3';
-import { Contract } from 'web3-eth-contract';
-import { AbiItem } from 'web3-utils';
 import { getContractConfig, type ContractConfig } from './contract-config';
 
 declare global {
   interface Window {
-    ethereum?: {
-      request: (args: { method: string; params?: unknown[] | undefined; }) => Promise<unknown>;
-    } | undefined;
+    ethereum?: any;
   }
 }
 
@@ -21,7 +17,7 @@ export interface HashData {
 
 export class Web3Service {
   private web3: Web3;
-  private contract: unknown;
+  private contract: any;
   private contractConfig: ContractConfig | null = null;
 
   constructor() {
@@ -38,17 +34,17 @@ export class Web3Service {
       
       // Initialize contract
       this.contract = new this.web3.eth.Contract(
-        this.contractConfig.abi as any,
+        this.contractConfig.abi,
         this.contractConfig.address
       );
 
       // Listen for network changes
-      window.ethereum!.on('chainChanged', () => {
+      window.ethereum.on('chainChanged', () => {
         window.location.reload();
       });
 
-    } catch {
-      throw new Error('Failed to initialize Web3Service');
+    } catch (error: any) {
+      throw new Error(`Failed to initialize Web3Service: ${error.message}`);
     }
   }
 
@@ -72,11 +68,11 @@ export class Web3Service {
 
   async connectWallet(): Promise<string[]> {
     try {
-      const accounts = await window.ethereum!.request({ 
+      const accounts = await window.ethereum.request({ 
         method: 'eth_requestAccounts' 
-      }) as string[];
+      });
       return accounts;
-    } catch {
+    } catch (error) {
       throw new Error('Failed to connect wallet');
     }
   }
@@ -90,25 +86,27 @@ export class Web3Service {
     this.ensureInitialized();
     try {
       const accounts = await this.connectWallet();
-      const result = await (this.contract as Contract<AbiItem[]>).methods
+      const result = await this.contract.methods
         .storeHash(hash, fileName, fileType, fileSize)
         .send({
           from: accounts[0]
         });
+      console.log("txhash:", result.transactionHash)
+
       return result.transactionHash;
-    } catch {
-      throw new Error('Failed to store hash');
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to store hash');
     }
   }
 
   async getAllProtectedAssets(): Promise<HashData[]> {
     this.ensureInitialized();
     try {
-      const hashes = await (this.contract as Contract<AbiItem[]>).methods.getAllHashes().call();
+      const hashes = await this.contract.methods.getAllHashes().call();
       const assets: HashData[] = [];
 
       for (const hash of hashes) {
-        const data = await (this.contract as Contract<AbiItem[]>).methods.getHashData(hash).call();
+        const data = await this.contract.methods.getHashData(hash).call();
         assets.push({
           hash: data[0],
           fileName: data[1],
@@ -119,8 +117,8 @@ export class Web3Service {
       }
 
       return assets;
-    } catch {
-      throw new Error('Failed to fetch protected assets');
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to fetch protected assets');
     }
   }
 
@@ -130,37 +128,34 @@ export class Web3Service {
     fileType?: string;
     fileSize?: string;
     timestamp?: number;
+    transactionHash?: string;
   }> {
     this.ensureInitialized();
     try {
-      const exists = await (this.contract as Contract<AbiItem[]>).methods.hashExists(hash).call();
+      const exists = await this.contract.methods.hashExists(hash).call();
       if (exists) {
-<<<<<<< HEAD
-        const data = await (this.contract as Contract<AbiItem[]>).methods.getHashData(hash).call();
-        console.log("hash",hash);
-=======
         const data = await this.contract.methods.getHashData(hash).call();
->>>>>>> parent of 7ce082d (finish v3?)
+        console.log("hash",hash);
         return { 
           exists, 
           fileName: data[1],
           fileType: data[2],
           fileSize: data[3],
-          timestamp: Number(data[4])
+          timestamp: Number(data[4]),
+          transactionHash: hash
         };
       }
       return { exists };
-    } catch {
+    } catch (error) {
       throw new Error('Failed to verify hash');
     }
   }
 
-<<<<<<< HEAD
   async getHashTransactionHash(hash: string): Promise<string> {
     this.ensureInitialized();
     try {
       // Get past events for the HashStored event (this is the event name from your smart contract)
-      const events = await (this.contract as Contract<AbiItem[]>).getPastEvents('HashStored', {
+      const events = await this.contract.getPastEvents('HashStored', {
         filter: { hash: hash },
         fromBlock: 0,
         toBlock: 'latest'
@@ -172,13 +167,11 @@ export class Web3Service {
 
       // Return the transaction hash of the event
       return events[0].transactionHash;
-    } catch {
-      throw new Error('Failed to get transaction hash');
+    } catch (error: any) {
+      throw new Error(`Failed to get transaction hash: ${error.message}`);
     }
   }
 
-=======
->>>>>>> parent of 7ce082d (finish v3?)
   // Add check for contract initialization
   private ensureInitialized() {
     if (!this.contract) {

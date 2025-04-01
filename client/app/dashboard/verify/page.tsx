@@ -32,6 +32,7 @@ export default function VerifyPage() {
       fileSize?: string
       timestamp?: string
       txHash?: string
+      etherscanTxHash?: string
     }
   }>({ status: null, message: "" });
 
@@ -54,16 +55,16 @@ export default function VerifyPage() {
         setWeb3Service(service);
         setIsInitialized(true);
         
-      } catch (error: unknown) {
+      } catch (error: any) {
         console.error('Initialization error:', error);
-        toast.error(`Failed to initialize: ${(error as Error).message}`);
+        toast.error(`Failed to initialize: ${error.message}`);
       }
     };
 
     initializeWeb3();
   }, []);
 
-  const handleFileUpload = async (files: File[]) => {
+  const  handleFileUpload = async (files: File[]) => {
     if (!isInitialized || !web3Service) {
       toast.error("Please wait for Web3 initialization");
       return;
@@ -82,6 +83,10 @@ export default function VerifyPage() {
 
       if (result.exists) {
         const timestamp = new Date(result.timestamp! * 1000).toLocaleString();
+        
+        // Get the actual transaction hash for Etherscan only
+        const txHash = await web3Service.getHashTransactionHash(hash);
+        
         setVerificationResult({
           status: "success",
           message: "File verified successfully!",
@@ -90,7 +95,8 @@ export default function VerifyPage() {
             fileType: result.fileType,
             fileSize: result.fileSize,
             timestamp,
-            txHash: hash,
+            txHash: hash, // Keep using file hash for display
+            etherscanTxHash: txHash, // Add new field for Etherscan link
           },
         });
       } else {
@@ -99,11 +105,11 @@ export default function VerifyPage() {
           message: "File not found in our records.",
         });
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
-        message: (error as Error).message || "Failed to verify file.",
+        message: error.message || "Failed to verify file.",
       });
     }
   };
@@ -119,12 +125,15 @@ export default function VerifyPage() {
 
     try {
       setVerificationResult({ status: null, message: "Verifying hash..." });
-
-      // Verify hash on blockchain
+      
       const result = await web3Service.verifyHash("0x"+hashInput);
 
       if (result.exists) {
         const timestamp = new Date(result.timestamp! * 1000).toLocaleString();
+        
+        // Get the actual transaction hash for Etherscan only
+        const txHash = await web3Service.getHashTransactionHash("0x"+hashInput);
+        
         setVerificationResult({
           status: "success",
           message: "Hash verified successfully!",
@@ -133,7 +142,8 @@ export default function VerifyPage() {
             fileType: result.fileType,
             fileSize: result.fileSize,
             timestamp,
-            txHash: hashInput,
+            txHash: "0x"+hashInput, // Keep using input hash for display
+            etherscanTxHash: txHash, // Add new field for Etherscan link
           },
         });
       } else {
@@ -142,17 +152,16 @@ export default function VerifyPage() {
           message: "Hash not found in our records.",
         });
       }
-    } catch (error: unknown) {
+    } catch (error: any) {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
-        message: (error as Error).message || "Failed to verify hash.",
+        message: error.message || "Failed to verify hash.",
       });
     }
   };
 
   const getBlockExplorerUrl = (txHash: string) => {
-    // Replace with your network's block explorer URL
     return `https://sepolia.etherscan.io/tx/${txHash}`;
   };
 
@@ -217,7 +226,7 @@ export default function VerifyPage() {
               <CardHeader>
                 <CardTitle>Upload File to Verify</CardTitle>
                 <CardDescription>
-                  We&apos;ll calculate the hash of your file and check if it exists on the blockchain
+                  We'll calculate the hash of your file and check if it exists on the blockchain
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -309,12 +318,12 @@ export default function VerifyPage() {
                   </div>
                 )}
               </CardContent>
-              {verificationResult.status === "success" && verificationResult.details?.txHash && (
+              {verificationResult.status === "success" && verificationResult.details?.etherscanTxHash && (
                 <CardFooter>
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => window.open(getBlockExplorerUrl(verificationResult.details!.txHash!), '_blank')}
+                    onClick={() => window.open(getBlockExplorerUrl(verificationResult.details!.etherscanTxHash!), '_blank')}
                   >
                     View on Blockchain Explorer
                   </Button>
@@ -333,4 +342,3 @@ export default function VerifyPage() {
     </div>
   )
 }
-

@@ -5,7 +5,7 @@ export async function generateFileHash(file: File): Promise<string> {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = '0x' + hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     return hashHex;
-  } catch {
+  } catch (error) {
     throw new Error('Failed to generate file hash');
   }
 } 

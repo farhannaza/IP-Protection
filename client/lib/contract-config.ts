@@ -1,32 +1,22 @@
-declare global {
-  interface Window {
-    ethereum?: {
-      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-    };
-  }
-}
-
 import HashStorageArtifact from '@/app/routes/artifacts/HashStorage.json';
-import { AbiItem } from 'web3-utils';
 
 export interface ContractConfig {
   address: string;
-  abi: AbiItem[];
+  abi: any;
   network: string;
 }
 
 export const getContractConfig = async (): Promise<ContractConfig> => {
   try {
-    if (!window.ethereum) {
-      throw new Error("MetaMask is not installed");
-    }
-
     // Get the network ID from MetaMask
-    const networkId = await window.ethereum.request({ method: 'net_version' }) as string;
+    const networkId = await window.ethereum.request({ method: 'net_version' });
     
     // Get the deployed address for this network from the contract artifact
     const networks = HashStorageArtifact.networks as Record<string, { address: string }>;
+    console.log("network:", networks)
     const deployedNetwork = networks[networkId];
+    console.log("deployed:", deployedNetwork.address)
+
 
     if (!deployedNetwork) {
       throw new Error(`Contract not deployed on network ${networkId}`);
@@ -34,16 +24,11 @@ export const getContractConfig = async (): Promise<ContractConfig> => {
 
     return {
       address: deployedNetwork.address,
-      abi: HashStorageArtifact.abi as AbiItem[],
+      abi: HashStorageArtifact.abi,
       network: networkId
     };
-<<<<<<< HEAD
     
-  } catch (error: unknown) {
-    throw new Error(`Failed to get contract config: ${error instanceof Error ? error.message : error}`);
-=======
   } catch (error: any) {
     throw new Error(`Failed to get contract config: ${error.message}`);
->>>>>>> parent of 7ce082d (finish v3?)
   }
 }; 

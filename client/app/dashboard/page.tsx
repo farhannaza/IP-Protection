@@ -61,8 +61,8 @@ export default function Dashboard() {
         }));
 
         setAssets(formattedAssets);
-      } catch (error: unknown) {
-        toast.error((error as Error).message);
+      } catch (error: any) {
+        toast.error(error.message);
       }
     };
 
@@ -130,7 +130,7 @@ export default function Dashboard() {
         }));
         setAssets(formattedAssets);
 
-      } catch (error: unknown) {
+      } catch (error: any) {
         console.error(error);
         
         setAssets(prev => prev.map(asset => {
@@ -143,7 +143,7 @@ export default function Dashboard() {
           return asset;
         }));
 
-        toast.error((error as Error).message || `Failed to protect "${file.name}"`);
+        toast.error(error.message || `Failed to protect "${file.name}"`);
       }
     }
   };
@@ -311,4 +311,3 @@ export default function Dashboard() {
     </div>
   )
 }
-
