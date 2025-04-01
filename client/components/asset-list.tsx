@@ -34,7 +34,7 @@ export function AssetList({ assets }: AssetListProps) {
         const service = new Web3Service();
         await service.initialize();
         setWeb3Service(service);
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Failed to initialize Web3:', error);
       }
     };
@@ -82,7 +82,7 @@ export function AssetList({ assets }: AssetListProps) {
     try {
       const txHash = await web3Service.getHashTransactionHash(asset.txHash!);
       window.open(getBlockExplorerUrl(txHash), '_blank');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to get transaction hash:', error);
     }
   };
