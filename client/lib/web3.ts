@@ -162,7 +162,7 @@ export class Web3Service {
       });
 
       if (events.length === 0) {
-        throw new Error(error.message || 'No transaction found for this hash');
+        throw new Error('No transaction found for this hash');
       }
 
       // Return the transaction hash of the event
