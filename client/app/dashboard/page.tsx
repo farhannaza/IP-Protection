@@ -62,7 +62,7 @@ export default function Dashboard() {
 
         setAssets(formattedAssets);
       } catch (error: unknown) {
-        toast.error(error.message);
+        toast.error((error as Error).message);
       }
     };
 
@@ -143,7 +143,7 @@ export default function Dashboard() {
           return asset;
         }));
 
-        toast.error(error.message || `Failed to protect "${file.name}"`);
+        toast.error((error as Error).message || `Failed to protect "${file.name}"`);
       }
     }
   };
