@@ -72,8 +72,8 @@ export class Web3Service {
         method: 'eth_requestAccounts' 
       });
       return accounts;
-    } catch (error) {
-      throw new Error('Failed to connect wallet');
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to connect wallet');
     }
   }
 
@@ -146,8 +146,8 @@ export class Web3Service {
         };
       }
       return { exists };
-    } catch (error) {
-      throw new Error('Failed to verify hash');
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to verify hash');
     }
   }
 
@@ -162,7 +162,7 @@ export class Web3Service {
       });
 
       if (events.length === 0) {
-        throw new Error('No transaction found for this hash');
+        throw new Error(error.message || 'No transaction found for this hash');
       }
 
       // Return the transaction hash of the event
