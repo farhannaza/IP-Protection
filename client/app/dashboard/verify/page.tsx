@@ -57,7 +57,7 @@ export default function VerifyPage() {
         
       } catch (error: unknown) {
         console.error('Initialization error:', error);
-        toast.error(`Failed to initialize: ${error.message}`);
+        toast.error(`Failed to initialize: ${(error as Error).message}`);
       }
     };
 
@@ -109,7 +109,7 @@ export default function VerifyPage() {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
-        message: error.message || "Failed to verify file.",
+        message: (error as Error).message || "Failed to verify file.",
       });
     }
   };
@@ -156,7 +156,7 @@ export default function VerifyPage() {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
-        message: error.message || "Failed to verify hash.",
+        message: (error as Error).message || "Failed to verify hash.",
       });
     }
   };
