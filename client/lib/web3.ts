@@ -3,7 +3,7 @@ import { getContractConfig, type ContractConfig } from './contract-config';
 
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: unknown;
   }
 }
 
@@ -17,7 +17,7 @@ export interface HashData {
 
 export class Web3Service {
   private web3: Web3;
-  private contract: any;
+  private contract: unknown;
   private contractConfig: ContractConfig | null = null;
 
   constructor() {
@@ -43,8 +43,8 @@ export class Web3Service {
         window.location.reload();
       });
 
-    } catch (error: any) {
-      throw new Error(`Failed to initialize Web3Service: ${error.message}`);
+    } catch (error: unknown) {
+      throw new Error(`Failed to initialize Web3Service: ${error as string}`);
     }
   }
 
@@ -72,7 +72,7 @@ export class Web3Service {
         method: 'eth_requestAccounts' 
       });
       return accounts;
-    } catch (error) {
+    } catch (error: unknown) {
       throw new Error('Failed to connect wallet');
     }
   }
@@ -86,7 +86,7 @@ export class Web3Service {
     this.ensureInitialized();
     try {
       const accounts = await this.connectWallet();
-      const result = await this.contract.methods
+      const result = await (this.contract as any).methods
         .storeHash(hash, fileName, fileType, fileSize)
         .send({
           from: accounts[0]
@@ -94,19 +94,19 @@ export class Web3Service {
       console.log("txhash:", result.transactionHash)
 
       return result.transactionHash;
-    } catch (error: any) {
-      throw new Error(error.message || 'Failed to store hash');
+    } catch (error: unknown) {
+      throw new Error(error as string || 'Failed to store hash');
     }
   }
 
   async getAllProtectedAssets(): Promise<HashData[]> {
     this.ensureInitialized();
     try {
-      const hashes = await this.contract.methods.getAllHashes().call();
+      const hashes = await (this.contract as any).methods.getAllHashes().call();
       const assets: HashData[] = [];
 
       for (const hash of hashes) {
-        const data = await this.contract.methods.getHashData(hash).call();
+        const data = await (this.contract as any).methods.getHashData(hash).call();
         assets.push({
           hash: data[0],
           fileName: data[1],
@@ -117,8 +117,8 @@ export class Web3Service {
       }
 
       return assets;
-    } catch (error: any) {
-      throw new Error(error.message || 'Failed to fetch protected assets');
+    } catch (error: unknown) {
+      throw new Error(error as string || 'Failed to fetch protected assets');
     }
   }
 
@@ -132,9 +132,9 @@ export class Web3Service {
   }> {
     this.ensureInitialized();
     try {
-      const exists = await this.contract.methods.hashExists(hash).call();
+      const exists = await (this.contract as any).methods.hashExists(hash).call();
       if (exists) {
-        const data = await this.contract.methods.getHashData(hash).call();
+        const data = await (this.contract as any).methods.getHashData(hash).call();
         console.log("hash",hash);
         return { 
           exists, 
@@ -146,7 +146,7 @@ export class Web3Service {
         };
       }
       return { exists };
-    } catch (error) {
+    } catch (error: unknown) {
       throw new Error('Failed to verify hash');
     }
   }
@@ -155,7 +155,7 @@ export class Web3Service {
     this.ensureInitialized();
     try {
       // Get past events for the HashStored event (this is the event name from your smart contract)
-      const events = await this.contract.getPastEvents('HashStored', {
+      const events = await (this.contract as any).getPastEvents('HashStored', {
         filter: { hash: hash },
         fromBlock: 0,
         toBlock: 'latest'
@@ -167,8 +167,8 @@ export class Web3Service {
 
       // Return the transaction hash of the event
       return events[0].transactionHash;
-    } catch (error: any) {
-      throw new Error(`Failed to get transaction hash: ${error.message}`);
+    } catch (error: unknown) {
+      throw new Error(`Failed to get transaction hash: ${error as string}`);
     }
   }
 

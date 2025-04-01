@@ -61,7 +61,7 @@ export default function Dashboard() {
         }));
 
         setAssets(formattedAssets);
-      } catch (error: any) {
+      } catch (error: unknown) {
         toast.error(error.message);
       }
     };
@@ -130,7 +130,7 @@ export default function Dashboard() {
         }));
         setAssets(formattedAssets);
 
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error(error);
         
         setAssets(prev => prev.map(asset => {

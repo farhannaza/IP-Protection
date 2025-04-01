@@ -55,7 +55,7 @@ export default function VerifyPage() {
         setWeb3Service(service);
         setIsInitialized(true);
         
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Initialization error:', error);
         toast.error(`Failed to initialize: ${error.message}`);
       }
@@ -105,7 +105,7 @@ export default function VerifyPage() {
           message: "File not found in our records.",
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
@@ -152,7 +152,7 @@ export default function VerifyPage() {
           message: "Hash not found in our records.",
         });
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Verification error:', error);
       setVerificationResult({
         status: "error",
