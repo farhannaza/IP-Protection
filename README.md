@@ -35,5 +35,14 @@ node -v
 
 1. Download VS Code from the official website: [https://code.visualstudio.com/](https://code.visualstudio.com/)
 2. Follow the installation guide.
-3. Once installed, open the terminal in VS Code by pressing:
+3. Once installed, open VS Code. 
+4. Then, open the terminal in VS Code by pressing:
+
+```bash
+Ctrl + `
+```
+
+<p align="center">
+  <img width="500" alt="VSCode" src="/assets/vscode-terminal.png">
+</p>
 
