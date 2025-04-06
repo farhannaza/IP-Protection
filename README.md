@@ -8,12 +8,6 @@ This guide helps you set up the development environment needed for your project 
 
 **Node.js** is an open-source, cross-platform JavaScript runtime environment that allows you to run JavaScript code outside of the web browser.
 
-### 📌 Why Node.js?
-
-- Enables JavaScript on the server-side.
-- Used for creating fast and scalable network applications.
-- Useful for building command-line tools, APIs, and more.
-
 ### 🧩 Installation Steps
 
 1. Download Node.js from the official website: [https://nodejs.org/](https://nodejs.org/)
@@ -22,3 +16,6 @@ This guide helps you set up the development environment needed for your project 
 
 ```bash
 node -v
+<p align="center" gap="5">
+      <img width="400" alt="NodeJS" src="/assets/node-v.png">
+     </p>
