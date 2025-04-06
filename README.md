@@ -1,27 +1,24 @@
-# IP-Protection
+# 🛠️ Environment Setup Guide
 
+This guide helps you set up the development environment needed for your project using **Node.js** and **Git**.
 
-![screenshot](./assets/node-v.png)
+---
 
-image.png
+## 1️⃣ Node.js
 
-A brief description of what your project does and who it's for.
+**Node.js** is an open-source, cross-platform JavaScript runtime environment that allows you to run JavaScript code outside of the web browser.
 
-## 🚀 Features
+### 📌 Why Node.js?
 
-- Feature 1
-- Feature 2
-- Feature 3
+- Enables JavaScript on the server-side.
+- Used for creating fast and scalable network applications.
+- Useful for building command-line tools, APIs, and more.
 
-## 🛠️ Tech Stack
+### 🧩 Installation Steps
 
-- Frontend: React, TailwindCSS
-- Backend: Node.js, Express
-- Blockchain: Solidity, Truffle
-- Database: Firebase
+1. Download Node.js from the official website: [https://nodejs.org/](https://nodejs.org/)
+2. Install it following the setup instructions.
+3. Open Command Prompt (CMD) or Terminal and run the command below to verify the installation:
 
-## 🧪 Installation
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/your-project-name.git
+```bash
+node -v
