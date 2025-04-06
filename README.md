@@ -1,5 +1,8 @@
 # IP-Protection
 
+
+![screenshot](./assets/node-v.png)
+
 image.png
 
 A brief description of what your project does and who it's for.
