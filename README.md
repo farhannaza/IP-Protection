@@ -1,6 +1,15 @@
 # 🛠️ Environment Setup Guide
 
-This guide helps you set up the development environment needed for your project using **Node.js** and **Git**.
+This guide helps you set up the development environment needed for your project using **Node.js**, **Git**, and **Visual Studio Code**.
+
+---
+
+## 📚 Table of Contents
+
+- [1️⃣ Node.js](#1-nodejs)
+- [2️⃣ Git](#2-git)
+- [3️⃣ Visual Studio Code](#3-visual-studio-code)
+- [✅ You're All Set!](#-youre-all-set)
 
 ---
 
@@ -16,7 +25,3 @@ This guide helps you set up the development environment needed for your project 
 
 ```bash
 node -v
-```
-<p align="center" gap="5">
-      <img width="400" alt="NodeJS" src="/assets/node-v.png">
-     </p>
