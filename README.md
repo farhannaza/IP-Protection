@@ -43,6 +43,6 @@ Ctrl + `
 ```
 
 <p align="center">
-  <img width="500" alt="VSCode" src="/assets/vs-terminal.png">
+  <img  alt="VSCode" src="/assets/vs-terminal.png">
 </p>
 
