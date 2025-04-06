@@ -27,3 +27,13 @@ node -v
 ```
 <p align="center"> <img width="400" alt="NodeJS" src="/assets/node-v.png"> </p>
 
+## 2️⃣ Visual Studio Code
+
+**Visual Studio Code (VS Code)** is a free, powerful, and lightweight code editor developed by Microsoft.
+
+### 🧩 Installation Steps
+
+1. Download VS Code from the official website: [https://code.visualstudio.com/](https://code.visualstudio.com/)
+2. Follow the installation guide.
+3. Once installed, open the terminal in VS Code by pressing:
+
