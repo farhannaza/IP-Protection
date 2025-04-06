@@ -16,6 +16,7 @@ This guide helps you set up the development environment needed for your project 
 
 ```bash
 node -v
+```
 <p align="center" gap="5">
       <img width="400" alt="NodeJS" src="/assets/node-v.png">
      </p>
