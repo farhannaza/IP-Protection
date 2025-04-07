@@ -71,10 +71,11 @@ mkdir folderName    # Create a new folder
   <img alt="Create Directory" src="/assets/create-directory.png">
 </p>
 
----
+once you're in the correct directory on the terminal, open explorer on the left by pressing : 
 
-## ✅ You're All Set!
-
-Now that you have **Node.js** and **Visual Studio Code** set up, and you know how to manage folders via the terminal, you're ready to start building your project.
-
-Happy coding! 💻🚀
+```bash
+code .
+```
+<p align="center">
+  <img alt="explorer" src="/assets/explorer.png">
+</p>
