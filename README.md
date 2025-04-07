@@ -9,6 +9,7 @@ This guide helps you set up the development environment needed for your project 
 - [1️⃣ Node.js](#1-nodejs)
 - [2️⃣ Visual Studio Code](#2-visual-studio-code)
   - [📁 Create Folder](#create-folder)
+  - [📂 Open Folder in Explorer](#open-folder-in-explorer)
 - [✅ You're All Set!](#-youre-all-set)
 
 ---
@@ -42,7 +43,7 @@ node -v
 1. Download VS Code from the official website: [https://code.visualstudio.com/](https://code.visualstudio.com/)
 2. Follow the installation guide.
 3. Once installed, open VS Code.
-4. Then, open the terminal in VS Code by pressing:
+4. Open the terminal inside VS Code by pressing:
 
 ```bash
 Ctrl + `
@@ -56,7 +57,7 @@ Ctrl + `
 
 ### 📁 Create Folder
 
-After opening the terminal in VS Code, you can create and navigate folders using the following commands:
+Inside the VS Code terminal, you can create and navigate folders using the following commands:
 
 ```bash
 cd folderName       # Navigate into a folder
@@ -71,11 +72,24 @@ mkdir folderName    # Create a new folder
   <img alt="Create Directory" src="/assets/create-directory.png">
 </p>
 
-once you're in the correct directory on the terminal, open explorer on the left by pressing : 
+---
+
+### 📂 Open Folder in Explorer
+
+Once you're in the correct project directory in the terminal, open it in the VS Code file explorer using this command:
 
 ```bash
 code .
 ```
+
 <p align="center">
   <img alt="explorer" src="/assets/explorer.png">
 </p>
+
+---
+
+## ✅ You're All Set!
+
+With **Node.js** and **Visual Studio Code** properly set up—and now that you can create and open folders with ease—you're ready to dive into development.
+
+Happy coding! 🎉🚀
