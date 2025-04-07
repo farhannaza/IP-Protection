@@ -110,11 +110,7 @@ truffle version
 ```
 
 <p align="center">
-  <img alt="verify truffle" src="/assets/verify-truffle.png">
+  <img width="400" alt="truffle-v" src="/assets/truffle-v.png">
 </p>
 
 ---
-
-## ✅ You're All Set!
-
-With **Node.js**, **Visual Studio Code**, and **Truffle Suite** installed, your development environment is now ready. Time to start building awesome blockchain applications! 🚀✨
