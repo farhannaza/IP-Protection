@@ -46,3 +46,9 @@ Ctrl + `
   <img  alt="VSCode" src="/assets/vs-terminal.png">
 </p>
 
+### Create Folder
+1. Locate your desired file location
+- remarks 
+- cd - Change Directory.
+- ls - list all file in the directory.
+- mkdir - make new directory.
