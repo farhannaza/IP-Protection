@@ -48,7 +48,7 @@ Ctrl + `
 
 ### Create Folder
 1. Locate your desired file location
-- remarks 
-- cd - Change Directory.
-- ls - list all file in the directory.
-- mkdir - make new directory.
+- Use this to find your way through the terminal:-
+- cd .. - Change directory.
+- ls - List all file in the directory.
+- mkdir nameOfYourFile - Make new directory.
