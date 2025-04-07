@@ -48,7 +48,11 @@ Ctrl + `
 
 ### Create Folder
 1. Locate your desired file location
-- Use this to find your way through the terminal:-
-- cd .. - Change directory.
-- ls - List all file in the directory.
-- mkdir nameOfYourFile - Make new directory.
+- Use these to find your way through the terminal:-
+- cd fileName - Change directory.
+- cd .. - Back to previous directory.
+- ls - List all directory/file in the current directory.
+- mkdir fileName - Make new directory.
+<p align="center">
+  <img  alt="VSCode" src="/assets/create-directory.png">
+</p>
