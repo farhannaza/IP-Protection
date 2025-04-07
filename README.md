@@ -11,7 +11,6 @@ This guide helps you set up the development environment needed for your project 
   - [📁 Create Folder](#create-folder)
   - [📂 Open Folder in Explorer](#open-folder-in-explorer)
 - [3️⃣ Truffle Suite](#3-truffle-suite)
-- [✅ You're All Set!](#-youre-all-set)
 
 ---
 
