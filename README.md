@@ -1,4 +1,4 @@
-# 🛠️ Environment Setup Guide
+# Environment Setup Guide
 
 This guide helps you set up the development environment needed for your project using **Node.js** and **Visual Studio Code**.
 
@@ -16,7 +16,7 @@ This guide helps you set up the development environment needed for your project 
 
 **Node.js** is an open-source, cross-platform JavaScript runtime environment that allows you to run JavaScript code outside of the web browser.
 
-### 🧩 Installation Steps
+### Installation Steps
 
 1. Download Node.js from the official website: [https://nodejs.org/](https://nodejs.org/)
 2. Install it following the setup instructions.
@@ -31,7 +31,7 @@ node -v
 
 **Visual Studio Code (VS Code)** is a free, powerful, and lightweight code editor developed by Microsoft.
 
-### 🧩 Installation Steps
+### Installation Steps
 
 1. Download VS Code from the official website: [https://code.visualstudio.com/](https://code.visualstudio.com/)
 2. Follow the installation guide.
