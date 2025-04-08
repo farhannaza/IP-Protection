@@ -157,7 +157,9 @@ npm install dotenv
 
 ### 📝 Update `truffle-config.js`
 
-- Uncomment the necessary code in `truffle-config.js` by using the shortcut:
+- Uncomment the necessary code in `truffle-config.js`.
+
+💡 *Tip: Use `ctrl + /` key to uncomment selected line.*
 
 ```bash
 ctrl + /
