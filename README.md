@@ -1,6 +1,6 @@
 # 🛠️ Environment Setup Guide
 
-This guide helps you set up the development environment required for your project using **Node.js**, **Visual Studio Code**, and **Truffle Suite**.
+This guide helps you set up the development environment required for your project using **Node.js**, **Visual Studio Code**, **Truffle Suite**, and **Alchemy**.
 
 ---
 
@@ -11,6 +11,7 @@ This guide helps you set up the development environment required for your projec
   - [📁 Create Folder](#create-folder)
   - [📂 Open Folder in Explorer](#open-folder-in-explorer)
 - [3️⃣ Truffle Suite](#3-truffle-suite)
+- [4️⃣ Alchemy](#4-alchemy)
 
 ---
 
@@ -134,26 +135,49 @@ After initialization, your project will contain the following structure:
 - `test/` — For writing unit tests to debug and validate your smart contracts.
 - `truffle-config.js` — Main configuration file for networks, compilers, and other Truffle settings.
 
-## 4 Alchemy
-Ethereum is a decentralized platform that runs smart contracts. These smart contracts are executed on all nodes in the Ethereum network. To interact with the Ethereum network (i.e., to read from or write to the blockchain), your application needs to connect to an Ethereum node.
+---
 
-Now, running your own Ethereum node can be resource-intensive. It requires downloading and synchronizing the entire Ethereum blockchain, which can take a lot of time and storage space. It also requires maintenance to stay synchronized with the network.
+## 4️⃣ Alchemy
 
-This is where Alchemy comes in. Alchemy hosts Ethereum nodes for you and provides a simple API to interact with them.
+**Alchemy** provides access to Ethereum nodes via a hosted API, so you don’t need to run your own full node.
 
-This means you can focus on building your application without worrying about maintaining an Ethereum node.
+You can deploy and interact with smart contracts on the Ethereum network using **Alchemy’s RPC URL** and **HDWalletProvider**.
 
-When you use Alchemy, your application sends API requests to Alchemy's servers. Alchemy's servers then interact with the Ethereum network on your behalf. They execute the necessary operations (like reading from or writing to the blockchain) and then return the results to your application.
+### 🔧 Installation
 
-In the context of deploying a smart contract, instead of setting up your own Ethereum node to deploy the contract, you can use Alchemy's API. You provide your Alchemy API key (which identifies your project) and the smart contract you want to deploy. Alchemy then deploys the contract to the Ethereum network for you.
+Install the required dependencies:
 
-- **HDWalletProvider** - used to create a connection to the Infura Ethereum node, allowing you to interact with the Ethereum network without running your own Ethereum node.
-- **Dotenv** - It helps to keep sensitive data out of your codebase, which is particularly important when your code is stored in a public repository.
-
-- Install HDWalletProvider and dotenv on our terminal    
-```sh
-  npm install @truffle/hdwallet-provider
+```bash
+npm install @truffle/hdwallet-provider
+npm install dotenv
 ```
-```sh
-  npm install dotenv
+
+### 🛠️ Use Case
+
+- **HDWalletProvider** — Connects your wallet to Ethereum through Alchemy’s RPC URL.
+- **dotenv** — Loads environment variables securely (e.g., private key, API key).
+
+You’ll use these in your `truffle-config.js` to configure networks like this:
+
+```js
+require('dotenv').config();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+module.exports = {
+  networks: {
+    goerli: {
+      provider: () => new HDWalletProvider(process.env.PRIVATE_KEY, process.env.ALCHEMY_URL),
+      network_id: 5,       // Goerli network ID
+      confirmations: 2,    // Wait for 2 confirmations
+      timeoutBlocks: 200,  // Timeout for deployment
+      skipDryRun: true     // Skip dry run before migrations
+    }
+  },
+};
 ```
+
+✅ That’s it! You can now deploy smart contracts using Alchemy without running a local Ethereum node.
+
+---
+
+Let me know if you want to include **MetaMask**, **Ganache**, or a smart contract deployment walkthrough next!
