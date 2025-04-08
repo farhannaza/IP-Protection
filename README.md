@@ -123,6 +123,7 @@ truffle init
 </
 
 ### Folder Description
+
   - **Contracts** - This file contain all of our smart contract
   - **Migrations** - This file is where we write script to deploy the smart contract
   - **Test** - This file is for test/debug our smart contract
