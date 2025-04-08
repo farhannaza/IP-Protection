@@ -166,7 +166,7 @@ ctrl + /
   <img alt="Truffle Version" src="/assets/uncomment.png">
 </p>
 
-- Change the network name : goerli => sepolia
+- Uncomment and change the network name : goerli => sepolia
 
 <p align="center">
   <img alt="Truffle Version" src="/assets/network-name.png">
