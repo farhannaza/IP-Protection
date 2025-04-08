@@ -159,11 +159,7 @@ npm install dotenv
 
 - Uncomment the necessary code in `truffle-config.js`.
 
-💡 *Tip: Use `ctrl + /` key to uncomment selected line.*
-
-```bash
-ctrl + /
-```
+💡 *Tip: Use `ctrl + /` keys to uncomment selected line.*
 
 <p align="center">
   <img alt="Uncomment Code" src="/assets/uncomment.png">
