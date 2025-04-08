@@ -139,36 +139,42 @@ After initialization, your project will contain the following structure:
 
 ## 4️⃣ Alchemy
 
-**Alchemy** provides access to Ethereum nodes via a hosted API, so you don’t need to run your own full node.
-
-You can deploy and interact with smart contracts on the Ethereum network using **Alchemy’s RPC URL** and **HDWalletProvider**.
+**Alchemy** provides access to Ethereum nodes via a hosted API, so you don’t need to run your own full node. It simplifies deploying and interacting with smart contracts on the Ethereum network through **Alchemy’s RPC URL** and **HDWalletProvider**.
 
 ### 🔧 Installation
 
-Install the required dependencies:
+First, install the necessary dependencies:
 
 ```bash
 npm install @truffle/hdwallet-provider
 npm install dotenv
 ```
 
-### 🛠️ Use Case
+### 🛠️ Configuration
 
-- **HDWalletProvider** — Connects your wallet to Ethereum through Alchemy’s RPC URL.
-- **dotenv** — Loads environment variables securely (e.g., private key, API key).
+1. **HDWalletProvider**: Connects your wallet to Ethereum through Alchemy’s RPC URL.
+2. **dotenv**: Loads environment variables securely (e.g., private key, API key).
 
-- Uncomment the code in truffle-config.js by using command: 
+### 📝 Update `truffle-config.js`
+
+- Uncomment the necessary code in `truffle-config.js` by using the shortcut:
 
 ```bash
 ctrl + /
 ```
-<p align="center">
-  <img alt="Truffle Version" src="/assets/uncomment.png">
-</p>
-
-- Uncomment and change the network name : goerli => sepolia
 
 <p align="center">
-  <img alt="Truffle Version" src="/assets/network-name.png">
+  <img alt="Uncomment Code" src="/assets/uncomment.png">
 </p>
 
+- Change the network name from `goerli` to `sepolia`:
+
+<p align="center">
+  <img alt="Network Name" src="/assets/network-name.png">
+</p>
+
+With this, you can deploy and interact with Ethereum contracts through Alchemy without managing a local node.
+
+--- 
+
+Now your Ethereum development environment is ready to go! If you need help with specific steps or further configurations, feel free to ask!
