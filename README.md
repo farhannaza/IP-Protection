@@ -112,11 +112,16 @@ truffle version
   <img width="400" alt="truffle-v" src="/assets/truffle-v.png">
 </
 
-Initialize truffle environment
+3. Initialize truffle environment
 
 ```bash
 truffle init
 ```
+
+<p align="center">
+  <img alt="truffle-v" src="/assets/truffle-init.png">
+</
+
 ### Folder Description
   - **Contracts** - This file contain all of our smart contract
   - **Migrations** - This file is where we write script to deploy the smart contract
