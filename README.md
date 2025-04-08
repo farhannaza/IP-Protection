@@ -157,27 +157,18 @@ npm install dotenv
 - **HDWalletProvider** — Connects your wallet to Ethereum through Alchemy’s RPC URL.
 - **dotenv** — Loads environment variables securely (e.g., private key, API key).
 
-You’ll use these in your `truffle-config.js` to configure networks like this:
+- Uncomment the code in truffle-config.js by using command: 
 
-```js
-require('dotenv').config();
-const HDWalletProvider = require('@truffle/hdwallet-provider');
-
-module.exports = {
-  networks: {
-    goerli: {
-      provider: () => new HDWalletProvider(process.env.PRIVATE_KEY, process.env.ALCHEMY_URL),
-      network_id: 5,       // Goerli network ID
-      confirmations: 2,    // Wait for 2 confirmations
-      timeoutBlocks: 200,  // Timeout for deployment
-      skipDryRun: true     // Skip dry run before migrations
-    }
-  },
-};
+```bash
+ctrl + /
 ```
+<p align="center">
+  <img width="400" alt="Truffle Version" src="/assets/uncomment.png">
+</p>
 
-✅ That’s it! You can now deploy smart contracts using Alchemy without running a local Ethereum node.
+- Change the network name : goerli => sepolia
 
----
+<p align="center">
+  <img width="400" alt="Truffle Version" src="/assets/network-name.png">
+</p>
 
-Let me know if you want to include **MetaMask**, **Ganache**, or a smart contract deployment walkthrough next!
