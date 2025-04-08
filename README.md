@@ -1,6 +1,6 @@
 # 🛠️ Environment Setup Guide
 
-This guide helps you set up the development environment needed for your project using **Node.js**, **Visual Studio Code**, and **Truffle Suite**.
+This guide helps you set up the development environment required for your project using **Node.js**, **Visual Studio Code**, and **Truffle Suite**.
 
 ---
 
@@ -16,34 +16,34 @@ This guide helps you set up the development environment needed for your project 
 
 ## 1️⃣ Node.js
 
-**Node.js** is an open-source, cross-platform JavaScript runtime environment that allows you to run JavaScript code outside of the web browser.
+**Node.js** is a cross-platform JavaScript runtime built on Chrome's V8 engine. It enables developers to run JavaScript outside the browser.
 
 ### 🧩 Installation Steps
 
-1. Download Node.js from the official website: [https://nodejs.org/](https://nodejs.org/)
-2. Install it following the setup instructions.
-3. Open Command Prompt (CMD) or Terminal and run the command below to verify the installation:
+1. Visit the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
+2. Download and install the LTS version.
+3. After installation, open your terminal and verify it with:
 
 ```bash
 node -v
 ```
 
 <p align="center">
-  <img width="400" alt="NodeJS" src="/assets/node-v.png">
+  <img width="400" alt="NodeJS Version" src="/assets/node-v.png">
 </p>
 
 ---
 
 ## 2️⃣ Visual Studio Code
 
-**Visual Studio Code (VS Code)** is a free, powerful, and lightweight code editor developed by Microsoft.
+**Visual Studio Code (VS Code)** is a fast, lightweight, and highly customizable code editor built by Microsoft.
 
 ### 🧩 Installation Steps
 
-1. Download VS Code from the official website: [https://code.visualstudio.com/](https://code.visualstudio.com/)
-2. Follow the installation instructions.
-3. Once installed, open VS Code.
-4. Open the terminal in VS Code by pressing:
+1. Download VS Code from: [https://code.visualstudio.com/](https://code.visualstudio.com/)
+2. Follow the installation instructions for your OS.
+3. After installing, launch VS Code.
+4. Open the integrated terminal using:
 
 ```bash
 Ctrl + `
@@ -57,75 +57,83 @@ Ctrl + `
 
 ### 📁 Create Folder
 
-Inside the VS Code terminal, use the following commands to manage folders:
+Use the terminal inside VS Code to manage folders with the following commands:
 
 ```bash
+mkdir folderName    # Create a new folder
 cd folderName       # Navigate into a folder
 cd ..               # Go back to the previous directory
 ls                  # List files and folders
-mkdir folderName    # Create a new folder
 ```
 
-💡 *Tip: Press the `Tab` key to auto-complete file or folder names while typing.*
+💡 *Tip: Use the `Tab` key to auto-complete folder or file names.*
 
 <p align="center">
   <img alt="Create Directory" src="/assets/create-directory.png">
 </p>
 
-Alternatively, go to **File > Open Folder > Choose Your Folder** to open a directory visually.
+Alternatively, use the menu:  
+**File > Open Folder > Select Your Folder**
 
 ---
 
 ### 📂 Open Folder in Explorer
 
-To open your current terminal directory in the VS Code explorer, use the following command:
+To open your current terminal folder in the VS Code file explorer:
 
 ```bash
 code .
 ```
 
 <p align="center">
-  <img alt="explorer" src="/assets/explorer.png">
+  <img alt="Open in Explorer" src="/assets/explorer.png">
 </p>
 
 ---
 
 ## 3️⃣ Truffle Suite
 
-**Truffle Suite** is a development environment, testing framework, and asset pipeline for Ethereum. It simplifies writing, testing, and deploying smart contracts using **Solidity** and helps build full-stack dApps efficiently.
+**Truffle Suite** is a powerful development framework for Ethereum that simplifies building, testing, and deploying smart contracts.
 
 ### 🧩 Installation Steps
 
-1. To install Truffle globally, run:
+1. Install Truffle globally via npm:
 
 ```bash
 npm install -g truffle
 ```
 
-2. To verify the installation, use:
+2. Confirm installation:
 
 ```bash
 truffle version
 ```
 
 <p align="center">
-  <img width="400" alt="truffle-v" src="/assets/truffle-v.png">
-</
+  <img width="400" alt="Truffle Version" src="/assets/truffle-v.png">
+</p>
 
-3. Initialize truffle environment
+3. Initialize a new Truffle project:
 
 ```bash
 truffle init
 ```
 
 <p align="center">
-  <img alt="truffle-v" src="/assets/truffle-init.png">
-</
+  <img alt="Truffle Init" src="/assets/truffle-init.png">
+</p>
 
-### Folder Description
-
-- **Contracts** - This file contain all of our smart contract
-- **Migrations** - This file is where we write script to deploy the smart contract
-- **Test** - This file is for test/debug our smart contract
-- `truffle-config.js` - This file contain our truffle configuration
 ---
+
+### 📂 Truffle Folder Structure
+
+After initialization, your project will contain the following structure:
+
+- `contracts/` — Where all smart contracts written in **Solidity** reside.
+- `migrations/` — Contains scripts to help deploy your contracts.
+- `test/` — For writing unit tests to debug and validate your smart contracts.
+- `truffle-config.js` — Main configuration file for networks, compilers, and other Truffle settings.
+
+---
+
+You're now ready to start building smart contracts and dApps with ease! 🚀
