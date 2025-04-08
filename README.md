@@ -120,7 +120,7 @@ truffle init
 ```
 
 <p align="center">
-  <img width="400" alt="Truffle Init" src="/assets/truffle-init.png">
+  <img alt="Truffle Init" src="/assets/truffle-init.png">
 </p>
 
 ---
@@ -134,6 +134,28 @@ After initialization, your project will contain the following structure:
 - `test/` — For writing unit tests to debug and validate your smart contracts.
 - `truffle-config.js` — Main configuration file for networks, compilers, and other Truffle settings.
 
----
+## 4 Alchemy
+Ethereum is a decentralized platform that runs smart contracts. These smart contracts are executed on all nodes in the Ethereum network. To interact with the Ethereum network (i.e., to read from or write to the blockchain), your application needs to connect to an Ethereum node.
 
-You're now ready to start building smart contracts and dApps with ease! 🚀
+Now, running your own Ethereum node can be resource-intensive. It requires downloading and synchronizing the entire Ethereum blockchain, which can take a lot of time and storage space. It also requires maintenance to stay synchronized with the network.
+
+This is where Alchemy comes in. Alchemy hosts Ethereum nodes for you and provides a simple API to interact with them.
+
+This means you can focus on building your application without worrying about maintaining an Ethereum node.
+
+When you use Alchemy, your application sends API requests to Alchemy's servers. Alchemy's servers then interact with the Ethereum network on your behalf. They execute the necessary operations (like reading from or writing to the blockchain) and then return the results to your application.
+
+In the context of deploying a smart contract, instead of setting up your own Ethereum node to deploy the contract, you can use Alchemy's API. You provide your Alchemy API key (which identifies your project) and the smart contract you want to deploy. Alchemy then deploys the contract to the Ethereum network for you.
+
+(chatgpt please make this alchemy part way shorter and concise please)
+
+- **HDWalletProvider** - used to create a connection to the Infura Ethereum node, allowing you to interact with the Ethereum network without running your own Ethereum node.
+- **Dotenv** - It helps to keep sensitive data out of your codebase, which is particularly important when your code is stored in a public repository.
+
+- Install HDWalletProvider and dotenv on our terminal    
+```sh
+  npm install @truffle/hdwallet-provider
+```
+```sh
+  npm install dotenv
+```
