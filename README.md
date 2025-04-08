@@ -163,12 +163,12 @@ npm install dotenv
 ctrl + /
 ```
 <p align="center">
-  <img width="400" alt="Truffle Version" src="/assets/uncomment.png">
+  <img alt="Truffle Version" src="/assets/uncomment.png">
 </p>
 
 - Change the network name : goerli => sepolia
 
 <p align="center">
-  <img width="400" alt="Truffle Version" src="/assets/network-name.png">
+  <img alt="Truffle Version" src="/assets/network-name.png">
 </p>
 
