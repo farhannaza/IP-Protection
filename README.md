@@ -167,14 +167,12 @@ ctrl + /
   <img alt="Uncomment Code" src="/assets/uncomment.png">
 </p>
 
-- Change the network name from `goerli` to `sepolia`:
+- Uncomment and change the network name from `goerli` to `sepolia`:
 
 <p align="center">
   <img alt="Network Name" src="/assets/network-name.png">
 </p>
 
-With this, you can deploy and interact with Ethereum contracts through Alchemy without managing a local node.
-
 --- 
 
-Now your Ethereum development environment is ready to go! If you need help with specific steps or further configurations, feel free to ask!
+
