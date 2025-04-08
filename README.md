@@ -120,7 +120,7 @@ truffle init
 ```
 
 <p align="center">
-  <img alt="Truffle Init" src="/assets/truffle-init.png">
+  <img width="400" alt="Truffle Init" src="/assets/truffle-init.png">
 </p>
 
 ---
