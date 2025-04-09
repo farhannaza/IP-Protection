@@ -173,6 +173,7 @@ npm install dotenv
 
 ### Register Alchemy
 
+- register alchemy at : (alchemy link)
 - create new app
 
 <p align="center">
@@ -183,6 +184,11 @@ npm install dotenv
 - Choose Ethereum Chain 
 - click create app button 
 
+- Copy API key and paste it on truffle-config.js
+
+<p align="center">
+  <img alt="Network Name" src="/assets/create-app.png">
+</p>
 --- 
 
 
