@@ -181,23 +181,13 @@ npm install dotenv
   <img alt="Network Name" src="/assets/create-app.png">
 </p>
 
-- Set app name
+- Set app name and choose wallet as use casses
 
-<p align="center">
-  <img alt="Network Name" src="/assets/alchemy-app.png">
-</p>
+- Choose Ethereum Chain 
 
-- Choose Chain 
+- click create app button 
 
-<p align="center">
-  <img alt="Network Name" src="/assets/select-chain.png">
-</p>
 
-- finish creating app
-
-<p align="center">
-  <img alt="Network Name" src="/assets/done-create.png">
-</p>
 --- 
 
 
