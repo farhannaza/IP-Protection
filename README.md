@@ -184,11 +184,27 @@ npm install dotenv
 - Choose Ethereum Chain 
 - click create app button 
 
-- Copy API key and paste it on truffle-config.js
+### Config Alchemy
+
+- Create .env file in your directory 
+
+<p align="center">
+  <img width=400 alt="Network Name" src="/assets/env.png">
+</p>
+
+- Copy API key from Alchemy and paste it on .env file
 
 <p align="center">
   <img alt="Network Name" src="/assets/api-key.png">
 </p>
+
+- Write PROJECT_ID= and MNEMONIC in the .env file.
+- Paste the API key.
+
+<p align="center">
+  <img alt="Network Name" src="/assets/env-content.png">
+</p>
+
 --- 
 
 
