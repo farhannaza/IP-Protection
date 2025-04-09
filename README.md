@@ -205,6 +205,17 @@ npm install dotenv
   <img alt="Network Name" src="/assets/env-content.png">
 </p>
 
+- Go to network section on Alchemy 
+- change 
+-   Mainnet to Sepolia 
+-   HTTPs to Websockets
+
+<p align="center">
+  <img alt="Network Name" src="/assets/network-alchemy.png">
+</p>
+
+
+
 --- 
 
 
