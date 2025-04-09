@@ -171,6 +171,17 @@ npm install dotenv
   <img alt="Network Name" src="/assets/network-name.png">
 </p>
 
+### Register Alchemy
+
+- Register Alchemy : 
+
+- create new app
+
+<p align="center">
+  <img alt="Network Name" src="/assets/create-app.png">
+</p>
+
+- create new app > choose Ethereum as chains > create app
 --- 
 
 
