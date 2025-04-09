@@ -173,8 +173,6 @@ npm install dotenv
 
 ### Register Alchemy
 
-- Register Alchemy : 
-
 - create new app
 
 <p align="center">
@@ -182,11 +180,8 @@ npm install dotenv
 </p>
 
 - Set app name and choose wallet as use casses
-
 - Choose Ethereum Chain 
-
 - click create app button 
-
 
 --- 
 
