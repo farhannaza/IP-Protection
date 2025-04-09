@@ -187,7 +187,7 @@ npm install dotenv
 - Copy API key and paste it on truffle-config.js
 
 <p align="center">
-  <img alt="Network Name" src="/assets/create-app.png">
+  <img alt="Network Name" src="/assets/api-key.png">
 </p>
 --- 
 
