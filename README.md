@@ -197,6 +197,11 @@ npm install dotenv
 
 2. Copy the Alchemy API Key and add it to `.env`:
 
+<p align="center">
+  <img alt="API Key Setup" src="/assets/api-key.png">
+</p>
+
+
 ```dotenv
 PROJECT_ID=yourAlchemyApiKey
 MNEMONIC=yourWalletMnemonicOrPrivateKey
@@ -210,7 +215,7 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 
 ### 🌐 Alchemy Network Settings
 
-1. Go to your Alchemy dashboard.  
+1. Go to **Network** in your Alchemy dashboard.  
 2. In the app settings:
    - Change the network from **Mainnet** to **Sepolia**.  
    - Switch from **HTTP** to **WebSocket** if required.
