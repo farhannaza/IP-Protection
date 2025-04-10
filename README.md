@@ -261,4 +261,4 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 
 ---
 
-✅ Your environment is now ready for smart contract development with Truffle and Alchemy on the Sepolia testnet!
+
