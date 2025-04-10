@@ -257,7 +257,7 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
    - Copy the 12-word Secret Recovery Phrase.
 
 <p align="center">
-  <img alt="Metamask Setup" src="/assets/met-collage.png">
+  <img alt="Metamask Setup" src="/assets/met-pin.png">
 </p>
 
 3. Paste it into your `.env` file:
