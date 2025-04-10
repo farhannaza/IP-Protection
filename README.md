@@ -234,7 +234,7 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
   <img alt="Network Settings" src="/assets/refactor-api.png">
 </p>
 
-### Metamask 
+## Metamask 
 
 1. Install Metamask extension : https://metamask.io/
     - Create new wallet if you don't have one.
