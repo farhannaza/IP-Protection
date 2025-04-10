@@ -218,10 +218,19 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 1. Go to **Network** in your Alchemy dashboard.  
 2. In the app settings:
    - Change the network from **Mainnet** to **Sepolia**.  
-   - Switch from **HTTP** to **WebSocket** if required.
+   - Switch from **HTTP** to **WebSocket**.
+   - Copy the link.
 
 <p align="center">
   <img alt="Network Settings" src="/assets/network-alchemy.png">
 </p>
 
+3. Refactor your API on truffle-config.js
+    - Paste the API link.
+    - Change the API part in the link into ${PROJECT_ID} to retrieve it back from .env file.
+    - Add WebSocket: true line
+
+<p align="center">
+  <img alt="Network Settings" src="/assets/refactor-api.png">
+</p>
 ---
