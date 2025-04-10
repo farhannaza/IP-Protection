@@ -81,7 +81,7 @@ Or use the menu:
 
 ### 📂 Open Folder in Explorer
 
-To open the current terminal directory in VS Code’s Explorer. Type this command in the terminal:
+To open the current terminal directory in VS Code’s Explorer, type this command in the terminal:
 
 ```bash
 code .
@@ -123,7 +123,7 @@ truffle init
 
 <p align="center">
   <img alt="Truffle Init" src="/assets/truffle-init.png">
-</p>f
+</p>
 
 ### 📂 Truffle Project Structure
 
