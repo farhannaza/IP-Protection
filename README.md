@@ -245,7 +245,14 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
    - Create a new wallet if you don't have one.  
    - **Make sure to store your Secret Recovery Phrase securely.**
 
-2. Find your **Secret Recovery Phrase** (MNEMONIC):  
+2. Pin Metamask extension in the browser for easy access:
+
+<p align="center">
+  <img alt="Refactor API" src="/assets/refactor-api.png">
+</p>
+
+
+3. Find your **Secret Recovery Phrase** (MNEMONIC):  
    - Complete the required security steps.  
    - Copy the 12-word Secret Recovery Phrase.
 
