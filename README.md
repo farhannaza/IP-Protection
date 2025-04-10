@@ -248,7 +248,7 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 2. Pin Metamask extension in the browser for easy access:
 
 <p align="center">
-  <img alt="Refactor API" src="/assets/refactor-api.png">
+  <img alt="Refactor API" src="/assets/met-pin.png">
 </p>
 
 
@@ -257,7 +257,7 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
    - Copy the 12-word Secret Recovery Phrase.
 
 <p align="center">
-  <img alt="Metamask Setup" src="/assets/met-pin.png">
+  <img alt="Metamask Setup" src="/assets/met-collage.png">
 </p>
 
 3. Paste it into your `.env` file:
