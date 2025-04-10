@@ -241,8 +241,16 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
     - Make sure to store your secret recovery phrase securely.
 
 2. Find MNEMONIC in Metamask.
+    - complete all the verification required and copy the Secret Recovery Phrase (MNEMONIC)
+
 <p align="center">
   <img alt="Network Settings" src="/assets/met-collage.png">
 </p>
-    
+
+3. paste it in .env file
+
+<p align="center">
+  <img alt="Network Settings" src="/assets/full-env.png">
+</p>   
+
 ---
