@@ -203,8 +203,8 @@ npm install dotenv
 
 
 ```dotenv
-PROJECT_ID=yourAlchemyApiKey
-MNEMONIC=yourWalletMnemonicOrPrivateKey
+PROJECT_ID= yourAlchemyApiKey
+MNEMONIC= yourWalletMnemonicOrPrivateKey
 ```
 
 <p align="center">
@@ -228,6 +228,7 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 3. Refactor your API on truffle-config.js
     - Paste the API link.
     - Change the API part in the link into ${PROJECT_ID} to retrieve it back from .env file.
+    - Change network_id: 5 to 11155111 (representing Sepolia network address).
     - Add WebSocket: true line
 
 <p align="center">
@@ -241,7 +242,8 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
     - Make sure to store your secret recovery phrase securely.
 
 2. Find MNEMONIC in Metamask.
-    - complete all the verification required and copy the Secret Recovery Phrase (MNEMONIC)
+    - complete all the step below and verification required.
+    - then copy the Secret Recovery Phrase (MNEMONIC)
 
 <p align="center">
   <img alt="Network Settings" src="/assets/met-collage.png">
