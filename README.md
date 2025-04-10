@@ -81,7 +81,7 @@ Or use the menu:
 
 ### 📂 Open Folder in Explorer
 
-To open the current terminal directory in VS Code’s Explorer:
+To open the current terminal directory in VS Code’s Explorer. Type this command in the terminal:
 
 ```bash
 code .
@@ -123,9 +123,7 @@ truffle init
 
 <p align="center">
   <img alt="Truffle Init" src="/assets/truffle-init.png">
-</p>
-
----
+</p>f
 
 ### 📂 Truffle Project Structure
 
@@ -168,7 +166,7 @@ npm install dotenv
   <img alt="Uncomment Code" src="/assets/uncomment.png">
 </p>
 
-- Rename the network from `goerli` to `sepolia` if needed.
+- Rename the network from `goerli` to `sepolia`.
 
 <p align="center">
   <img alt="Network Name" src="/assets/network-name.png">
