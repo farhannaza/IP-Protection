@@ -1,14 +1,14 @@
 # 🛠️ Environment Setup Guide
 
-This guide helps you set up the development environment required for your project using **Node.js**, **Visual Studio Code**, **Truffle Suite**, and **Alchemy**.
+This guide walks you through setting up your development environment using **Node.js**, **Visual Studio Code**, **Truffle Suite**, and **Alchemy**.
 
 ---
 
 ## 📚 Table of Contents
 
 - [1️⃣ Node.js](#1-nodejs)
-- [2️⃣ Visual Studio Code](#2-visual-studio-code)
-  - [📁 Create Folder](#create-folder)
+- [2️⃣ Visual Studio Code](#2-visual-studio-code)  
+  - [📁 Create Folder](#create-folder)  
   - [📂 Open Folder in Explorer](#open-folder-in-explorer)
 - [3️⃣ Truffle Suite](#3-truffle-suite)
 - [4️⃣ Alchemy](#4-alchemy)
@@ -17,13 +17,13 @@ This guide helps you set up the development environment required for your projec
 
 ## 1️⃣ Node.js
 
-**Node.js** is a cross-platform JavaScript runtime built on Chrome's V8 engine. It enables developers to run JavaScript outside the browser.
+**Node.js** is a cross-platform JavaScript runtime built on Chrome's V8 engine. It enables you to run JavaScript code outside the browser.
 
 ### 🧩 Installation Steps
 
-1. Visit the official Node.js website: [https://nodejs.org/](https://nodejs.org/)
-2. Download and install the LTS version.
-3. After installation, open your terminal and verify it with:
+1. Go to the official Node.js website: [https://nodejs.org/](https://nodejs.org/)  
+2. Download and install the **LTS** version.  
+3. After installation, verify it in your terminal:
 
 ```bash
 node -v
@@ -37,13 +37,13 @@ node -v
 
 ## 2️⃣ Visual Studio Code
 
-**Visual Studio Code (VS Code)** is a fast, lightweight, and highly customizable code editor built by Microsoft.
+**Visual Studio Code (VS Code)** is a lightweight yet powerful code editor developed by Microsoft, ideal for modern web development.
 
 ### 🧩 Installation Steps
 
-1. Download VS Code from: [https://code.visualstudio.com/](https://code.visualstudio.com/)
-2. Follow the installation instructions for your OS.
-3. After installing, launch VS Code.
+1. Download VS Code from: [https://code.visualstudio.com/](https://code.visualstudio.com/)  
+2. Follow the instructions for your operating system.  
+3. Launch VS Code after installation.  
 4. Open the integrated terminal using:
 
 ```bash
@@ -58,29 +58,29 @@ Ctrl + `
 
 ### 📁 Create Folder
 
-Use the terminal inside VS Code to manage folders with the following commands:
+Use the terminal to manage your project folders:
 
 ```bash
-mkdir folderName    # Create a new folder
-cd folderName       # Navigate into a folder
-cd ..               # Go back to the previous directory
+mkdir folderName    # Create a folder
+cd folderName       # Enter the folder
+cd ..               # Go back a directory
 ls                  # List files and folders
 ```
 
-💡 *Tip: Use the `Tab` key to auto-complete folder or file names.*
+💡 *Tip: Press `Tab` to auto-complete folder or file names.*
 
 <p align="center">
   <img alt="Create Directory" src="/assets/create-directory.png">
 </p>
 
-Alternatively, use the menu:  
+Or use the menu:  
 **File > Open Folder > Select Your Folder**
 
 ---
 
 ### 📂 Open Folder in Explorer
 
-To open your current terminal folder in the VS Code file explorer:
+To open the current terminal directory in VS Code’s Explorer:
 
 ```bash
 code .
@@ -94,17 +94,17 @@ code .
 
 ## 3️⃣ Truffle Suite
 
-**Truffle Suite** is a powerful development framework for Ethereum that simplifies building, testing, and deploying smart contracts.
+**Truffle Suite** is a development framework for Ethereum that makes it easier to build, test, and deploy smart contracts.
 
 ### 🧩 Installation Steps
 
-1. Install Truffle globally via npm:
+1. Install Truffle globally:
 
 ```bash
 npm install -g truffle
 ```
 
-2. Confirm installation:
+2. Verify the installation:
 
 ```bash
 truffle version
@@ -126,96 +126,97 @@ truffle init
 
 ---
 
-### 📂 Truffle Folder Structure
+### 📂 Truffle Project Structure
 
-After initialization, your project will contain the following structure:
+After initialization, your project will include:
 
-- `contracts/` — Where all smart contracts written in **Solidity** reside.
-- `migrations/` — Contains scripts to help deploy your contracts.
-- `test/` — For writing unit tests to debug and validate your smart contracts.
-- `truffle-config.js` — Main configuration file for networks, compilers, and other Truffle settings.
+- `contracts/` — Contains Solidity smart contracts  
+- `migrations/` — Deployment scripts for your contracts  
+- `test/` — Smart contract unit tests  
+- `truffle-config.js` — Project configuration file
 
 ---
 
 ## 4️⃣ Alchemy
 
-**Alchemy** provides access to Ethereum nodes via a hosted API, so you don’t need to run your own full node. It simplifies deploying and interacting with smart contracts on the Ethereum network through **Alchemy’s RPC URL** and **HDWalletProvider**.
+**Alchemy** is a blockchain development platform that provides APIs for accessing Ethereum without running your own node.
 
 ### 🔧 Installation
 
-First, install the necessary dependencies:
+Install the required packages:
 
 ```bash
 npm install @truffle/hdwallet-provider
 npm install dotenv
 ```
 
-### 🛠️ Configuration
+### ⚙️ Configuration
 
-1. **HDWalletProvider**: Connects your wallet to Ethereum through Alchemy’s RPC URL.
-2. **dotenv**: Loads environment variables securely (e.g., private key, API key).
+1. **HDWalletProvider** connects your wallet to Ethereum through Alchemy’s RPC URL.  
+2. **dotenv** securely loads environment variables (e.g., private key, API key).
 
 ### 📝 Update `truffle-config.js`
 
-- Uncomment the necessary code in `truffle-config.js`.
+- Uncomment the necessary lines to enable the network configuration.
 
-💡 *Tip: Use `ctrl + /` keys to uncomment selected line.*
+💡 *Tip: Use `Ctrl + /` to toggle comments in VS Code.*
 
 <p align="center">
   <img alt="Uncomment Code" src="/assets/uncomment.png">
 </p>
 
-- Uncomment and change the network name from `goerli` to `sepolia`:
+- Rename the network from `goerli` to `sepolia` if needed.
 
 <p align="center">
   <img alt="Network Name" src="/assets/network-name.png">
 </p>
 
-### Register Alchemy
+---
 
-- register alchemy at : (alchemy link)
-- create new app
+### 🧾 Create Alchemy App
 
-<p align="center">
-  <img alt="Network Name" src="/assets/create-app.png">
-</p>
-
-- Set app name and choose wallet as use casses
-- Choose Ethereum Chain 
-- click create app button 
-
-### Config Alchemy
-
-- Create .env file in your directory 
+1. Register at: [https://www.alchemy.com/](https://www.alchemy.com/)  
+2. Create a new app:
 
 <p align="center">
-  <img width=400 alt="Network Name" src="/assets/env.png">
+  <img alt="Create App" src="/assets/create-app.png">
 </p>
 
-- Copy API key from Alchemy and paste it on .env file
+3. Set an app name and choose your use case (e.g., Wallet).  
+4. Select **Ethereum** as the chain and click **Create App**.
+
+---
+
+### 🛠️ Configure Environment Variables
+
+1. Create a `.env` file in your project directory.
 
 <p align="center">
-  <img alt="Network Name" src="/assets/api-key.png">
+  <img width="400" alt="Create .env" src="/assets/env.png">
 </p>
 
-- Write PROJECT_ID= and MNEMONIC in the .env file.
-- Paste the API key.
+2. Copy the Alchemy API Key and add it to `.env`:
+
+```dotenv
+PROJECT_ID=yourAlchemyApiKey
+MNEMONIC=yourWalletMnemonicOrPrivateKey
+```
 
 <p align="center">
-  <img alt="Network Name" src="/assets/env-content.png">
+  <img alt="API Key Setup" src="/assets/env-content.png">
 </p>
 
-- Go to network section on Alchemy 
-- change 
--   Mainnet to Sepolia 
--   HTTPs to Websockets
+---
+
+### 🌐 Alchemy Network Settings
+
+1. Go to your Alchemy dashboard.  
+2. In the app settings:
+   - Change the network from **Mainnet** to **Sepolia**.  
+   - Switch from **HTTP** to **WebSocket** if required.
 
 <p align="center">
-  <img alt="Network Name" src="/assets/network-alchemy.png">
+  <img alt="Network Settings" src="/assets/network-alchemy.png">
 </p>
 
-
-
---- 
-
-
+---
