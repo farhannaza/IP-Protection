@@ -12,6 +12,7 @@ This guide walks you through setting up your development environment using **Nod
   - [📂 Open Folder in Explorer](#open-folder-in-explorer)
 - [3️⃣ Truffle Suite](#3-truffle-suite)
 - [4️⃣ Alchemy](#4-alchemy)
+- [5️⃣ Metamask](#5-metamask)
 
 ---
 
@@ -42,7 +43,7 @@ node -v
 ### 🧩 Installation Steps
 
 1. Download VS Code from: [https://code.visualstudio.com/](https://code.visualstudio.com/)  
-2. Follow the instructions for your operating system.  
+2. Follow the installation instructions for your operating system.  
 3. Launch VS Code after installation.  
 4. Open the integrated terminal using:
 
@@ -155,6 +156,8 @@ npm install dotenv
 1. **HDWalletProvider** connects your wallet to Ethereum through Alchemy’s RPC URL.  
 2. **dotenv** securely loads environment variables (e.g., private key, API key).
 
+---
+
 ### 📝 Update `truffle-config.js`
 
 - Uncomment the necessary lines to enable the network configuration.
@@ -201,58 +204,63 @@ npm install dotenv
   <img alt="API Key Setup" src="/assets/api-key.png">
 </p>
 
-
 ```dotenv
-PROJECT_ID= yourAlchemyApiKey
-MNEMONIC= yourWalletMnemonicOrPrivateKey
+PROJECT_ID=yourAlchemyApiKey
+MNEMONIC=yourWalletMnemonicOrPrivateKey
 ```
 
 <p align="center">
-  <img alt="API Key Setup" src="/assets/env-content.png">
+  <img alt="Full .env File" src="/assets/env-content.png">
 </p>
 
 ---
 
 ### 🌐 Alchemy Network Settings
 
-1. Go to **Network** in your Alchemy dashboard.  
+1. Go to the **Network** tab in your Alchemy dashboard.  
 2. In the app settings:
    - Change the network from **Mainnet** to **Sepolia**.  
-   - Switch from **HTTP** to **WebSocket**.
-   - Copy the link.
+   - Switch from **HTTP** to **WebSocket**.  
+   - Copy the WebSocket URL.
 
 <p align="center">
   <img alt="Network Settings" src="/assets/network-alchemy.png">
 </p>
 
-3. Refactor your API on truffle-config.js
-    - Paste the API link.
-    - Change the API part in the link into ${PROJECT_ID} to retrieve it back from .env file.
-    - Change network_id: 5 to 11155111 (representing Sepolia network address).
-    - Add WebSocket: true line
+3. Refactor your Alchemy URL in `truffle-config.js`:
+   - Paste the copied WebSocket URL.
+   - Replace the API part in the link with `${PROJECT_ID}` to load it from `.env`.
+   - Change `network_id: 5` to `11155111` (Sepolia's network ID).
+   - Add `websocket: true`.
 
 <p align="center">
-  <img alt="Network Settings" src="/assets/refactor-api.png">
+  <img alt="Refactor API" src="/assets/refactor-api.png">
 </p>
-
-## Metamask 
-
-1. Install Metamask extension : https://metamask.io/
-    - Create new wallet if you don't have one.
-    - Make sure to store your secret recovery phrase securely.
-
-2. Find MNEMONIC in Metamask.
-    - complete all the step below and verification required.
-    - then copy the Secret Recovery Phrase (MNEMONIC)
-
-<p align="center">
-  <img alt="Network Settings" src="/assets/met-collage.png">
-</p>
-
-3. paste it in .env file
-
-<p align="center">
-  <img alt="Network Settings" src="/assets/full-env.png">
-</p>   
 
 ---
+
+## 5️⃣ Metamask
+
+**Metamask** is a browser extension that allows you to interact with the Ethereum blockchain and manage your wallet.
+
+1. Install Metamask: [https://metamask.io/](https://metamask.io/)  
+   - Create a new wallet if you don't have one.  
+   - **Make sure to store your Secret Recovery Phrase securely.**
+
+2. Find your **Secret Recovery Phrase** (MNEMONIC):  
+   - Complete the required security steps.  
+   - Copy the 12-word Secret Recovery Phrase.
+
+<p align="center">
+  <img alt="Metamask Setup" src="/assets/met-collage.png">
+</p>
+
+3. Paste it into your `.env` file:
+
+<p align="center">
+  <img alt="Full .env File" src="/assets/full-env.png">
+</p>
+
+---
+
+✅ Your environment is now ready for smart contract development with Truffle and Alchemy on the Sepolia testnet!
