@@ -233,4 +233,16 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 <p align="center">
   <img alt="Network Settings" src="/assets/refactor-api.png">
 </p>
+
+### Metamask 
+
+1. Install Metamask extension : https://metamask.io/
+    - Create new wallet if you don't have one.
+    - Make sure to store your secret recovery phrase securely.
+
+2. Find MNEMONIC in Metamask.
+<p align="center">
+  <img alt="Network Settings" src="/assets/met-collage.png">
+</p>
+    
 ---
