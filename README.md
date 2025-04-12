@@ -358,9 +358,9 @@ Your project should look like this:
 
 ## 7️⃣ Deployment of Smart Contract (Ethereum)
 
-### 1. Retreive Wallet Address 
+### 1. Change to Sepolia network and Retreive Wallet Address 
 
-![Directory](/assets/met-address.png)
+![Directory](/assets/met-change.png)
 
 ### 2. Fund Your Wallet
 
