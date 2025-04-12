@@ -357,7 +357,7 @@ Your project should look like this:
 ### 2. Fund Your Wallet
 
 1. Use the Sepolia faucet:  
-[https://cloud.google.com/application/web3/faucet/ethereum/sepolia](Ethereum Sepolia faucet(Google))
+[https://cloud.google.com/application/web3/faucet/ethereum/sepolia] (Ethereum Sepolia faucet(Google))
 
 2. Paste your wallet address:
 ![Sepolia Faucet](/assets/sepolia-faucet.png)
