@@ -398,5 +398,7 @@ truffle migrate --network sepolia --reset
 Etherscan : https://sepolia.etherscan.io/
 
 ![Directory](/assets/etherscan.png)
+ 
+- You can see the detail of the transaction in here, explain a bit
 
 
