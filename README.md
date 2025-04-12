@@ -369,6 +369,13 @@ Use Sepolia faucet:
 
 ![Directory](/assets/sepolia-faucet.png)
 
+### 3. Deploy Smart Contract
+
+- compile the smart contract with the command:
+
+truffle migrate --network sepolia --reset
+
+![Directory](/assets/success-migrate.png)
 
 ---
 
