@@ -375,7 +375,27 @@ Use Sepolia faucet:
 
 truffle migrate --network sepolia --reset
 
+- Contragulation, you migration is succeed!
+
 ![Directory](/assets/success-migrate.png)
 
+
+
 ---
+
+4. Verify Smart Contract Deployment
+
+![Directory](/assets/trans-hash.png)
+
+- copy either the 
+- transaction hash 
+- contract address
+- block number
+- account
+- and paste in etherscan
+- explain a bit about all the method
+
+Etherscan : https://sepolia.etherscan.io/
+
+
 
