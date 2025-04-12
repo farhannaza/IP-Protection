@@ -64,7 +64,7 @@ Navigate to your desired directory and create folder `IP-Prottection`.
 
 ![Create Directory](/assets/create-directory.png)
 
-Alternative method(If you do not want to use terminal):  
+Alternative method (If you do not want to use terminal):  
 **Press File > Open Folder > Select Your Folder**
 
 ---
