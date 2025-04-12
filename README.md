@@ -20,7 +20,7 @@ This guide walks you through setting up your development environment using **Nod
 
 **Node.js** is a JavaScript runtime built on Chrome’s V8 engine.
 
-### 🧩 Installation Steps
+### Installation Steps
 
 1. Download Node.js (LTS version): [https://nodejs.org/](https://nodejs.org/)  
 2. Verify the installation:
@@ -37,7 +37,7 @@ node -v
 
 **VS Code** is a powerful code editor for modern development.
 
-### 🧩 Installation Steps
+### Installation Steps
 
 1. Download VS Code: [https://code.visualstudio.com/](https://code.visualstudio.com/)  
 2. Install and launch it  
@@ -71,7 +71,7 @@ Or go to:
 
 ### 📂 Open Folder in Explorer
 
-To open your folder in file explorer, type `code . ` in the terminal:
+To open your folder in file explorer, type `code .` in the terminal
 
 ![Explorer](/assets/explorer.png)
 
@@ -81,7 +81,7 @@ To open your folder in file explorer, type `code . ` in the terminal:
 
 **Truffle** is a development framework for Ethereum smart contracts.
 
-### 🧩 Installation Steps
+### Installation Steps
 
 1. Install Truffle globally:
 
@@ -118,14 +118,12 @@ truffle init
 
 **Alchemy** provides access to Ethereum nodes via APIs.
 
-### 🔧 Install Dependencies
+### Install Dependencies
 
 ```bash
 npm install @truffle/hdwallet-provider
 npm install dotenv
 ```
-
-### ⚙️ Config Setup
 
 - `HDWalletProvider`: Connects your wallet  
 - `dotenv`: Loads environment variables
@@ -137,7 +135,7 @@ npm install dotenv
 - Uncomment config lines  
 - Rename `goerli` to `sepolia`  
 
-💡 Use <kbd>Ctrl</kbd> + <kbd>/</kbd> to toggle comments in VS Code
+💡 Use <kbd>Ctrl</kbd> + <kbd>/</kbd> to toggle comments/uncomments in VS Code
 
 ![Uncomment Code](/assets/uncomment.png)  
 ![Network Name](/assets/network-name.png)
@@ -157,15 +155,20 @@ npm install dotenv
 ### 🛠️ Configure `.env`
 
 1. Create a `.env` file in the root directory  
-2. Add the following:
+
+![Create .env](/assets/env.png)  
+
+2. Add the following in the `.env` file:
 
 ```env
 PROJECT_ID=yourAlchemyApiKey
 MNEMONIC=yourWalletMnemonicOrPrivateKey
 ```
 
-![Create .env](/assets/env.png)  
+3. Copy the API key from Alchemy website:
 ![API Key Setup](/assets/api-key.png)  
+
+4. Paste it into the `.env` file:
 ![Full .env File](/assets/env-content.png)
 
 ---
