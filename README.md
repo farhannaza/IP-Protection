@@ -158,7 +158,7 @@ npm install dotenv
 
 ![Create .env](/assets/env.png)  
 
-2. Add the following in the `.env` file:
+2. Add the following into the `.env` file:
 
 ```env
 PROJECT_ID=yourAlchemyApiKey
@@ -179,10 +179,12 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 2. Change:
    - **Mainnet** → **Sepolia**  
    - **HTTP** → **WebSocket**
+3. Copy the Sepolia link
 
 ![Network Settings](/assets/network-alchemy.png)
 
-3. Update `truffle-config.js`:
+4. Update `truffle-config.js`:
+   - Replace the existing goerli link with sepolia's link
    - Replace URL with `${PROJECT_ID}`  
    - Set `network_id: 11155111`  
    - Add `websocket: true`  
@@ -191,15 +193,14 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 
 ---
 
-## 5️⃣ Metamask
+## 5️⃣ Metamask - Retreive the MNEMONIC
 
 **Metamask** is a wallet for managing Ethereum accounts.
 
 1. Install: [https://metamask.io/](https://metamask.io/)  
-2. Create a wallet  
-3. Secure your Secret Recovery Phrase
+2. Create a wallet (ensure that you secure your Secret Recovery Phrase)
+3. Retrieve the MNEMONIC: 
 
-![Metamask Pin](/assets/met-pin.png)  
 ![Metamask Setup](/assets/met-collage.png)
 
 4. Copy the 12-word Secret Recovery Phrase  
