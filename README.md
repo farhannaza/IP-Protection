@@ -1,101 +1,93 @@
 # 🛠️ Environment Setup Guide
 
-This guide walks you through setting up your development environment using **Node.js**, **Visual Studio Code**, **Truffle Suite**, and **Alchemy**.
+This guide walks you through setting up your development environment using **Node.js**, **Visual Studio Code**, **Truffle Suite**, **Alchemy**, and **Metamask** to build and deploy Ethereum smart contracts.
 
 ---
 
 ## 📚 Table of Contents
 
-- [1️⃣ Node.js](#1-nodejs)
-- [2️⃣ Visual Studio Code](#2-visual-studio-code)  
-  - [📁 Create Folder](#create-folder)  
-  - [📂 Open Folder in Explorer](#open-folder-in-explorer)
-- [3️⃣ Truffle Suite](#3-truffle-suite)
-- [4️⃣ Alchemy](#4-alchemy)
-- [5️⃣ Metamask](#5-metamask)
+- [1️⃣ Node.js](#1️⃣-nodejs)  
+- [2️⃣ Visual Studio Code](#2️⃣-visual-studio-code)  
+  - [📁 Create Folder](#📁-create-folder)  
+  - [📂 Open Folder in Explorer](#📂-open-folder-in-explorer)  
+- [3️⃣ Truffle Suite](#3️⃣-truffle-suite)  
+- [4️⃣ Alchemy](#4️⃣-alchemy)  
+- [5️⃣ Metamask](#5️⃣-metamask)  
+- [6️⃣ Smart Contract Setup](#6️⃣-smart-contract-setup)  
+- [7️⃣ Deployment](#7️⃣-deployment-of-smart-contract-ethereum)  
 
 ---
 
 ## 1️⃣ Node.js
 
-**Node.js** is a cross-platform JavaScript runtime built on Chrome's V8 engine. It enables you to run JavaScript code outside the browser.
+**Node.js** is a cross-platform JavaScript runtime built on Chrome's V8 engine.
 
 ### 🧩 Installation Steps
 
-1. Go to the official Node.js website: [https://nodejs.org/](https://nodejs.org/)  
-2. Download and install the **LTS** version.  
-3. After installation, verify it in your terminal:
+1. Download Node.js (LTS version): [https://nodejs.org/](https://nodejs.org/)  
+2. After installation, verify in your terminal:
 
 ```bash
 node -v
 ```
 
-<p align="center">
-  <img width="400" alt="NodeJS Version" src="/assets/node-v.png">
-</p>
+![Node Version](/assets/node-v.png)
 
 ---
 
 ## 2️⃣ Visual Studio Code
 
-**Visual Studio Code (VS Code)** is a lightweight yet powerful code editor developed by Microsoft, ideal for modern web development.
+**VS Code** is a powerful code editor for modern development.
 
 ### 🧩 Installation Steps
 
-1. Download VS Code from: [https://code.visualstudio.com/](https://code.visualstudio.com/)  
-2. Follow the installation instructions for your operating system.  
-3. Launch VS Code after installation.  
-4. Open the integrated terminal using:
+1. Download VS Code: [https://code.visualstudio.com/](https://code.visualstudio.com/)  
+2. Install and launch it.  
+3. Open the integrated terminal:
 
 ```bash
 Ctrl + `
 ```
 
-<p align="center">
-  <img alt="VSCode Terminal" src="/assets/vs-terminal.png">
-</p>
+![VS Code Terminal](/assets/vs-terminal.png)
 
 ---
 
 ### 📁 Create Folder
 
-Use the terminal to manage your project folders:
+Use the terminal to manage your project directory:
 
 ```bash
-mkdir folderName    # Create a folder
-cd folderName       # Enter the folder
-cd ..               # Go back a directory
-ls                  # List files and folders
+mkdir folderName
+cd folderName
+cd ..
+ls
 ```
 
-💡 *Tip: Press `Tab` to auto-complete folder or file names.*
+💡 Tip: Press `Tab` to auto-complete names.
 
-<p align="center">
-  <img alt="Create Directory" src="/assets/create-directory.png">
-</p>
+![Create Directory](/assets/create-directory.png)
 
-Or use the menu:  
-**File > Open Folder > Select Your Folder**
+Or go to:  
+**File > Open Folder > Select Folder**
 
 ---
 
 ### 📂 Open Folder in Explorer
 
-To open the current terminal directory in VS Code’s Explorer, type this command in the terminal:
+To open your folder in VS Code's file explorer:
 
 ```bash
 code .
 ```
 
-<p align="center">
-  <img alt="Open in Explorer" src="/assets/explorer.png">
-</p>
+![Explorer](/assets/explorer.png)
 
 ---
 
 ## 3️⃣ Truffle Suite
 
-**Truffle Suite** is a development framework for Ethereum that makes it easier to build, test, and deploy smart contracts.
+**Truffle Suite** is a development framework for Ethereum smart contracts.
 
 ### 🧩 Installation Steps
 
@@ -111,9 +103,7 @@ npm install -g truffle
 truffle version
 ```
 
-<p align="center">
-  <img width="400" alt="Truffle Version" src="/assets/truffle-v.png">
-</p>
+![Truffle Version](/assets/truffle-v.png)
 
 3. Initialize a new Truffle project:
 
@@ -121,159 +111,120 @@ truffle version
 truffle init
 ```
 
-<p align="center">
-  <img alt="Truffle Init" src="/assets/truffle-init.png">
-</p>
+![Truffle Init](/assets/truffle-init.png)
 
 ### 📂 Truffle Project Structure
 
-After initialization, your project will include:
-
-- `contracts/` — Contains Solidity smart contracts  
-- `migrations/` — Deployment scripts for your contracts  
-- `test/` — Smart contract unit tests  
-- `truffle-config.js` — Project configuration file
+- `contracts/` — Solidity smart contracts  
+- `migrations/` — Deployment scripts  
+- `test/` — Unit tests  
+- `truffle-config.js` — Config file  
 
 ---
 
 ## 4️⃣ Alchemy
 
-**Alchemy** is a blockchain development platform that provides APIs for accessing Ethereum without running your own node.
+**Alchemy** provides a way to access Ethereum nodes without running one yourself.
 
-### 🔧 Installation
-
-Install the required packages:
+### 🔧 Install Dependencies
 
 ```bash
 npm install @truffle/hdwallet-provider
 npm install dotenv
 ```
 
-### ⚙️ Configuration
+### ⚙️ Config Setup
 
-1. **HDWalletProvider** connects your wallet to Ethereum through Alchemy’s RPC URL.  
-2. **dotenv** securely loads environment variables (e.g., private key, API key).
+- `HDWalletProvider`: Connects your wallet  
+- `dotenv`: Loads environment variables
 
 ---
 
 ### 📝 Update `truffle-config.js`
 
-- Uncomment the necessary lines to enable the network configuration.
+- Uncomment config lines  
+- Rename `goerli` to `sepolia`  
 
-💡 *Tip: Use `Ctrl + /` to toggle comments in VS Code.*
+💡 Use `Ctrl + /` to toggle comments in VS Code
 
-<p align="center">
-  <img alt="Uncomment Code" src="/assets/uncomment.png">
-</p>
-
-- Rename the network from `goerli` to `sepolia`.
-
-<p align="center">
-  <img alt="Network Name" src="/assets/network-name.png">
-</p>
+![Uncomment Code](/assets/uncomment.png)  
+![Network Name](/assets/network-name.png)
 
 ---
 
 ### 🧾 Create Alchemy App
 
-1. Register at: [https://www.alchemy.com/](https://www.alchemy.com/)  
-2. Create a new app:
+1. Register: [https://www.alchemy.com/](https://www.alchemy.com/)  
+2. Create a new app (e.g., Wallet use case)  
+3. Choose **Ethereum** and click **Create App**
 
-<p align="center">
-  <img alt="Create App" src="/assets/create-app.png">
-</p>
-
-3. Set an app name and choose your use case (e.g., Wallet).  
-4. Select **Ethereum** as the chain and click **Create App**.
+![Create App](/assets/create-app.png)
 
 ---
 
-### 🛠️ Configure Environment Variables
+### 🛠️ Configure `.env`
 
-1. Create a `.env` file in your project directory.
-
-<p align="center">
-  <img width="400" alt="Create .env" src="/assets/env.png">
-</p>
-
-2. Copy the Alchemy API Key and add it to `.env`:
-
-<p align="center">
-  <img alt="API Key Setup" src="/assets/api-key.png">
-</p>
+1. Create a `.env` file in the root directory  
+2. Add:
 
 ```dotenv
 PROJECT_ID=yourAlchemyApiKey
 MNEMONIC=yourWalletMnemonicOrPrivateKey
 ```
 
-<p align="center">
-  <img alt="Full .env File" src="/assets/env-content.png">
-</p>
+![Create .env](/assets/env.png)  
+![API Key Setup](/assets/api-key.png)  
+![Full .env File](/assets/env-content.png)
 
 ---
 
 ### 🌐 Alchemy Network Settings
 
-1. Go to the **Network** tab in your Alchemy dashboard.  
-2. In the app settings:
-   - Change the network from **Mainnet** to **Sepolia**.  
-   - Switch from **HTTP** to **WebSocket**.  
-   - Copy the WebSocket URL.
+1. Open the **Network** tab in Alchemy  
+2. Change:
+   - **Mainnet** → **Sepolia**  
+   - **HTTP** → **WebSocket**  
 
-<p align="center">
-  <img alt="Network Settings" src="/assets/network-alchemy.png">
-</p>
+![Network Settings](/assets/network-alchemy.png)
 
-3. Refactor your Alchemy URL in `truffle-config.js`:
-   - Paste the copied WebSocket URL.
-   - Replace the API part in the link with `${PROJECT_ID}` to load it from `.env`.
-   - Change `network_id: 5` to `11155111` (Sepolia's network ID).
-   - Add `websocket: true`.
+3. Update `truffle-config.js`:
+   - Replace URL with `${PROJECT_ID}`  
+   - Set `network_id: 11155111`  
+   - Add `websocket: true`  
 
-<p align="center">
-  <img alt="Refactor API" src="/assets/refactor-api.png">
-</p>
+![Refactor API](/assets/refactor-api.png)
 
 ---
 
 ## 5️⃣ Metamask
 
-**Metamask** is a browser extension that allows you to interact with the Ethereum blockchain and manage your wallet.
+**Metamask** is a wallet for managing Ethereum accounts.
 
-1. Install Metamask: [https://metamask.io/](https://metamask.io/)  
-   - Create a new wallet if you don't have one.  
-   - **Make sure to store your Secret Recovery Phrase securely.**
+1. Install: [https://metamask.io/](https://metamask.io/)  
+2. Create a wallet  
+3. Secure your Secret Recovery Phrase
 
-2. Pin Metamask extension in the browser for easy access:
+![Metamask Pin](/assets/met-pin.png)  
+![Metamask Setup](/assets/met-collage.png)
 
-<p align="center">
-  <img alt="Refactor API" src="/assets/met-pin.png">
-</p>
+4. Copy the 12-word Secret Recovery Phrase  
+5. Paste into `.env` as:
 
+```dotenv
+MNEMONIC=your 12 word phrase
+```
 
-3. Find your **Secret Recovery Phrase** (MNEMONIC):  
-   - Complete the required security steps.  
-   - Copy the 12-word Secret Recovery Phrase.
-
-<p align="center">
-  <img alt="Metamask Setup" src="/assets/met-collage.png">
-</p>
-
-3. Paste it into your `.env` file:
-
-<p align="center">
-  <img alt="Full .env File" src="/assets/full-env.png">
-</p>
+![Full .env File](/assets/full-env.png)
 
 ---
 
-## 6 Smart Contract
+## 6️⃣ Smart Contract Setup
 
-1. Initialize smart contract
+### 1. Migrations Contract (Required)
 
-- In contract folder, create file Migration.sol
+Inside `contracts/Migrations.sol`:
 
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
@@ -282,10 +233,7 @@ contract Migrations {
     uint public last_completed_migration;
 
     modifier restricted() {
-        require(
-            msg.sender == owner,
-            "This function is restricted to the contract's owner"
-        );
+        require(msg.sender == owner, "This function is restricted to the contract's owner");
         _;
     }
 
@@ -293,30 +241,37 @@ contract Migrations {
         last_completed_migration = completed;
     }
 }
+```
 
-- explain a bit about Migration
+📌 *This file is required for deploying any contract with Truffle.*
 
-2. Initialize Our Script Of Deployment
+---
 
-- Create one file within migration folder name 1_migration.js
+### 2. Migration Script
 
+Inside `migrations/1_migration.js`:
+
+```javascript
 const Migrations = artifacts.require("Migrations");
 
 module.exports = function (deployer) {
   deployer.deploy(Migrations);
 };
+```
 
-- explain a bit migration folder
+📌 *The `migrations/` folder contains scripts that help Truffle know which contracts to deploy and in what order.*
 
-3. Completing Smart Contract and Migration
+---
 
-- HashStorage.sol
+### 3. Main Smart Contract
 
+Inside `contracts/HashStorage.sol`:
+
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract HashStorage {
-    // Structure to store hash and file information
     struct HashData {
         bytes32 hash;
         string fileName;
@@ -325,31 +280,15 @@ contract HashStorage {
         uint256 timestamp;
         bool exists;
     }
-    
-    // Mapping to store HashData by hash
-    mapping(bytes32 => HashData) public hashRecords;
-    
-    // Array to store all hashes for retrieval
-    bytes32[] public allHashes;
-    
-    // Event to emit when new hash is stored
-    event HashStored(
-        bytes32 indexed hash, 
-        string fileName, 
-        string fileType,
-        string fileSize,
-        uint256 timestamp
-    );
 
-    // Function to store a hash with file information
-    function storeHash(
-        bytes32 _hash, 
-        string memory _fileName,
-        string memory _fileType,
-        string memory _fileSize
-    ) public {
+    mapping(bytes32 => HashData) public hashRecords;
+    bytes32[] public allHashes;
+
+    event HashStored(bytes32 indexed hash, string fileName, string fileType, string fileSize, uint256 timestamp);
+
+    function storeHash(bytes32 _hash, string memory _fileName, string memory _fileType, string memory _fileSize) public {
         require(!hashRecords[_hash].exists, "Hash already exists");
-        
+
         hashRecords[_hash] = HashData({
             hash: _hash,
             fileName: _fileName,
@@ -358,44 +297,36 @@ contract HashStorage {
             timestamp: block.timestamp,
             exists: true
         });
-        
+
         allHashes.push(_hash);
         emit HashStored(_hash, _fileName, _fileType, _fileSize, block.timestamp);
     }
-    
-    // Function to retrieve hash data
+
     function getHashData(bytes32 _hash) public view returns (
-        bytes32,
-        string memory,
-        string memory,
-        string memory,
-        uint256
+        bytes32, string memory, string memory, string memory, uint256
     ) {
         require(hashRecords[_hash].exists, "Hash does not exist");
-        
         HashData memory data = hashRecords[_hash];
-        return (
-            data.hash,
-            data.fileName,
-            data.fileType,
-            data.fileSize,
-            data.timestamp
-        );
+        return (data.hash, data.fileName, data.fileType, data.fileSize, data.timestamp);
     }
-    
-    // Function to get all stored hashes
+
     function getAllHashes() public view returns (bytes32[] memory) {
         return allHashes;
     }
-    
-    // Function to check if hash exists
+
     function hashExists(bytes32 _hash) public view returns (bool) {
         return hashRecords[_hash].exists;
     }
 }
+```
 
-- in migration folder, create file name 2_HashStorage.js
+---
 
+### 4. Deployment Script
+
+Inside `migrations/2_HashStorage.js`:
+
+```javascript
 const HashStorage = artifacts.require("HashStorage");
 const fs = require('fs');
 const path = require('path');
@@ -403,42 +334,41 @@ const path = require('path');
 module.exports = function (deployer) {
   deployer.deploy(HashStorage)
     .then(() => {
-      // Write contract address to a file
       const addressData = {
         address: HashStorage.address,
         network: deployer.network
       };
-      
       fs.writeFileSync(
         path.join(__dirname, '../client/lib/contract-address.json'),
         JSON.stringify(addressData, null, 2)
       );
     });
 };
+```
 
+---
 
-- current directory supposed to be like this : 
+### 🗂️ Project Directory Structure
 
-<p align="center">
-  <img alt="Full .env File" src="/assets/directory.png">
-</p>
+Your project should look like this:
 
-note, migration.sol and 1_migration.js is compulsory for any smart contract deployment to the Ethereum network.
+![Directory](/assets/directory.png)
 
-## Deployment of Smart Contract (Ethereum)
+---
 
-1. Fund Your Metamask
+## 7️⃣ Deployment of Smart Contract (Ethereum)
 
-- google faucet : https://cloud.google.com/application/web3/faucet/ethereum/sepolia
+### 1. Fund Your Wallet
 
+Use Sepolia faucet:  
+[https://cloud.google.com/application/web3/faucet/ethereum/sepolia](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
 
+---
 
+Once funded, run:
 
+```bash
+truffle migrate --network sepolia
+```
 
-
-
-
-
-
-
-
+🎉 Your smart contract is now deployed!
