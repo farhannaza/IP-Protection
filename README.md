@@ -358,17 +358,14 @@ Your project should look like this:
 
 ## 7️⃣ Deployment of Smart Contract (Ethereum)
 
-### 1. Fund Your Wallet
+### 1. Retreive Wallet Address 
+
+![Directory](/assets/met-address.png)
+
+### 2. Fund Your Wallet
 
 Use Sepolia faucet:  
 [https://cloud.google.com/application/web3/faucet/ethereum/sepolia](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
 
 ---
 
-Once funded, run:
-
-```bash
-truffle migrate --network sepolia
-```
-
-🎉 Your smart contract is now deployed!
