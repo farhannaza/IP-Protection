@@ -52,8 +52,8 @@ node -v
 Use these command in terminal to manage your project directory:
 
 ```bash
-mkdir `folderName`
-cd `folderName`
+mkdir 'folderName'
+cd 'folderName'
 cd ..
 ls
 ```
