@@ -206,10 +206,6 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 4. Copy the 12-word Secret Recovery Phrase  
 5. Paste into `.env` like so:
 
-```env
-MNEMONIC=your 12 word phrase
-```
-
 ![Full .env File](/assets/full-env.png)
 
 ---
@@ -352,7 +348,7 @@ Your project should look like this:
 
 ## 7️⃣ Deploying to Ethereum
 
-### 1. Change to Sepolia and Retrieve Wallet Address
+### 1. Change to Sepolia Network and Retrieve Wallet Address
 
 ![Directory](/assets/met-change.png)
 
@@ -360,9 +356,10 @@ Your project should look like this:
 
 ### 2. Fund Your Wallet
 
-Use the Sepolia faucet:  
+1. Use the Sepolia faucet:  
 [https://cloud.google.com/application/web3/faucet/ethereum/sepolia](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
 
+2. Paste your wallet address:
 ![Sepolia Faucet](/assets/sepolia-faucet.png)
 
 ---
