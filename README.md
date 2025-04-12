@@ -367,5 +367,8 @@ Your project should look like this:
 Use Sepolia faucet:  
 [https://cloud.google.com/application/web3/faucet/ethereum/sepolia](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
 
+![Directory](/assets/sepolia-faucet.png)
+
+
 ---
 
