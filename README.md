@@ -49,7 +49,7 @@ node -v
 
 ### 📁 Create Project Folder
 
-Use the terminal to manage your project directory:
+Use these command in terminal to manage your project directory:
 
 ```bash
 mkdir folderName
@@ -59,6 +59,8 @@ ls
 ```
 
 💡 Tip: Press `Tab` to auto-complete names.
+
+Navigate to your desired directory and create folder `IP-Prottection`.
 
 ![Create Directory](/assets/create-directory.png)
 
