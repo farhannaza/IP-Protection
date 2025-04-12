@@ -52,8 +52,8 @@ node -v
 Use these command in terminal to manage your project directory:
 
 ```bash
-mkdir folderName
-cd folderName
+mkdir `folderName`
+cd `folderName`
 cd ..
 ls
 ```
@@ -355,6 +355,7 @@ Your project should look like this:
 ---
 
 ### 2. Fund Your Wallet
+fund in your wallet is needed to pay for the migration process.
 
 1. Use the Sepolia faucet:  
 [Ethereum Sepolia Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
@@ -391,6 +392,6 @@ Copy and paste either one into Etherscan:
 
 ![Etherscan](/assets/etherscan.png)
 
-🔍 You can explore your deployed contract and verify method behavior here.
+You can explore your deployed contract and verify method behavior here.
 
 ---
