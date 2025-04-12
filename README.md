@@ -382,7 +382,7 @@ truffle migrate --network sepolia --reset
 ![Transaction Hash](/assets/trans-hash.png)
 
 Copy and paste either one into Etherscan:  
-[https://sepolia.etherscan.io/](https://sepolia.etherscan.io/)
+[Sepolia Etherscan](https://sepolia.etherscan.io/)
 
 - Transaction hash  
 - Contract address  
