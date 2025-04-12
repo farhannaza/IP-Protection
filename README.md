@@ -71,11 +71,7 @@ Or go to:
 
 ### 📂 Open Folder in Explorer
 
-To open your folder in VS Code's file explorer:
-
-```bash
-code .
-```
+To open your folder in file explorer, type `code . ` in the terminal:
 
 ![Explorer](/assets/explorer.png)
 
