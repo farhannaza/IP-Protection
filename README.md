@@ -357,7 +357,7 @@ Your project should look like this:
 ### 2. Fund Your Wallet
 
 1. Use the Sepolia faucet:  
-[Ethereum Sepolia faucet(Google)](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
+[Ethereum Sepolia Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia)
 
 2. Paste your wallet address:
 ![Sepolia Faucet](/assets/sepolia-faucet.png)
@@ -372,9 +372,8 @@ Compile and migrate with:
 truffle migrate --network sepolia --reset
 ```
 
-🎉 Congrats! Your migration is successful.
-
 ![Success](/assets/success-migrate.png)
+🎉 Congrats! Your migration is successful.
 
 ---
 
@@ -382,7 +381,7 @@ truffle migrate --network sepolia --reset
 
 ![Transaction Hash](/assets/trans-hash.png)
 
-Copy and paste details into Etherscan:  
+Copy and paste either one into Etherscan:  
 [https://sepolia.etherscan.io/](https://sepolia.etherscan.io/)
 
 - Transaction hash  
