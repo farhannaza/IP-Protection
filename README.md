@@ -268,4 +268,177 @@ MNEMONIC=yourWalletMnemonicOrPrivateKey
 
 ---
 
+## 6 Smart Contract
+
+1. Initialize smart contract
+
+- In contract folder, create file Migration.sol
+
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.22 <0.9.0;
+
+contract Migrations {
+    address public owner = msg.sender;
+    uint public last_completed_migration;
+
+    modifier restricted() {
+        require(
+            msg.sender == owner,
+            "This function is restricted to the contract's owner"
+        );
+        _;
+    }
+
+    function setCompleted(uint completed) public restricted {
+        last_completed_migration = completed;
+    }
+}
+
+- explain a bit about Migration
+
+2. Initialize Our Script Of Deployment
+
+- Create one file within migration folder name 1_migration.js
+
+const Migrations = artifacts.require("Migrations");
+
+module.exports = function (deployer) {
+  deployer.deploy(Migrations);
+};
+
+- explain a bit migration folder
+
+3. Completing Smart Contract and Migration
+
+- HashStorage.sol
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract HashStorage {
+    // Structure to store hash and file information
+    struct HashData {
+        bytes32 hash;
+        string fileName;
+        string fileType;
+        string fileSize;
+        uint256 timestamp;
+        bool exists;
+    }
+    
+    // Mapping to store HashData by hash
+    mapping(bytes32 => HashData) public hashRecords;
+    
+    // Array to store all hashes for retrieval
+    bytes32[] public allHashes;
+    
+    // Event to emit when new hash is stored
+    event HashStored(
+        bytes32 indexed hash, 
+        string fileName, 
+        string fileType,
+        string fileSize,
+        uint256 timestamp
+    );
+
+    // Function to store a hash with file information
+    function storeHash(
+        bytes32 _hash, 
+        string memory _fileName,
+        string memory _fileType,
+        string memory _fileSize
+    ) public {
+        require(!hashRecords[_hash].exists, "Hash already exists");
+        
+        hashRecords[_hash] = HashData({
+            hash: _hash,
+            fileName: _fileName,
+            fileType: _fileType,
+            fileSize: _fileSize,
+            timestamp: block.timestamp,
+            exists: true
+        });
+        
+        allHashes.push(_hash);
+        emit HashStored(_hash, _fileName, _fileType, _fileSize, block.timestamp);
+    }
+    
+    // Function to retrieve hash data
+    function getHashData(bytes32 _hash) public view returns (
+        bytes32,
+        string memory,
+        string memory,
+        string memory,
+        uint256
+    ) {
+        require(hashRecords[_hash].exists, "Hash does not exist");
+        
+        HashData memory data = hashRecords[_hash];
+        return (
+            data.hash,
+            data.fileName,
+            data.fileType,
+            data.fileSize,
+            data.timestamp
+        );
+    }
+    
+    // Function to get all stored hashes
+    function getAllHashes() public view returns (bytes32[] memory) {
+        return allHashes;
+    }
+    
+    // Function to check if hash exists
+    function hashExists(bytes32 _hash) public view returns (bool) {
+        return hashRecords[_hash].exists;
+    }
+}
+
+- in migration folder, create file name 2_HashStorage.js
+
+const HashStorage = artifacts.require("HashStorage");
+const fs = require('fs');
+const path = require('path');
+
+module.exports = function (deployer) {
+  deployer.deploy(HashStorage)
+    .then(() => {
+      // Write contract address to a file
+      const addressData = {
+        address: HashStorage.address,
+        network: deployer.network
+      };
+      
+      fs.writeFileSync(
+        path.join(__dirname, '../client/lib/contract-address.json'),
+        JSON.stringify(addressData, null, 2)
+      );
+    });
+};
+
+
+- current directory supposed to be like this : 
+
+<p align="center">
+  <img alt="Full .env File" src="/assets/directory.png">
+</p>
+
+note, migration.sol and 1_migration.js is compulsory for any smart contract deployment to the Ethereum network.
+
+## Deployment of Smart Contract (Ethereum)
+
+1. Fund Your Metamask
+
+- google faucet : https://cloud.google.com/application/web3/faucet/ethereum/sepolia
+
+
+
+
+
+
+
+
+
+
+
 
