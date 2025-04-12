@@ -41,9 +41,7 @@ node -v
 
 1. Download VS Code: [https://code.visualstudio.com/](https://code.visualstudio.com/)  
 2. Install and launch it  
-3. Open the integrated terminal:
-
-<kbd>Ctrl</kbd> + <kbd>`</kbd>
+3. Open the integrated terminal: <kbd>Ctrl</kbd> + <kbd>`</kbd>
 
 ![VS Code Terminal](/assets/vs-terminal.png)
 
