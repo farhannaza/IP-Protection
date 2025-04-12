@@ -8,8 +8,6 @@ This guide walks you through setting up your development environment using **Nod
 
 - [1️⃣ Node.js](#1️⃣-nodejs)  
 - [2️⃣ Visual Studio Code](#2️⃣-visual-studio-code)  
-  - [📁 Create Project Folder](#📁-create-project-folder)  
-  - [📂 Open Folder in Explorer](#📂-open-folder-in-explorer)  
 - [3️⃣ Truffle Suite](#3️⃣-truffle-suite)  
 - [4️⃣ Alchemy](#4️⃣-alchemy)  
 - [5️⃣ Metamask](#5️⃣-metamask)  
