@@ -21,7 +21,7 @@ This guide walks you through setting up your development environment using **Nod
 ---
 
 <h1 align="center">   
-  IP-Shield (Ethereum)
+  Blockchain Development: Backend
 </h1> 
 
 ## 1️⃣ Node.js
@@ -326,8 +326,6 @@ Create `migrations/2_HashStorage.js`:
 
 ```javascript
 const HashStorage = artifacts.require("HashStorage");
-const fs = require('fs');
-const path = require('path');
 
 module.exports = function (deployer) {
   deployer.deploy(HashStorage)
@@ -393,3 +391,14 @@ Copy and paste either one into Etherscan:
 You can explore your deployed contract and verify method behavior here.
 
 ---
+
+download in zip file 
+![Etherscan](/assets/github.png)
+
+and extract the file, then copy `client` file into the your project root directory
+
+in the terminal type `npm install` command
+
+
+
+
