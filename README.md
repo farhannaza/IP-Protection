@@ -397,7 +397,7 @@ download in zip file
 
 and extract the file, then copy `client` file into the your project root directory
 
-(if your terminal is not in the `IP-protection/client`, make sure to `cd client` first)
+(if your terminal is not in the `IP-protection/client`, make sure to type command : `cd client` )
 
 in the terminal type `npm install` command
 
