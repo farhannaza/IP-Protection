@@ -1,4 +1,8 @@
-# 🛠️ Environment Setup Guide
+<h1 align="center">   
+  IP-Shield (Ethereum)
+</h1> 
+
+## 🛠️ Environment Setup Guide
 
 This guide walks you through setting up your development environment using **Node.js**, **Visual Studio Code**, **Truffle Suite**, **Alchemy**, and **Metamask** to build and deploy Ethereum smart contracts.
 
@@ -15,6 +19,8 @@ This guide walks you through setting up your development environment using **Nod
 - [7️⃣ Deploying to Ethereum](#7️⃣-deploying-to-ethereum)  
 
 ---
+
+# Backend : Ethereum Network
 
 ## 1️⃣ Node.js
 
