@@ -16,7 +16,8 @@ This guide walks you through setting up your development environment using **Nod
 - [4️⃣ Alchemy](#4️⃣-alchemy)  
 - [5️⃣ Metamask](#5️⃣-metamask)  
 - [6️⃣ Smart Contract Setup](#6️⃣-smart-contract-setup)  
-- [7️⃣ Deploying to Ethereum](#7️⃣-deploying-to-ethereum)  
+- [7️⃣ Sepolia: Deploying to Ethereum](#7️⃣-deploying-to-ethereum)  
+- [8 Ganache: Deploying to Ethereum](#7️⃣-deploying-to-ethereum) 
 
 ---
 
@@ -342,7 +343,7 @@ Your project should look like this:
 
 ---
 
-## 7️⃣ Deploying to Ethereum
+## 7️⃣ Sepolia: Deploying to Ethereum
 
 ### 1. Change to Sepolia Network and Retrieve Wallet Address
 
@@ -392,15 +393,24 @@ You can explore your deployed contract and verify method behavior here.
 
 ---
 
-download in zip file 
-![Etherscan](/assets/github.png)
+## 7️⃣ Ganache: Deploying to Ethereum
+Ganache is personal blockchain for Ethereum development that you can use to deploy contracts, develop applications, and run tests.
 
-and extract the file, then copy `client` file into the your project root directory
+1. Setup
 
-(if your terminal is not in the `IP-protection/client`, make sure to type command : `cd client` )
+- download : ganache link
 
-in the terminal type `npm install` command
+- install and launch the software
 
-then type `npm run dev`
+2. create new workspace:
+
+![Etherscan](/assets/ganache-dash.png)
+
+- choose name for your Ethereum local network.
+- go to server tab and change the hostname to Loopback.
+  -we choose loopback since we will only use one device for the development.
+  - you can always use other setting as needed.
+
+![Etherscan](/assets/ganache-collage.png)
 
 
