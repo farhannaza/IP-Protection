@@ -52,10 +52,10 @@ node -v
 Use these command in terminal to manage your project directory:
 
 ```bash
-mkdir 'folderName'
-cd 'folderName'
-cd ..
-ls
+mkdir 'folderName' : To create new folder
+cd 'folderName'    : To go to specific folder
+cd ..              : To go back to previous folder
+ls                 : List folder content
 ```
 
 💡 Tip: Press `Tab` to auto-complete names.
