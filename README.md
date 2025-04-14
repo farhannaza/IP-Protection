@@ -393,100 +393,6 @@ You can explore your deployed contract and verify method behavior here.
 
 ---
 
-## 7️⃣ Ganache: Deploying to Ethereum
-Ganache is personal blockchain for Ethereum development that you can use to deploy contracts, develop applications, and run tests.
-
-1. Setup
-
-- download : ganache link
-
-- install and launch the software
-
-2. create new workspace:
-
-![Etherscan](/assets/ganache-dash.png)
-
-- choose name for your Ethereum local network.
-- go to server tab and change the hostname to Loopback.
-  - we choose loopback since we will only use one device for the development.
-  - Loopback represent your own device.
-  - you can always use other setting as needed.
-- Start your new workspace.
-
-![Etherscan](/assets/ganache-collage.png)
-
-
-3. Copy ganache RPC server URL :
-
-![Etherscan](/assets/ganache-ip.png)
-
-4. Add Ganache Network To Metamask
-    - fill in all information to add custom network as per picture
-
-![Etherscan](/assets/met-ganache.png)
-
-5. Import Ganache account to Metamask
-
-
-- Choose your desired account:
-
-![Etherscan](/assets/ganache-key.png)
-
-- copy the private key:
-
-![Etherscan](/assets/ganache-priv.png)
-
-- Add the account into metamask by importing the private key: 
-
-![Etherscan](/assets/met-ganachenet.png)
-
-- Succesfully added ganache account to metamask!
-
-![Etherscan](/assets/met-gansuc.png)
-
-6. Refactor truffle-config.js
-
-- Uncomment the highlighted area `truffle-config.js`
-- Change the file base on information from Ganache
-    - `development` to `ganache`
-    - port: `8545` to `7545`
-    - network_id: `*` to `5777`
-
-![Etherscan](/assets/refactor.png)
-
-- version: `0.8.21` to `0.8.19`
-
-![Etherscan](/assets/truffle-version.png)
-
-7. Ganache: Deploy Smart Contract
-
-deploy using this command: 
-`truffle migrate --network ganache --reset`
-
-![Etherscan](/assets/ganache-deploy.png)
-
-- Success!
-
-8. Verify Smart Contract Deployment
-
-- You can verify either on blocks or transaction 
-
-- chatgpt, please explain the difference between those two
-
-![Etherscan](/assets/ganache-verify.png)
-
-Here's a breakdown of what those blocks might represent:
-
-- Initialize Block (Block 0): The first block which often referred as genesis block or Block 0. This block doesn't contain any transactions (since you haven't deployed any contracts or made any transactions yet), but it's necessary to initialize the blockchain. All subsequent blocks (which will contain your transactions) will link back to this block.
-
-- Migrations Contract Deployment (Block 1): The first transaction is usually the deployment of the Migrations contract. Truffle uses this contract to keep track of which migrations have been run. The contract is deployed only once, when you run your migrations for the first time.
-
-- Migrations Contract Update (Block 2): After the Migrations contract is deployed, Truffle records that the first migration (the deployment of the Migrations contract itself) has been completed. It does this by calling a function on the Migrations contract, which creates a transaction.
-
-- Your Contract Deployment (Block 3): The next transaction is the deployment of your actual contract. This is the contract you've written and are deploying with your second migration script.
-
-- Migrations Contract Update (Block 4): After your contract is deployed, Truffle records that the second migration has been completed. Again, it does this by calling a function on the Migrations contract, which creates another transaction.
-
 ## 8️⃣ Ganache: Deploying to Ethereum
 
 **Ganache** is a personal Ethereum blockchain used for deploying contracts, developing applications, and testing.
@@ -499,11 +405,11 @@ Here's a breakdown of what those blocks might represent:
 ### 2. Create a New Workspace
 
 - Choose a name for your local Ethereum network
+![Ganache Dashboard](/assets/ganache-dash.png)
+
 - Navigate to the **Server** tab and set the **Hostname** to **Loopback**
   - Loopback refers to your own device, ideal for local development
 - Click **Save Workspace** and **Start**
-
-![Ganache Dashboard](/assets/ganache-dash.png)
 ![Ganache Config](/assets/ganache-collage.png)
 
 ### 3. Retrieve RPC Server URL
@@ -514,11 +420,11 @@ Here's a breakdown of what those blocks might represent:
 
 ### 4. Add Ganache Network to MetaMask
 
-- Open MetaMask and go to **Settings > Networks > Add Network**
+- Open MetaMask and go to **Network logo(top left) > Add a custom network**
 - Enter the following:
   - Network Name: Ganache
   - New RPC URL: Paste the RPC URL from Ganache
-  - Chain ID: 1337 or 5777 (whichever Ganache displays)
+  - Chain ID: 1337
   - Currency Symbol: ETH
 - Save the network
 
@@ -548,8 +454,10 @@ ganache: {
   network_id: "5777", // Match Ganache network id
 },
 ```
+![Truffle Config](/assets/refactor.png)
 
-- Also, make sure the compiler version is set to `0.8.19` to match your contract:
+- Also, make sure the compiler version is set to `0.8.19`:
+- Using latest version on Ganache might introduce unexpected error during migration.
 
 ```js
 compilers: {
@@ -558,8 +466,6 @@ compilers: {
   }
 }
 ```
-
-![Truffle Config](/assets/refactor.png)
 ![Compiler Version](/assets/truffle-version.png)
 
 ### 7. Deploy to Ganache
@@ -572,7 +478,7 @@ truffle migrate --network ganache --reset
 
 ![Deploy Success](/assets/ganache-deploy.png)
 
-🎉 Your smart contract is now deployed to your local Ganache blockchain!
+Your smart contract is now deployed to your local Ganache blockchain!
 
 ### 8. Verify Deployment
 
