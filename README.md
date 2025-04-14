@@ -436,7 +436,13 @@ Ganache is personal blockchain for Ethereum development that you can use to depl
 ![Etherscan](/assets/ganache-priv.png)
 
 - Add the account into metamask by importing the private key: 
+
 ![Etherscan](/assets/met-ganachenet.png)
+
+- Succesfully added ganache account to metamask!
+
+![Etherscan](/assets/met-gansuc.png)
+
 
 
 
