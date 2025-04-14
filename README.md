@@ -443,6 +443,7 @@ You can explore your deployed contract and verify method behavior here.
 ![Import Account](/assets/met-ganachenet.png)
 
 - Successfully importing wallet!
+
 ![Success Import](/assets/met-gansuc.png)
 
 ### 6. Update `truffle-config.js`
