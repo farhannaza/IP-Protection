@@ -17,7 +17,7 @@ This guide walks you through setting up your development environment using **Nod
 - [5️⃣ Metamask](#5️⃣-metamask)  
 - [6️⃣ Smart Contract Setup](#6️⃣-smart-contract-setup)  
 - [7️⃣ Sepolia: Deploying to Ethereum](#7️⃣-deploying-to-ethereum)  
-- [8 Ganache: Deploying to Ethereum](#7️⃣-deploying-to-ethereum) 
+- [8️⃣ Ganache: Local Deployment for Testing](#8️⃣-ganache-local-deployment-for-testing)
 
 ---
 
@@ -393,7 +393,7 @@ You can explore your deployed contract and verify method behavior here.
 
 ---
 
-## 8️⃣ Ganache: Deploying to Ethereum
+## 8️⃣ Ganache: Local Deployment for Testing
 
 **Ganache** is a personal Ethereum blockchain used for deploying contracts, developing applications, and testing.
 
@@ -441,6 +441,8 @@ You can explore your deployed contract and verify method behavior here.
 - In MetaMask, go to **Import Account** and paste the private key
 
 ![Import Account](/assets/met-ganachenet.png)
+
+- Successfully importing wallet!
 ![Success Import](/assets/met-gansuc.png)
 
 ### 6. Update `truffle-config.js`
@@ -457,7 +459,7 @@ ganache: {
 ![Truffle Config](/assets/refactor.png)
 
 - Also, make sure the compiler version is set to `0.8.19`:
-- Using latest version on Ganache might introduce unexpected error during migration.
+- Using compilers with latest version on Ganache network might introduce unexpected error during migration.
 
 ```js
 compilers: {
