@@ -443,8 +443,15 @@ Ganache is personal blockchain for Ethereum development that you can use to depl
 
 ![Etherscan](/assets/met-gansuc.png)
 
-refactor
-![Etherscan](/assets/met-gansuc.png)
+6. Refactor truffle-config.js
+
+- `development` to `ganache`
+- port: `8545` to `75545`
+- network_id: `*` to `5777`
+
+![Etherscan](/assets/ganache-refactor.png)
+
+
 
 
 
