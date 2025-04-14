@@ -409,6 +409,7 @@ Ganache is personal blockchain for Ethereum development that you can use to depl
 - choose name for your Ethereum local network.
 - go to server tab and change the hostname to Loopback.
   - we choose loopback since we will only use one device for the development.
+  - Loopback represent your own device.
   - you can always use other setting as needed.
 - Start your new workspace.
 
@@ -468,7 +469,7 @@ deploy using this command:
 
 8. Verify Smart Contract Deployment
 
-- You can verify the either on blocks or transaction 
+- You can verify either on blocks or transaction 
 
 - chatgpt, please explain the difference between those two
 
@@ -485,6 +486,109 @@ Here's a breakdown of what those blocks might represent:
 - Your Contract Deployment (Block 3): The next transaction is the deployment of your actual contract. This is the contract you've written and are deploying with your second migration script.
 
 - Migrations Contract Update (Block 4): After your contract is deployed, Truffle records that the second migration has been completed. Again, it does this by calling a function on the Migrations contract, which creates another transaction.
+
+## 8️⃣ Ganache: Deploying to Ethereum
+
+**Ganache** is a personal Ethereum blockchain used for deploying contracts, developing applications, and testing.
+
+### 1. Install and Launch Ganache
+
+- Download Ganache: [Ganache Official Website](https://trufflesuite.com/ganache/)
+- Install and open the software
+
+### 2. Create a New Workspace
+
+- Choose a name for your local Ethereum network
+- Navigate to the **Server** tab and set the **Hostname** to **Loopback**
+  - Loopback refers to your own device, ideal for local development
+- Click **Save Workspace** and **Start**
+
+![Ganache Dashboard](/assets/ganache-dash.png)
+![Ganache Config](/assets/ganache-collage.png)
+
+### 3. Retrieve RPC Server URL
+
+- Copy the RPC URL displayed at the top (e.g., `http://127.0.0.1:7545`)
+
+![RPC URL](/assets/ganache-ip.png)
+
+### 4. Add Ganache Network to MetaMask
+
+- Open MetaMask and go to **Settings > Networks > Add Network**
+- Enter the following:
+  - Network Name: Ganache
+  - New RPC URL: Paste the RPC URL from Ganache
+  - Chain ID: 1337 or 5777 (whichever Ganache displays)
+  - Currency Symbol: ETH
+- Save the network
+
+![MetaMask Add Network](/assets/met-ganache.png)
+
+### 5. Import Ganache Account to MetaMask
+
+- In Ganache, select an account and click **Export Private Key**
+- Copy the private key
+
+![Private Key](/assets/ganache-key.png)
+![Private Key Export](/assets/ganache-priv.png)
+
+- In MetaMask, go to **Import Account** and paste the private key
+
+![Import Account](/assets/met-ganachenet.png)
+![Success Import](/assets/met-gansuc.png)
+
+### 6. Update `truffle-config.js`
+
+Modify your configuration as follows:
+
+```js
+ganache: {
+  host: "127.0.0.1",
+  port: 7545,
+  network_id: "5777", // Match Ganache network id
+},
+```
+
+- Also, make sure the compiler version is set to `0.8.19` to match your contract:
+
+```js
+compilers: {
+  solc: {
+    version: "0.8.19"
+  }
+}
+```
+
+![Truffle Config](/assets/refactor.png)
+![Compiler Version](/assets/truffle-version.png)
+
+### 7. Deploy to Ganache
+
+Run the deployment command:
+
+```bash
+truffle migrate --network ganache --reset
+```
+
+![Deploy Success](/assets/ganache-deploy.png)
+
+🎉 Your smart contract is now deployed to your local Ganache blockchain!
+
+### 8. Verify Deployment
+
+Ganache provides both a block explorer and transaction list. Here's how to interpret them:
+
+- **Blocks** represent grouped transactions. Each new contract deployment creates a block.
+- **Transactions** are the individual actions (like deploying a contract or sending ETH).
+
+![Ganache Verification](/assets/ganache-verify.png)
+
+#### Example Breakdown:
+
+- **Block 0**: The Genesis block (initial block with no transactions)
+- **Block 1**: Deployment of the `Migrations` contract by Truffle
+- **Block 2**: Records that the migration has been completed
+- **Block 3**: Deployment of your `HashStorage` contract
 
 
 
