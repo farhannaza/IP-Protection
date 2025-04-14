@@ -420,8 +420,27 @@ Ganache is personal blockchain for Ethereum development that you can use to depl
 ![Etherscan](/assets/ganache-ip.png)
 
 4. Add Ganache Network To Metamask
+    - fill in all information to add custom network as per picture
 
 ![Etherscan](/assets/met-ganache.png)
+
+5. Import Ganache account to Metamask
+
+
+- Choose your desired account:
+
+![Etherscan](/assets/ganache-key.png)
+
+- copy the private key:
+
+![Etherscan](/assets/ganache-priv.png)
+
+- Add the account into metamask by importing the private key: 
+![Etherscan](/assets/met-ganachenet.png)
+
+
+
+
 
 
 
