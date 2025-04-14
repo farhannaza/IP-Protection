@@ -408,9 +408,22 @@ Ganache is personal blockchain for Ethereum development that you can use to depl
 
 - choose name for your Ethereum local network.
 - go to server tab and change the hostname to Loopback.
-  -we choose loopback since we will only use one device for the development.
+  - we choose loopback since we will only use one device for the development.
   - you can always use other setting as needed.
+- Start your new workspace.
 
 ![Etherscan](/assets/ganache-collage.png)
+
+
+3. Copy ganache RPC server URL :
+
+![Etherscan](/assets/ganache-ip.png)
+
+4. Add Ganache Network To Metamask
+
+![Etherscan](/assets/met-ganache.png)
+
+
+
 
 
