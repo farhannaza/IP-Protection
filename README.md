@@ -447,9 +447,14 @@ Ganache is personal blockchain for Ethereum development that you can use to depl
 
 ![Etherscan](/assets/ganache-refactor.png)
 
+- Uncomment the highlighted area.
 - `development` to `ganache`
 - port: `8545` to `7545`
 - network_id: `*` to `5777`
+
+![Etherscan](/assets/ganache-refactor.png)
+
+- version: `0.8.21` to `0.8.19`
 
 
 
