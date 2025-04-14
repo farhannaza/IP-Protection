@@ -445,17 +445,47 @@ Ganache is personal blockchain for Ethereum development that you can use to depl
 
 6. Refactor truffle-config.js
 
-![Etherscan](/assets/refactor.png)
-
 - Uncomment the highlighted area `truffle-config.js`
 - Change the file base on information from Ganache
     - `development` to `ganache`
     - port: `8545` to `7545`
     - network_id: `*` to `5777`
 
-![Etherscan](/assets/truffle-version.png)
+![Etherscan](/assets/refactor.png)
 
 - version: `0.8.21` to `0.8.19`
+
+![Etherscan](/assets/truffle-version.png)
+
+7. Ganache: Deploy Smart Contract
+
+deploy using this command: 
+`truffle migrate --network ganache --reset`
+
+![Etherscan](/assets/ganache-deploy.png)
+
+- Success!
+
+8. Verify Smart Contract Deployment
+
+- You can verify the either on blocks or transaction 
+
+- chatgpt, please explain the difference between those two
+
+![Etherscan](/assets/ganache-verify.png)
+
+Here's a breakdown of what those blocks might represent:
+
+- Initialize Block (Block 0): The first block which often referred as genesis block or Block 0. This block doesn't contain any transactions (since you haven't deployed any contracts or made any transactions yet), but it's necessary to initialize the blockchain. All subsequent blocks (which will contain your transactions) will link back to this block.
+
+- Migrations Contract Deployment (Block 1): The first transaction is usually the deployment of the Migrations contract. Truffle uses this contract to keep track of which migrations have been run. The contract is deployed only once, when you run your migrations for the first time.
+
+- Migrations Contract Update (Block 2): After the Migrations contract is deployed, Truffle records that the first migration (the deployment of the Migrations contract itself) has been completed. It does this by calling a function on the Migrations contract, which creates a transaction.
+
+- Your Contract Deployment (Block 3): The next transaction is the deployment of your actual contract. This is the contract you've written and are deploying with your second migration script.
+
+- Migrations Contract Update (Block 4): After your contract is deployed, Truffle records that the second migration has been completed. Again, it does this by calling a function on the Migrations contract, which creates another transaction.
+
 
 
 
