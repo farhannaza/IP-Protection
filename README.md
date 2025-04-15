@@ -9,20 +9,22 @@ This guide walks you through setting up your development environment using **Nod
 ---
 
 ## 📚 Table of Contents
+- [Chapter 1: Backend](#backend)  
+  - [1️⃣ Node.js](#1️⃣-nodejs)  
+  - [2️⃣ Visual Studio Code](#2️⃣-visual-studio-code)  
+  - [3️⃣ Truffle Suite](#3️⃣-truffle-suite)  
+  - [4️⃣ Alchemy](#4️⃣-alchemy)  
+  - [5️⃣ Metamask](#5️⃣-metamask)  
+  - [6️⃣ Smart Contract Setup](#6️⃣-smart-contract-setup)  
+  - [7️⃣ Sepolia: Deploying to Ethereum Testnet](#7️⃣-deploying-to-ethereum-testnet)  
+  - [8️⃣ Ganache: Local Deployment for Testing](#8️⃣-ganache-local-deployment-for-testing)
+- [Chapter 2: Frontend](#frontend)  
 
-- [1️⃣ Node.js](#1️⃣-nodejs)  
-- [2️⃣ Visual Studio Code](#2️⃣-visual-studio-code)  
-- [3️⃣ Truffle Suite](#3️⃣-truffle-suite)  
-- [4️⃣ Alchemy](#4️⃣-alchemy)  
-- [5️⃣ Metamask](#5️⃣-metamask)  
-- [6️⃣ Smart Contract Setup](#6️⃣-smart-contract-setup)  
-- [7️⃣ Sepolia: Deploying to Ethereum](#7️⃣-deploying-to-ethereum)  
-- [8️⃣ Ganache: Local Deployment for Testing](#8️⃣-ganache-local-deployment-for-testing)
 
 ---
 
 <h1 align="center">   
-  Blockchain Development: Backend
+  Chapter 1: Backend
 </h1> 
 
 ## 1️⃣ Node.js
@@ -343,7 +345,7 @@ Your project should look like this:
 
 ---
 
-## 7️⃣ Sepolia: Deploying to Ethereum
+## 7️⃣ Sepolia: Deploying to Ethereum Testnet
 
 ### 1. Change to Sepolia Network and Retrieve Wallet Address
 
@@ -499,8 +501,13 @@ Ganache provides both a block explorer and transaction list. Here's how to inter
 - **Block 2**: Records that the migration has been completed
 - **Block 3**: Deployment of your `HashStorage` contract
 
+<h1 align="center">   
+  Chapter 2: Frontend
+</h1> 
 
 
+## 1️⃣ Next.js Framework
+install next js
 
 
 
