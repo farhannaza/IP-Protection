@@ -507,24 +507,28 @@ Ganache provides both a block explorer and transaction list. Here's how to inter
 
 ## 1️⃣ Next.js Framework
 
-install next js, ensure you install it in the correct directory (Ip Protection):
-npx create-next-app@latest
+1. install next js, ensure you install it in the correct directory (Ip Protection):
+`npx create-next-app@latest`
 
-put the project name: `client`
+2. put the project name: `client`
 (we choose that name because that is the default name use for contract build directory in truffle-config.js)
-choose the default setting for all the other option.
+- choose the default setting for all the other option.
 
 ![Ganache Verification](/assets/install-nextjs.png)
 
-go into the client directory using `cd client`
+3. go into the client directory using `cd client`
 
-then type `npm run dev` to test the next.js framework : 
+- then type `npm run dev` to test the next.js framework : 
 
 ![Ganache Verification](/assets/nextjs-testrun.png)
 
-if everything is set up correctly you should see it like this : 
+- if everything is set up correctly you should see it like this : 
 
 ![Ganache Verification](/assets/nextjs-client.png)
+
+
+## 2 Customization
+
 
 
 
