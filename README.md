@@ -518,7 +518,8 @@ Ganache provides both a block explorer and transaction list. Here's how to inter
 
 3. go into the client directory using `cd client`
 
-- then type `npm run dev` to test the next.js framework : 
+- then type `npm run dev` to test the next.js framework.
+- click on either Local or Network link.
 
 ![Ganache Verification](/assets/nextjs-testrun.png)
 
@@ -528,6 +529,33 @@ Ganache provides both a block explorer and transaction list. Here's how to inter
 
 
 ## 2 Customization
+
+1. Before we start customizing our UI we need to recompile our blockchain contract (truffle-config.js) into the client directory to ensure that our next.js framework can properly interact with blockchain Application Binary Interface(ABI)
+
+- define what ABI is : 
+
+- paste this code snippet in truffle-config.js: 
+
+`contracts_build_directory: "./client/app/routes/artifacts",`
+
+![Ganache Verification](/assets/abi-directory.png)
+
+- then compile the smart contract again:
+
+`truffle migrate --network ganache --reset`
+
+- you should see this file in the client directory
+
+![Ganache Verification](/assets/abi-location.png)
+
+
+- dependencies 
+
+npx shadcn@latest init
+npm i lucide-react
+npm i sonner
+npm i radix-ui
+npm i web3
 
 
 
