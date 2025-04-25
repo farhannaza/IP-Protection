@@ -1873,17 +1873,33 @@ congratulation, you have completed the tutorial! Happy Coding!
 
 ## 4️⃣ Final Steps
 
-### 1. Download All UI Components from ShadCN
+### 1. Download All UI Components Used in the Project from Shadcn
 
 Run these commands to fetch components used in this project:
 
 ```bash
 npx shadcn@latest add button
+```
+```bash
 npx shadcn@latest add badge
+```
+```bash
 npx shadcn@latest add card
+```
+```bash
+
 npx shadcn@latest add dialog
+```
+```bash
+
 npx shadcn@latest add input
+```
+```bash
+
 npx shadcn@latest add label
+```
+```bash
+
 npx shadcn@latest add table
 ```
 
