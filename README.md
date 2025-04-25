@@ -21,7 +21,8 @@ This guide walks you through setting up your development environment using **Nod
 - [Chapter 2: Frontend](#frontend)  
   - [1️⃣ Next.js Framework](#1️⃣-nextjs-framework)  
   - [2️⃣ UI Customization & ABI Integration](#2️⃣-ui-customization--abi-integration)  
-
+  - [3️⃣ Use Template](#3️⃣-use-template)  
+  - [4️⃣ Final Steps](#4️⃣-final-steps)
 
 ---
 
