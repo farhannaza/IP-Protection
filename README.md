@@ -595,3 +595,1277 @@ npm i web3
 - `web3`: JavaScript library for Ethereum blockchain interactions
 
 ---
+
+## 3 Use Template
+- we will be creating three new directory which is `dashboard`, `components` and `lib` and its contents.
+
+- the directory graph will look like this : 
+client/
+├── app/
+│   └── dashboard/
+│       ├── verify/
+│       │   └── page.tsx
+│       └── page.tsx
+├── components/
+│   ├── asset-list.tsx
+│   ├── file-uploader.tsx
+├── lib/
+│   ├── contract-config.ts
+│   ├── hash.ts
+│   └── web3.ts
+...
+
+
+
+## 3️⃣ Use Template
+
+We will be creating three new directories: `dashboard`, `components`, and `lib` with the following structure:
+
+```
+client/
+├── app/
+│   └── dashboard/
+│       ├── verify/
+│       │   └── page.tsx
+│       └── page.tsx
+├── components/
+│   ├── asset-list.tsx
+│   ├── file-uploader.tsx
+├── lib/
+│   ├── contract-config.ts
+│   ├── hash.ts
+│   └── web3.ts
+...
+```
+
+### 🔧 Template for Each File
+
+```tsx
+// client/app/dashboard/page.tsx
+"use client"
+
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Shield, FileText, Music, ImageIcon, File, Video, Package } from "lucide-react"
+import { FileUploader } from "@/components/file-uploader"
+import { AssetList } from "@/components/asset-list"
+import { Web3Service } from "@/lib/web3"
+import { generateFileHash } from "@/lib/hash"
+import { toast, Toaster } from "sonner"
+
+export default function Dashboard() {
+  const [assets, setAssets] = useState<
+    Array<{
+      id: string
+      name: string
+      type: string
+      size: string
+      uploadDate: string
+      status: "processing" | "verified" | "error"
+      txHash?: string
+      timestamp?: string
+    }>
+  >([]);
+  const [web3Service, setWeb3Service] = useState<Web3Service | null>(null);
+  const [networkInfo, setNetworkInfo] = useState<{
+    name: string;
+    contractAddress: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const initializeWeb3AndLoadAssets = async () => {
+      try {
+        const service = new Web3Service();
+        await service.initialize();
+        
+        // Get network information
+        const networkName = await service.getNetworkName();
+        const contractAddress = await service.getContractAddress();
+        setNetworkInfo({
+          name: networkName,
+          contractAddress: contractAddress
+        });
+
+        setWeb3Service(service);
+
+        // Load assets from blockchain
+        const blockchainAssets = await service.getAllProtectedAssets();
+        
+        // Convert blockchain assets to UI format
+        const formattedAssets = blockchainAssets.map(asset => ({
+          id: asset.hash,
+          name: asset.fileName,
+          type: asset.fileType,
+          size: asset.fileSize,
+          uploadDate: new Date(asset.timestamp * 1000).toISOString().split('T')[0],
+          status: "verified" as const,
+          txHash: asset.hash,
+          timestamp: new Date(asset.timestamp * 1000).toLocaleString(),
+        }));
+
+        setAssets(formattedAssets);
+      } catch (error: any) {
+        toast.error(error.message);
+      }
+    };
+
+    initializeWeb3AndLoadAssets();
+  }, []);
+
+  const handleFileUpload = async (files: File[]) => {
+    if (!web3Service) {
+      toast.error("Web3 not initialized");
+      return;
+    }
+
+    // Add new files to UI immediately with processing status
+    const newAssets = files.map((file, index) => ({
+      id: `new-${Date.now()}-${index}`,
+      name: file.name,
+      type: file.type,
+      size: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
+      uploadDate: new Date().toISOString().split("T")[0],
+      status: "processing" as const,
+    }));
+
+    setAssets(prev => [...newAssets, ...prev]);
+
+    // Process each file
+    for (const [index, file] of files.entries()) {
+      try {
+        // Generate hash
+        const hash = await generateFileHash(file);
+
+        // Store hash and file information on blockchain
+        const txHash = await web3Service.storeHash(
+          hash,
+          file.name,
+          file.type,
+          `${(file.size / (1024 * 1024)).toFixed(2)} MB`
+        );
+
+        // Update asset status
+        setAssets(prev => prev.map(asset => {
+          if (asset.id === newAssets[index].id) {
+            return {
+              ...asset,
+              status: "verified",
+              txHash,
+              timestamp: new Date().toLocaleString(),
+            };
+          }
+          return asset;
+        }));
+
+        toast.success(`File "${file.name}" has been protected`);
+        
+        // Refresh assets from blockchain
+        const blockchainAssets = await web3Service.getAllProtectedAssets();
+        const formattedAssets = blockchainAssets.map(asset => ({
+          id: asset.hash,
+          name: asset.fileName,
+          type: asset.fileType,
+          size: asset.fileSize,
+          uploadDate: new Date(asset.timestamp * 1000).toISOString().split('T')[0],
+          status: "verified" as const,
+          txHash: asset.hash,
+          timestamp: new Date(asset.timestamp * 1000).toLocaleString(),
+        }));
+        setAssets(formattedAssets);
+
+      } catch (error: any) {
+        console.error(error);
+        
+        setAssets(prev => prev.map(asset => {
+          if (asset.id === newAssets[index].id) {
+            return {
+              ...asset,
+              status: "error",
+            };
+          }
+          return asset;
+        }));
+
+        toast.error(error.message || `Failed to protect "${file.name}"`);
+      }
+    }
+  };
+
+  // Helper function to categorize files
+  const getCategoryCounts = () => {
+    return {
+      documents: assets.filter(a => 
+        a.type.includes('pdf') || 
+        a.type.includes('document') || 
+        a.type.includes('txt') ||
+        a.type.includes('doc')
+      ).length,
+      music: assets.filter(a => 
+        a.type.includes('audio') || 
+        a.type.includes('mp3') || 
+        a.type.includes('wav')
+      ).length,
+      images: assets.filter(a => 
+        a.type.includes('image') || 
+        a.type.includes('png') || 
+        a.type.includes('jpg') || 
+        a.type.includes('jpeg') || 
+        a.type.includes('gif')
+      ).length,
+      videos: assets.filter(a => 
+        a.type.includes('video') || 
+        a.type.includes('mp4') || 
+        a.type.includes('mov') || 
+        a.type.includes('avi')
+      ).length,
+      others: assets.filter(a => {
+        const isDocument = a.type.includes('pdf') || a.type.includes('document') || a.type.includes('txt') || a.type.includes('doc');
+        const isMusic = a.type.includes('audio') || a.type.includes('mp3') || a.type.includes('wav');
+        const isImage = a.type.includes('image') || a.type.includes('png') || a.type.includes('jpg') || a.type.includes('jpeg') || a.type.includes('gif');
+        const isVideo = a.type.includes('video') || a.type.includes('mp4') || a.type.includes('mov') || a.type.includes('avi');
+        return !isDocument && !isMusic && !isImage && !isVideo;
+      }).length
+    };
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Toaster position="top-right" />
+      <header className="px-4 lg:px-6 h-14 flex items-center border-b">
+        <Link className="flex items-center gap-2 font-semibold" href="/">
+          <Shield className="h-6 w-6" />
+          <span>IP Shield</span>
+        </Link>
+        {networkInfo && (
+          <div className="ml-4 text-sm text-muted-foreground">
+            <span className="font-medium">{networkInfo.name}</span>
+            <span className="mx-2">|</span>
+            <span className="font-mono text-xs truncate" title={networkInfo.contractAddress}>
+              Contract: {networkInfo.contractAddress.slice(0, 6)}...{networkInfo.contractAddress.slice(-4)}
+            </span>
+          </div>
+        )}
+        <nav className="ml-auto flex gap-4 sm:gap-6">
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard">
+            Dashboard
+          </Link>
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard/verify">
+            Verify
+          </Link>
+        </nav>
+      </header>
+      <main className="flex-1 container max-w-7xl mx-auto py-6 px-4">
+        <div className="grid gap-6">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+            <p className="text-muted-foreground">Manage and protect your intellectual property</p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-6">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Total Assets</CardTitle>
+                <FileText className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{assets.length}</div>
+                <p className="text-xs text-muted-foreground">Protected items</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Documents</CardTitle>
+                <File className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{getCategoryCounts().documents}</div>
+                <p className="text-xs text-muted-foreground">Protected documents</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Music</CardTitle>
+                <Music className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{getCategoryCounts().music}</div>
+                <p className="text-xs text-muted-foreground">Protected audio files</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Images</CardTitle>
+                <ImageIcon className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{getCategoryCounts().images}</div>
+                <p className="text-xs text-muted-foreground">Protected images</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Videos</CardTitle>
+                <Video className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{getCategoryCounts().videos}</div>
+                <p className="text-xs text-muted-foreground">Protected videos</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Others</CardTitle>
+                <Package className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{getCategoryCounts().others}</div>
+                <p className="text-xs text-muted-foreground">Other protected files</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Upload New Asset</CardTitle>
+              <CardDescription>Upload your intellectual property to secure it on the blockchain</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <FileUploader onFilesSelected={handleFileUpload} />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Your Protected Assets</CardTitle>
+              <CardDescription>View and manage your intellectual property</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <AssetList assets={assets} />
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+      <footer className="border-t py-4 px-6">
+        <div className="container flex flex-col sm:flex-row items-center justify-between">
+          <p className="text-xs text-muted-foreground">IP Shield.</p>
+          <p className="text-xs text-muted-foreground">Powered by Blockchain Technology</p>
+        </div>
+      </footer>
+    </div>
+  )
+}
+```
+
+```tsx
+// client/app/dashboard/verify/page.tsx
+"use client"
+
+import type React from "react"
+
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Shield, Search, CheckCircle, XCircle } from "lucide-react"
+import { FileUploader } from "@/components/file-uploader"
+import { Web3Service } from "@/lib/web3"
+import { generateFileHash } from "@/lib/hash"
+import { toast, Toaster } from "sonner"
+
+export default function VerifyPage() {
+  const [verificationMethod, setVerificationMethod] = useState<"file" | "hash">("file")
+  const [hashInput, setHashInput] = useState("")
+  const [web3Service, setWeb3Service] = useState<Web3Service | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [networkInfo, setNetworkInfo] = useState<{
+    name: string;
+    contractAddress: string;
+  } | null>(null);
+  const [verificationResult, setVerificationResult] = useState<{
+    status: "success" | "error" | null
+    message: string
+    details?: {
+      fileName?: string
+      fileType?: string
+      fileSize?: string
+      timestamp?: string
+      txHash?: string
+      etherscanTxHash?: string
+    }
+  }>({ status: null, message: "" });
+
+  // Initialize Web3Service when component mounts
+  useEffect(() => {
+    const initializeWeb3 = async () => {
+      try {
+        const service = new Web3Service();
+        await service.initialize(); // Make sure to await initialization
+        
+        // Get network information
+        const networkName = await service.getNetworkName();
+        const contractAddress = await service.getContractAddress();
+        
+        setNetworkInfo({
+          name: networkName,
+          contractAddress: contractAddress
+        });
+        
+        setWeb3Service(service);
+        setIsInitialized(true);
+        
+      } catch (error: any) {
+        console.error('Initialization error:', error);
+        toast.error(`Failed to initialize: ${error.message}`);
+      }
+    };
+
+    initializeWeb3();
+  }, []);
+
+  const  handleFileUpload = async (files: File[]) => {
+    if (!isInitialized || !web3Service) {
+      toast.error("Please wait for Web3 initialization");
+      return;
+    }
+
+    if (files.length === 0) return;
+
+    try {
+      setVerificationResult({ status: null, message: "Verifying file..." });
+
+      // Generate hash from the file
+      const hash = await generateFileHash(files[0]);
+
+      // Verify hash on blockchain
+      const result = await web3Service.verifyHash(hash);
+
+      if (result.exists) {
+        const timestamp = new Date(result.timestamp! * 1000).toLocaleString();
+        
+        // Get the actual transaction hash for Etherscan only
+        const txHash = await web3Service.getHashTransactionHash(hash);
+        
+        setVerificationResult({
+          status: "success",
+          message: "File verified successfully!",
+          details: {
+            fileName: result.fileName,
+            fileType: result.fileType,
+            fileSize: result.fileSize,
+            timestamp,
+            txHash: hash, // Keep using file hash for display
+            etherscanTxHash: txHash, // Add new field for Etherscan link
+          },
+        });
+      } else {
+        setVerificationResult({
+          status: "error",
+          message: "File not found in our records.",
+        });
+      }
+    } catch (error: any) {
+      console.error('Verification error:', error);
+      setVerificationResult({
+        status: "error",
+        message: error.message || "Failed to verify file.",
+      });
+    }
+  };
+
+  const handleHashVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isInitialized || !web3Service) {
+      toast.error("Please wait for Web3 initialization");
+      return;
+    }
+
+    if (!hashInput) return;
+
+    try {
+      setVerificationResult({ status: null, message: "Verifying hash..." });
+      
+      const result = await web3Service.verifyHash("0x"+hashInput);
+
+      if (result.exists) {
+        const timestamp = new Date(result.timestamp! * 1000).toLocaleString();
+        
+        // Get the actual transaction hash for Etherscan only
+        const txHash = await web3Service.getHashTransactionHash("0x"+hashInput);
+        
+        setVerificationResult({
+          status: "success",
+          message: "Hash verified successfully!",
+          details: {
+            fileName: result.fileName,
+            fileType: result.fileType,
+            fileSize: result.fileSize,
+            timestamp,
+            txHash: "0x"+hashInput, // Keep using input hash for display
+            etherscanTxHash: txHash, // Add new field for Etherscan link
+          },
+        });
+      } else {
+        setVerificationResult({
+          status: "error",
+          message: "Hash not found in our records.",
+        });
+      }
+    } catch (error: any) {
+      console.error('Verification error:', error);
+      setVerificationResult({
+        status: "error",
+        message: error.message || "Failed to verify hash.",
+      });
+    }
+  };
+
+  const getBlockExplorerUrl = (txHash: string) => {
+    return `https://sepolia.etherscan.io/tx/${txHash}`;
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Toaster position="top-right" />
+      <header className="px-4 lg:px-6 h-14 flex items-center border-b">
+        <Link className="flex items-center gap-2 font-semibold" href="/">
+          <Shield className="h-6 w-6" />
+          <span>IP Shield</span>
+        </Link>
+        {networkInfo && (
+          <div className="ml-4 text-sm text-muted-foreground">
+            <span className="font-medium">{networkInfo.name}</span>
+            <span className="mx-2">|</span>
+            <span className="font-mono text-xs truncate" title={networkInfo.contractAddress}>
+              Contract: {networkInfo.contractAddress.slice(0, 6)}...{networkInfo.contractAddress.slice(-4)}
+            </span>
+          </div>
+        )}
+        <nav className="ml-auto flex gap-4 sm:gap-6">
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard">
+            Dashboard
+          </Link>
+          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard/verify">
+            Verify
+          </Link>
+        </nav>
+      </header>
+      <main className="flex-1 container max-w-7xl mx-auto py-6 px-4">
+        <div className="grid gap-6 max-w-2xl mx-auto">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Verify Intellectual Property</h1>
+            <p className="text-muted-foreground">Check if a file or hash exists on the blockchain</p>
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Verification Method</CardTitle>
+              <CardDescription>Choose how you want to verify intellectual property</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-4">
+                <Button
+                  variant={verificationMethod === "file" ? "default" : "outline"}
+                  onClick={() => setVerificationMethod("file")}
+                >
+                  Upload File
+                </Button>
+                <Button
+                  variant={verificationMethod === "hash" ? "default" : "outline"}
+                  onClick={() => setVerificationMethod("hash")}
+                >
+                  Enter Hash
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {verificationMethod === "file" ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Upload File to Verify</CardTitle>
+                <CardDescription>
+                We&apos;ll calculate the hash of your file and check if it exists on the blockchain
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <FileUploader onFilesSelected={handleFileUpload} />
+              </CardContent>
+            </Card>
+          ) : (
+            <Card>
+              <CardHeader>
+                <CardTitle>Enter File Hash</CardTitle>
+                <CardDescription>
+                  Enter the SHA-256 hash of your file to verify its existence on the blockchain
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleHashVerify}>
+                  <div className="grid gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="hash">File Hash</Label>
+                      <Input
+                        id="hash"
+                        placeholder="e.g., 8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
+                        value={hashInput}
+                        onChange={(e) => setHashInput(e.target.value)}
+                      />
+                    </div>
+                    <Button type="submit">
+                      <Search className="w-4 h-4 mr-2" />
+                      Verify Hash
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          )}
+
+          {verificationResult.status !== null && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  {verificationResult.status === "success" ? (
+                    <>
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                      Verification Successful
+                    </>
+                  ) : (
+                    <>
+                      <XCircle className="w-5 h-5 text-red-500" />
+                      Verification Failed
+                    </>
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="mb-4">{verificationResult.message}</p>
+
+                {verificationResult.details && (
+                  <div className="grid gap-2 text-sm">
+                    {verificationResult.details.fileName && (
+                      <div className="grid grid-cols-3 gap-1 py-1 border-b">
+                        <span className="font-medium">File Name:</span>
+                        <span className="col-span-2">{verificationResult.details.fileName}</span>
+                      </div>
+                    )}
+                    {verificationResult.details.fileType && (
+                      <div className="grid grid-cols-3 gap-1 py-1 border-b">
+                        <span className="font-medium">File Type:</span>
+                        <span className="col-span-2">{verificationResult.details.fileType}</span>
+                      </div>
+                    )}
+                    {verificationResult.details.fileSize && (
+                      <div className="grid grid-cols-3 gap-1 py-1 border-b">
+                        <span className="font-medium">File Size:</span>
+                        <span className="col-span-2">{verificationResult.details.fileSize}</span>
+                      </div>
+                    )}
+                    {verificationResult.details.timestamp && (
+                      <div className="grid grid-cols-3 gap-1 py-1 border-b">
+                        <span className="font-medium">Timestamp:</span>
+                        <span className="col-span-2">{verificationResult.details.timestamp}</span>
+                      </div>
+                    )}
+                    {verificationResult.details.txHash && (
+                      <div className="grid grid-cols-3 gap-1 py-1">
+                        <span className="font-medium">Hash:</span>
+                        <span className="col-span-2 truncate">{verificationResult.details.txHash}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+              {verificationResult.status === "success" && verificationResult.details?.etherscanTxHash && (
+                <CardFooter>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => window.open(getBlockExplorerUrl(verificationResult.details!.etherscanTxHash!), '_blank')}
+                  >
+                    View on Blockchain Explorer
+                  </Button>
+                </CardFooter>
+              )}
+            </Card>
+          )}
+        </div>
+      </main>
+      <footer className="border-t py-4 px-6">
+        <div className="container flex flex-col sm:flex-row items-center justify-between">
+          <p className="text-xs text-muted-foreground">IP Shield.</p>
+          <p className="text-xs text-muted-foreground">Powered by Blockchain Technology</p>
+        </div>
+      </footer>
+    </div>
+  )
+}
+```
+
+```tsx
+// client/components/asset-list.tsx
+"use client"
+
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Badge } from "@/components/ui/badge"
+import { FileText, Music, ImageIcon, File, ExternalLink, Info } from "lucide-react"
+import { Web3Service } from "@/lib/web3"
+
+interface Asset {
+  id: string
+  name: string
+  type: string
+  size: string
+  uploadDate: string
+  status: "processing" | "verified" | "error"
+  txHash?: string
+  timestamp?: string
+  etherscanTxHash?: string
+}
+
+interface AssetListProps {
+  assets: Asset[]
+}
+
+export function AssetList({ assets }: AssetListProps) {
+  const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null)
+  const [web3Service, setWeb3Service] = useState<Web3Service | null>(null)
+
+  useEffect(() => {
+    const initializeWeb3 = async () => {
+      try {
+        const service = new Web3Service();
+        await service.initialize();
+        setWeb3Service(service);
+      } catch (error: any) {
+        console.error('Failed to initialize Web3:', error);
+      }
+    };
+
+    initializeWeb3();
+  }, []);
+
+  const getFileIcon = (type: string) => {
+    if (type.includes("image")) return <ImageIcon className="w-4 h-4" />
+    if (type.includes("audio")) return <Music className="w-4 h-4" />
+    if (type.includes("pdf") || type.includes("document")) return <FileText className="w-4 h-4" />
+    return <File className="w-4 h-4" />
+  }
+
+  const getStatusBadge = (status: Asset['status']) => {
+    switch (status) {
+      case 'processing':
+        return (
+          <Badge variant="outline" className="bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
+            Processing
+          </Badge>
+        );
+      case 'verified':
+        return (
+          <Badge variant="outline" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300">
+            Verified
+          </Badge>
+        );
+      case 'error':
+        return (
+          <Badge variant="outline" className="bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">
+            Error
+          </Badge>
+        );
+    }
+  };
+
+  const getBlockExplorerUrl = (txHash: string) => {
+    return `https://sepolia.etherscan.io/tx/${txHash}`;
+  };
+
+  const handleViewOnExplorer = async (asset: Asset) => {
+    if (!web3Service) return;
+
+    try {
+      const txHash = await web3Service.getHashTransactionHash(asset.txHash!);
+      window.open(getBlockExplorerUrl(txHash), '_blank');
+    } catch (error: any) {
+      console.error('Failed to get transaction hash:', error);
+    }
+  };
+
+  return (
+    <>
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Type</TableHead>
+              <TableHead>Size</TableHead>
+              <TableHead>Upload Date</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {assets.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
+                  No assets found. Upload your first file to get started.
+                </TableCell>
+              </TableRow>
+            ) : (
+              assets.map((asset) => (
+                <TableRow key={asset.id}>
+                  <TableCell className="font-medium flex items-center gap-2">
+                    {getFileIcon(asset.type)}
+                    <span className="truncate max-w-[150px]">{asset.name}</span>
+                  </TableCell>
+                  <TableCell>{asset.type.split("/")[1]?.toUpperCase() || asset.type}</TableCell>
+                  <TableCell>{asset.size}</TableCell>
+                  <TableCell>{asset.uploadDate}</TableCell>
+                  <TableCell>
+                    {getStatusBadge(asset.status)}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button variant="ghost" size="icon" onClick={() => setSelectedAsset(asset)}>
+                      <Info className="w-4 h-4" />
+                      <span className="sr-only">View details</span>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      <Dialog open={!!selectedAsset} onOpenChange={(open) => !open && setSelectedAsset(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Asset Details</DialogTitle>
+            <DialogDescription>Information about your protected intellectual property</DialogDescription>
+          </DialogHeader>
+
+          {selectedAsset && (
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-3 gap-4 items-center">
+                <span className="font-medium">File Name:</span>
+                <span className="col-span-2 truncate">{selectedAsset.name}</span>
+              </div>
+              <div className="grid grid-cols-3 gap-4 items-center">
+                <span className="font-medium">File Type:</span>
+                <span className="col-span-2">{selectedAsset.type}</span>
+              </div>
+              <div className="grid grid-cols-3 gap-4 items-center">
+                <span className="font-medium">File Size:</span>
+                <span className="col-span-2">{selectedAsset.size}</span>
+              </div>
+              <div className="grid grid-cols-3 gap-4 items-center">
+                <span className="font-medium">Upload Date:</span>
+                <span className="col-span-2">{selectedAsset.uploadDate}</span>
+              </div>
+              <div className="grid grid-cols-3 gap-4 items-center">
+                <span className="font-medium">Status:</span>
+                <span className="col-span-2">
+                  {getStatusBadge(selectedAsset.status)}
+                </span>
+              </div>
+
+              {selectedAsset.status === "verified" && (
+                <>
+                  <div className="grid grid-cols-3 gap-4 items-center">
+                    <span className="font-medium">Timestamp:</span>
+                    <span className="col-span-2">{selectedAsset.timestamp}</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4 items-center">
+                    <span className="font-medium">Transaction Hash:</span>
+                    <span className="col-span-2 truncate">{selectedAsset.txHash}</span>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    className="mt-2"
+                    onClick={() => handleViewOnExplorer(selectedAsset)}
+                  >
+                    <ExternalLink className="w-4 h-4 mr-2" />
+                    View on Blockchain Explorer
+                  </Button>
+                </>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+```
+
+```tsx
+// client/components/file-uploader.tsx
+"use client"
+
+import type React from "react"
+
+import { useState, useRef } from "react"
+import { Button } from "@/components/ui/button"
+import { Upload, X } from "lucide-react"
+
+interface FileUploaderProps {
+  onFilesSelected: (files: File[]) => void
+}
+
+export function FileUploader({ onFilesSelected }: FileUploaderProps) {
+  const [dragActive, setDragActive] = useState(false)
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true)
+    } else if (e.type === "dragleave") {
+      setDragActive(false)
+    }
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragActive(false)
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const filesArray = Array.from(e.dataTransfer.files)
+      setSelectedFiles(filesArray)
+      onFilesSelected(filesArray)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    if (e.target.files && e.target.files.length > 0) {
+      const filesArray = Array.from(e.target.files)
+      setSelectedFiles(filesArray)
+      onFilesSelected(filesArray)
+    }
+  }
+
+  const handleButtonClick = () => {
+    inputRef.current?.click()
+  }
+
+  const removeFile = (index: number) => {
+    const newFiles = [...selectedFiles]
+    newFiles.splice(index, 1)
+    setSelectedFiles(newFiles)
+  }
+
+  const getFileIcon = (type: string) => {
+    if (type.includes("image")) return "🖼️"
+    if (type.includes("audio")) return "🎵"
+    if (type.includes("video")) return "🎬"
+    if (type.includes("pdf")) return "📄"
+    return "📁"
+  }
+
+  return (
+    <div className="grid gap-4">
+      <div
+        className={`border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center gap-4 ${
+          dragActive ? "border-primary bg-primary/5" : "border-gray-300 dark:border-gray-700"
+        }`}
+        onDragEnter={handleDrag}
+        onDragLeave={handleDrag}
+        onDragOver={handleDrag}
+        onDrop={handleDrop}
+      >
+        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+          <Upload className="w-8 h-8 text-primary" />
+        </div>
+        <div className="text-center">
+          <p className="font-medium">Drag and drop your files here</p>
+          <p className="text-sm text-muted-foreground mt-1">or click to browse</p>
+        </div>
+        <input ref={inputRef} type="file" className="hidden" multiple onChange={handleChange} />
+        <Button type="button" variant="outline" onClick={handleButtonClick}>
+          Select Files
+        </Button>
+      </div>
+
+      {selectedFiles.length > 0 && (
+        <div className="grid gap-2">
+          <p className="text-sm font-medium">Selected Files:</p>
+          <div className="border rounded-lg divide-y">
+            {selectedFiles.map((file, index) => (
+              <div key={index} className="flex items-center justify-between p-3">
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl">{getFileIcon(file.type)}</div>
+                  <div>
+                    <p className="font-medium truncate max-w-[200px]">{file.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {file.type || "Unknown type"} • {(file.size / (1024 * 1024)).toFixed(2)} MB
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => removeFile(index)}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+
+```
+
+```ts
+// client/lib/contract-config.ts
+import HashStorageArtifact from '@/app/routes/artifacts/HashStorage.json';
+
+export interface ContractConfig {
+  address: string;
+  abi: any;
+  network: string;
+}
+
+export const getContractConfig = async (): Promise<ContractConfig> => {
+  try {
+    // Get the network ID from MetaMask
+    const networkId = await window.ethereum.request({ method: 'net_version' });
+    
+    // Get the deployed address for this network from the contract artifact
+    const networks = HashStorageArtifact.networks as Record<string, { address: string }>;
+    console.log("network:", networks)
+    const deployedNetwork = networks[networkId];
+    console.log("deployed:", deployedNetwork.address)
+
+
+    if (!deployedNetwork) {
+      throw new Error(`Contract not deployed on network ${networkId}`);
+    }
+
+    return {
+      address: deployedNetwork.address,
+      abi: HashStorageArtifact.abi,
+      network: networkId
+    };
+    
+  } catch (error: any) {
+    throw new Error(`Failed to get contract config: ${error.message}`);
+  }
+}; 
+```
+
+```ts
+// client/lib/hash.ts
+export async function generateFileHash(file: File): Promise<string> {
+  try {
+    const buffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = '0x' + hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+  } catch (error: any) {
+    throw new Error(error.message || 'Failed to generate file hash');
+  }
+} 
+```
+
+```ts
+// client/lib/web3.ts
+import Web3 from 'web3';
+import { getContractConfig, type ContractConfig } from './contract-config';
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
+
+export interface HashData {
+  hash: string;
+  fileName: string;
+  fileType: string;
+  fileSize: string;
+  timestamp: number;
+}
+
+export class Web3Service {
+  private web3: Web3;
+  private contract: any;
+  private contractConfig: ContractConfig | null = null;
+
+  constructor() {
+    if (typeof window === 'undefined' || !window.ethereum) {
+      throw new Error('Please install MetaMask to use this application');
+    }
+    this.web3 = new Web3(window.ethereum);
+  }
+
+  async initialize(): Promise<void> {
+    try {
+      // Get contract configuration
+      this.contractConfig = await getContractConfig();
+      
+      // Initialize contract
+      this.contract = new this.web3.eth.Contract(
+        this.contractConfig.abi,
+        this.contractConfig.address
+      );
+
+      // Listen for network changes
+      window.ethereum.on('chainChanged', () => {
+        window.location.reload();
+      });
+
+    } catch (error: any) {
+      throw new Error(`Failed to initialize Web3Service: ${error.message}`);
+    }
+  }
+
+  async getContractAddress(): Promise<string> {
+    if (!this.contractConfig) {
+      throw new Error('Contract not initialized');
+    }
+    return this.contractConfig.address;
+  }
+
+  async getNetworkName(): Promise<string> {
+    const networkId = await this.web3.eth.net.getId();
+    const networks: Record<string, string> = {
+      '1': 'Ethereum Mainnet',
+      '5': 'Goerli Testnet',
+      '11155111': 'Sepolia Testnet',
+      '5777': 'Local Ganache'
+    };
+    return networks[networkId.toString()] || `Network ${networkId}`;
+  }
+
+  async connectWallet(): Promise<string[]> {
+    try {
+      const accounts = await window.ethereum.request({ 
+        method: 'eth_requestAccounts' 
+      });
+      return accounts;
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to connect wallet');
+    }
+  }
+
+  async storeHash(
+    hash: string, 
+    fileName: string, 
+    fileType: string,
+    fileSize: string
+  ): Promise<string> {
+    this.ensureInitialized();
+    try {
+      const accounts = await this.connectWallet();
+      const result = await this.contract.methods
+        .storeHash(hash, fileName, fileType, fileSize)
+        .send({
+          from: accounts[0]
+        });
+      console.log("txhash:", result.transactionHash)
+
+      return result.transactionHash;
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to store hash');
+    }
+  }
+
+  async getAllProtectedAssets(): Promise<HashData[]> {
+    this.ensureInitialized();
+    try {
+      const hashes = await this.contract.methods.getAllHashes().call();
+      const assets: HashData[] = [];
+
+      for (const hash of hashes) {
+        const data = await this.contract.methods.getHashData(hash).call();
+        assets.push({
+          hash: data[0],
+          fileName: data[1],
+          fileType: data[2],
+          fileSize: data[3],
+          timestamp: Number(data[4])
+        });
+      }
+
+      return assets;
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to fetch protected assets');
+    }
+  }
+
+  async verifyHash(hash: string): Promise<{
+    exists: boolean;
+    fileName?: string;
+    fileType?: string;
+    fileSize?: string;
+    timestamp?: number;
+    transactionHash?: string;
+  }> {
+    this.ensureInitialized();
+    try {
+      const exists = await this.contract.methods.hashExists(hash).call();
+      if (exists) {
+        const data = await this.contract.methods.getHashData(hash).call();
+        console.log("hash",hash);
+        return { 
+          exists, 
+          fileName: data[1],
+          fileType: data[2],
+          fileSize: data[3],
+          timestamp: Number(data[4]),
+          transactionHash: hash
+        };
+      }
+      return { exists };
+    } catch (error: any) {
+      throw new Error(error.message || 'Failed to verify hash');
+    }
+  }
+
+  async getHashTransactionHash(hash: string): Promise<string> {
+    this.ensureInitialized();
+    try {
+      // Get past events for the HashStored event (this is the event name from your smart contract)
+      const events = await this.contract.getPastEvents('HashStored', {
+        filter: { hash: hash },
+        fromBlock: 0,
+        toBlock: 'latest'
+      });
+
+      if (events.length === 0) {
+        throw new Error('No transaction found for this hash');
+      }
+
+      // Return the transaction hash of the event
+      return events[0].transactionHash;
+    } catch (error: any) {
+      throw new Error(`Failed to get transaction hash: ${error.message}`);
+    }
+  }
+
+  // Add check for contract initialization
+  private ensureInitialized() {
+    if (!this.contract) {
+      throw new Error('Contract not initialized. Call initialize() first.');
+    }
+  }
+} 
+```
