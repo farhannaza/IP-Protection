@@ -1849,28 +1849,6 @@ export class Web3Service {
 } 
 ```
 
-2. download all the components use in the project from shadcnn: 
-npx shadcn@latest add button
-npx shadcn@latest add badge
-npx shadcn@latest add card
-npx shadcn@latest add dialog
-npx shadcn@latest add input
-npx shadcn@latest add label
-npx shadcn@latest add table
-
-We can get all the components from https://ui.shadcn.com/
-
-
-3. let's run the project:
-```
-npm run dev 
-```
-![Network Name](/assets/ip-protec.png)
-
-
-congratulation, you have completed the tutorial! Happy Coding!
-
-
 ## 4️⃣ Final Steps
 
 ### 1. Download All UI Components Used in the Project from Shadcn
