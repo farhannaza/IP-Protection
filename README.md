@@ -548,7 +548,7 @@ Ganache provides both a block explorer and transaction list. Here's how to inter
 
 ![Ganache Verification](/assets/abi-location.png)
 
-- download dependencies 
+2. download dependencies used in the template
 
 - `npx shadcn@latest init`
 - `npm i lucide-react`
