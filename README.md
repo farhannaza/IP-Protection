@@ -2,9 +2,19 @@
   IP-Shield (Ethereum)
 </h1> 
 
-## 🛠️ Environment Setup Guide
+## Introduction
 
-This guide walks you through setting up your development environment using **Node.js**, **Visual Studio Code**, **Truffle Suite**, **Alchemy**, and **Metamask** to build and deploy Ethereum smart contracts.
+Welcome to IP-Shield (Ethereum) — a practical guide for building a decentralized application (dApp) focused on intellectual property protection using the Ethereum blockchain.
+
+This tutorial will walk you through:
+
+Setting up a development environment with Node.js, Visual Studio Code, Truffle Suite, Alchemy, and Metamask
+
+Writing, compiling, and deploying smart contracts
+
+Creating a frontend interface using Next.js, shadcn/ui, and Web3.js
+
+The goal is to provide a clear, step-by-step process suitable for those looking to understand or develop simple Ethereum-based applications.
 
 ---
 
