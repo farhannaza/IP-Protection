@@ -1903,7 +1903,7 @@ npx shadcn@latest add label
 npx shadcn@latest add table
 ```
 
-We can get all the components from [https://ui.shadcn.com/](https://ui.shadcn.com/)
+We can get all the components from [https://ui.shadcn.com/](Shadcn)
 
 ### 2. Run the Project
 
