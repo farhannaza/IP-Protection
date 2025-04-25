@@ -596,27 +596,6 @@ npm i web3
 
 ---
 
-## 3 Use Template
-- we will be creating three new directory which is `dashboard`, `components` and `lib` and its contents.
-
-- the directory graph will look like this : 
-client/
-├── app/
-│   └── dashboard/
-│       ├── verify/
-│       │   └── page.tsx
-│       └── page.tsx
-├── components/
-│   ├── asset-list.tsx
-│   ├── file-uploader.tsx
-├── lib/
-│   ├── contract-config.ts
-│   ├── hash.ts
-│   └── web3.ts
-...
-
-
-
 ## 3️⃣ Use Template
 
 We will be creating three new directories: `dashboard`, `components`, and `lib` with the following structure:
@@ -1868,4 +1847,11 @@ export class Web3Service {
     }
   }
 } 
+```
+
+```tsx
+// client/app/dashboard/verify/page.tsx
+export default function VerifyPage() {
+  return <div>Verify Page</div>;
+}
 ```
