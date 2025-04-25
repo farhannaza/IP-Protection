@@ -1869,3 +1869,36 @@ npm run dev
 
 
 congratulation, you have completed the tutorial! Happy Coding!
+
+
+## 4️⃣ Final Steps
+
+### 1. Download All UI Components from ShadCN
+
+Run these commands to fetch components used in this project:
+
+```bash
+npx shadcn@latest add button
+npx shadcn@latest add badge
+npx shadcn@latest add card
+npx shadcn@latest add dialog
+npx shadcn@latest add input
+npx shadcn@latest add label
+npx shadcn@latest add table
+```
+
+We can get all the components from [https://ui.shadcn.com/](https://ui.shadcn.com/)
+
+### 2. Run the Project
+
+```bash
+npm run dev
+```
+
+![Network Name](/assets/ip-protec.png)
+
+---
+
+🎉 **Congratulations, you have completed the tutorial! Happy Coding!**
+
+---
