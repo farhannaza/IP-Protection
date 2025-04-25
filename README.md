@@ -8,11 +8,11 @@ Welcome to IP-Shield (Ethereum) — a practical guide for building a decentraliz
 
 This tutorial will walk you through:
 
-Setting up a development environment with Node.js, Visual Studio Code, Truffle Suite, Alchemy, and Metamask
+- Setting up a development environment with Node.js, Visual Studio Code, Truffle Suite, Alchemy, and Metamask
 
-Writing, compiling, and deploying smart contracts
+- Writing, compiling, and deploying smart contracts
 
-Creating a frontend interface using Next.js, shadcn/ui, and Web3.js
+- Creating a frontend interface using Next.js, shadcn/ui, and Web3.js
 
 The goal is to provide a clear, step-by-step process suitable for those looking to understand or develop simple Ethereum-based applications.
 
