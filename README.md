@@ -598,7 +598,7 @@ npm i web3
 
 ## 3️⃣ Use Template
 
-We will be creating three new directories: `dashboard`, `components`, and `lib` with the following structure:
+1. We will be creating three new directories: `dashboard`, `components`, and `lib` with the following structure:
 
 ```
 client/
@@ -1849,9 +1849,23 @@ export class Web3Service {
 } 
 ```
 
-```tsx
-// client/app/dashboard/verify/page.tsx
-export default function VerifyPage() {
-  return <div>Verify Page</div>;
-}
+2. download all the components use in the project from shadcnn: 
+npx shadcn@latest add button
+npx shadcn@latest add badge
+npx shadcn@latest add card
+npx shadcn@latest add dialog
+npx shadcn@latest add input
+npx shadcn@latest add label
+npx shadcn@latest add table
+
+We can get all the components from https://ui.shadcn.com/
+
+
+3. let's run the project:
 ```
+npm run dev 
+```
+![Network Name](/assets/ip-protec.png)
+
+
+congratulation, you have completed the tutorial! Happy Coding!
