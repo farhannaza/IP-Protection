@@ -509,61 +509,6 @@ Ganache provides both a block explorer and transaction list. Here's how to inter
 
 ## 1️⃣ Next.js Framework
 
-1. install next js, ensure you install it in the correct directory (Ip Protection):
-`npx create-next-app@latest`
-
-2. put the project name: `client`
-(we choose that name because that is the default name use for contract build directory in truffle-config.js)
-- choose the default setting for all the other option.
-
-![Ganache Verification](/assets/install-nextjs.png)
-
-3. go into the client directory using `cd client`
-
-- then type `npm run dev` to test the next.js framework.
-- click on either Local or Network link.
-
-![Ganache Verification](/assets/nextjs-testrun.png)
-
-- if everything is set up correctly you should see it like this : 
-
-![Ganache Verification](/assets/nextjs-client.png)
-
-
-## 2 Customization
-
-1. Before we start customizing our UI we need to recompile our blockchain contract (truffle-config.js) into the client directory to ensure that our next.js framework can properly interact with blockchain Application Binary Interface(ABI)
-
-- define what ABI is : 
-
-- paste this code snippet in truffle-config.js: 
-
-`contracts_build_directory: "./client/app/routes/artifacts",`
-
-![Ganache Verification](/assets/abi-directory.png)
-
-- then compile the smart contract again:
-
-`truffle migrate --network ganache --reset`
-
-- you should see this file in the client directory
-
-![Ganache Verification](/assets/abi-location.png)
-
-2. download dependencies used in the template
-
-- `npx shadcn@latest init`
-- `npm i lucide-react`
-- `npm i sonner`
-- `npm i radix-ui`
-- `npm i web3`
-
-<h1 align="center">   
-  Chapter 2: Frontend
-</h1> 
-
-## 1️⃣ Next.js Framework
-
 In this section, we’ll set up the frontend for your dApp using **Next.js**, a popular React-based framework ideal for building fast and scalable web interfaces.
 
 ### 🧱 Setup Instructions
@@ -575,7 +520,7 @@ npx create-next-app@latest
 ```
 
 2. When prompted, name your project `client`.  
-This matches the default Truffle `contracts_build_directory` used for ABI output.
+This matches the default Truffle `contracts_build_directory` used for ABI output we will use later.
 
 3. Accept all default configuration options when prompted.
 
@@ -605,7 +550,7 @@ If successful, you should see the default Next.js landing page:
 
 Now that our frontend is running, let’s connect it to the blockchain by linking the compiled contract artifacts.
 
-### 🔄 Define the ABI Output Location
+### 1. Define the ABI Output Location
 
 Update your `truffle-config.js` file to point to the frontend directory, so contract builds land inside your Next.js project:
 
@@ -615,7 +560,7 @@ contracts_build_directory: "./client/app/routes/artifacts",
 
 ![ABI Directory](/assets/abi-directory.png)
 
-### ⚙️ Recompile Contracts
+### 2. Recompile Contracts
 
 Recompile the smart contracts and migrate them to the local Ganache network:
 
@@ -631,7 +576,7 @@ client/app/routes/artifacts/
 
 ![ABI Location](/assets/abi-location.png)
 
-### 📦 Install Frontend Dependencies
+### 3. Install Frontend Dependencies
 
 Install the UI and blockchain interaction libraries used in this project:
 
