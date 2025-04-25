@@ -19,6 +19,8 @@ This guide walks you through setting up your development environment using **Nod
   - [7️⃣ Sepolia: Deploying to Ethereum Testnet](#7️⃣-deploying-to-ethereum-testnet)  
   - [8️⃣ Ganache: Local Deployment for Testing](#8️⃣-ganache-local-deployment-for-testing)
 - [Chapter 2: Frontend](#frontend)  
+  - [1️⃣ Next.js Framework](#1️⃣-nextjs-framework)  
+  - [2️⃣ UI Customization & ABI Integration](#2️⃣-ui-customization--abi-integration)  
 
 
 ---
@@ -556,19 +558,95 @@ Ganache provides both a block explorer and transaction list. Here's how to inter
 - `npm i radix-ui`
 - `npm i web3`
 
+<h1 align="center">   
+  Chapter 2: Frontend
+</h1> 
 
+## 1️⃣ Next.js Framework
 
+In this section, we’ll set up the frontend for your dApp using **Next.js**, a popular React-based framework ideal for building fast and scalable web interfaces.
 
+### 🧱 Setup Instructions
 
+1. Run the following command inside your `IP-Protection` project directory:
 
+```bash
+npx create-next-app@latest
+```
 
+2. When prompted, name your project `client`.  
+This matches the default Truffle `contracts_build_directory` used for ABI output.
 
+3. Accept all default configuration options when prompted.
 
+![Install Next.js](/assets/install-nextjs.png)
 
+4. Navigate into your newly created frontend directory:
 
+```bash
+cd client
+```
 
+5. Start the development server:
 
+```bash
+npm run dev
+```
 
+6. Open the provided **Local** or **Network** URL in your browser.
 
+If successful, you should see the default Next.js landing page:
 
+![Next.js Client](/assets/nextjs-client.png)
 
+---
+
+## 2️⃣ UI Customization & ABI Integration
+
+Now that our frontend is running, let’s connect it to the blockchain by linking the compiled contract artifacts.
+
+### 🔄 Define the ABI Output Location
+
+Update your `truffle-config.js` file to point to the frontend directory, so contract builds land inside your Next.js project:
+
+```js
+contracts_build_directory: "./client/app/routes/artifacts",
+```
+
+![ABI Directory](/assets/abi-directory.png)
+
+### ⚙️ Recompile Contracts
+
+Recompile the smart contracts and migrate them to the local Ganache network:
+
+```bash
+truffle migrate --network ganache --reset
+```
+
+You should now see contract ABIs generated under:
+
+```
+client/app/routes/artifacts/
+```
+
+![ABI Location](/assets/abi-location.png)
+
+### 📦 Install Frontend Dependencies
+
+Install the UI and blockchain interaction libraries used in this project:
+
+```bash
+npx shadcn@latest init
+npm i lucide-react
+npm i sonner
+npm i radix-ui
+npm i web3
+```
+
+- `shadcn/ui`: A modern UI component library  
+- `lucide-react`: Icon library  
+- `sonner`: Toast notification system  
+- `radix-ui`: Unstyled primitives for building accessible UIs  
+- `web3`: JavaScript library for Ethereum blockchain interactions
+
+---
