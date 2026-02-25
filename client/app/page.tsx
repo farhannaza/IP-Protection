@@ -5,20 +5,22 @@ import { Shield } from "lucide-react"
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-        <Link className="flex items-center gap-2 font-semibold" href="#">
-          <Shield className="h-6 w-6" />
-          <span>IP Shield</span>
-        </Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard">
-            Dashboard
+      <header className="h-14 border-b">
+        <div className="mx-auto flex h-full w-full max-w-6xl items-center px-4 lg:px-6">
+          <Link className="flex items-center gap-2 font-semibold" href="#">
+            <Shield className="h-6 w-6" />
+            <span>IP Shield</span>
           </Link>
-        </nav>
+          <nav className="ml-auto flex gap-4 sm:gap-6">
+            <Link className="text-sm font-medium hover:underline underline-offset-4" href="/dashboard">
+              Dashboard
+            </Link>
+          </nav>
+        </div>
       </header>
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
-          <div className="container px-4 md:px-6">
+          <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
@@ -41,7 +43,7 @@ export default function Home() {
           </div>
         </section>
         <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-900">
-          <div className="container px-4 md:px-6">
+          <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">How It Works</h2>
@@ -82,10 +84,11 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-gray-500 dark:text-gray-400">IP Shield.</p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-        </nav>
+      <footer className="w-full shrink-0 border-t py-6">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-4 sm:flex-row md:px-6">
+          <p className="text-xs text-gray-500 dark:text-gray-400">IP Shield.</p>
+          <nav className="sm:ml-auto flex gap-4 sm:gap-6"></nav>
+        </div>
       </footer>
     </div>
   )
